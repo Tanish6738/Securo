@@ -8,6 +8,34 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 })
     }
 
+    // Use test data for demonstration emails
+    if (email.toLowerCase().includes('test') || email.toLowerCase().includes('demo')) {
+      if (type === 'analytics') {
+        // Use the test analytics endpoint for demo
+        const testResponse = await fetch(`${request.url.replace('/breach-check', '/test-analytics')}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        })
+        
+        if (testResponse.ok) {
+          const testData = await testResponse.json()
+          return NextResponse.json(testData)
+        }
+      } else {
+        // Return basic test data
+        return NextResponse.json({
+          isBreached: true,
+          breaches: ["SweClockers", "TestBreach2018", "Entertainment2021"],
+          breachCount: 3,
+          email: email,
+          status: 'success'
+        })
+      }
+    }
+
     // Choose endpoint based on type
     let endpoint = ''
     switch (type) {

@@ -33,9 +33,11 @@ export default function Header() {
               </Link>
               <Link href="/fake-data" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium">
                 Fake Data
-              </Link>
-              <Link href="/temp-email" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium">
+              </Link>              <Link href="/temp-email" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium">
                 Temp Email
+              </Link>
+              <Link href="/vault" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium">
+                Vault
               </Link>
               <Link href="/privacy-news" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium">
                 Privacy News
@@ -100,9 +102,11 @@ export default function Header() {
               </Link>
               <Link href="/fake-data" className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
                 Fake Data
-              </Link>
-              <Link href="/temp-email" className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              </Link>              <Link href="/temp-email" className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
                 Temp Email
+              </Link>
+              <Link href="/vault" className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+                Vault
               </Link>
               <Link href="/privacy-news" className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
                 Privacy News

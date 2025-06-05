@@ -20,6 +20,7 @@ import {
   KeyIcon,
   DocumentDuplicateIcon,
   NewspaperIcon,
+  LockClosedIcon,
 } from "@heroicons/react/24/outline";
 import { formatDate } from "@/lib/utils";
 
@@ -218,11 +219,15 @@ export default function DashboardPage() {
                       <KeyIcon className="mr-2 h-4 w-4" />
                       Check Password
                     </Button>
-                  </Link>
-                  <Link href="/temp-email">
+                  </Link>                  <Link href="/temp-email">
                     <Button className="w-full justify-start" variant="outline">
                       <EyeIcon className="mr-2 h-4 w-4" />
                       Create Temp Email
+                    </Button>
+                  </Link>                  <Link href="/vault">
+                    <Button className="w-full justify-start" variant="outline">
+                      <LockClosedIcon className="mr-2 h-4 w-4" />
+                      Secure Vault
                     </Button>
                   </Link>
                   <Link href="/fake-data">
