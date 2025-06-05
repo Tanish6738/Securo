@@ -107,32 +107,9 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
-    }
-  ],
+    }  ],
   "cleanUrls": true,
   "trailingSlash": false,
-  "routes": [
-    {
-      "src": "/robots.txt",
-      "dest": "/robots.txt"
-    },
-    {
-      "src": "/sitemap.xml",
-      "dest": "/sitemap.xml"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/favicon.ico"
-    },
-    {
-      "src": "/manifest.json",
-      "dest": "/manifest.json"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "dest": "/apple-touch-icon.png"
-    }
-  ],
   "outputDirectory": ".next",
   "installCommand": "npm install",
   "devCommand": "npm run dev",
