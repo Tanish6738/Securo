@@ -325,9 +325,8 @@ export default function PasswordCheckerPage() {
                     <div>
                       <h4 className="font-medium text-gray-900 dark:text-white">
                         Avoid personal information
-                      </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Don't use names, birthdays, or other personal details.
+                      </h4>                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Don&apos;t use names, birthdays, or other personal details.
                       </p>
                     </div>
                   </div>

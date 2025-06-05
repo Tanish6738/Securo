@@ -231,9 +231,8 @@ export default function FakeDataPage() {
                       <DocumentDuplicateIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                       <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
                         No Data Generated Yet
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-400">
-                        Select one or more categories and click "Generate Fake Data" to get started.
+                      </h3>                      <p className="text-gray-600 dark:text-gray-400">
+                        Select one or more categories and click &quot;Generate Fake Data&quot; to get started.
                       </p>
                     </div>
                   </CardContent>

@@ -277,10 +277,9 @@ export default function BreachMonitorPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         className="w-full"
                         required
-                      />
-                      {checkType === 'analytics' && (
+                      />                      {checkType === 'analytics' && (
                         <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
-                          💡 Try "test@example.com" or "demo@test.com" to see full analytics features in action
+                          💡 Try &quot;test@example.com&quot; or &quot;demo@test.com&quot; to see full analytics features in action
                         </p>
                       )}
                     </div>

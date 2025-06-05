@@ -1,0 +1,77 @@
+{
+  "name": "PrivacyGuard - Digital Privacy Command Center",
+  "short_name": "PrivacyGuard",
+  "description": "Advanced cybersecurity platform protecting millions from data breaches",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["security", "privacy", "productivity"],
+  "lang": "en-US",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Breach Monitor",
+      "short_name": "Breaches",
+      "description": "Check for data breaches",
+      "url": "/breach-monitor",
+      "icons": [
+        {
+          "src": "/shortcut-breach.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Password Checker",
+      "short_name": "Passwords",
+      "description": "Check password security",
+      "url": "/password-checker",
+      "icons": [
+        {
+          "src": "/shortcut-password.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Temp Email",
+      "short_name": "Email",
+      "description": "Create temporary email",
+      "url": "/temp-email",
+      "icons": [
+        {
+          "src": "/shortcut-email.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}

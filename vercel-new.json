@@ -1,0 +1,285 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "framework": "nextjs",
+  "functions": {
+    "src/app/api/**/*.js": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/((?!api|_next|_static|favicon.ico).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/login",
+      "destination": "/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/signup",
+      "destination": "/dashboard", 
+      "permanent": false
+    },
+    {
+      "source": "/sign-in",
+      "destination": "/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/sign-up",
+      "destination": "/dashboard",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://clerk.dev https://*.clerk.accounts.dev https://api.clerk.dev; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.clerk.dev https://*.clerk.accounts.dev wss: ws:; frame-src 'self' https://*.clerk.accounts.dev; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization, X-Requested-With, Accept, Origin, User-Agent"
+        },
+        {
+          "key": "Access-Control-Max-Age",
+          "value": "86400"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|eot|pdf))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/_next/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/_next/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(dashboard|vault|temp-email|profile|privacy-news|password-checker|fake-data|breach-monitor)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    {
+      "src": "/robots.txt",
+      "dest": "/robots.txt",
+      "headers": {
+        "Cache-Control": "public, max-age=86400"
+      }
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/sitemap.xml",
+      "headers": {
+        "Cache-Control": "public, max-age=86400",
+        "Content-Type": "application/xml"
+      }
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/favicon.ico",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/manifest.json",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "Content-Type": "application/manifest+json"
+      }
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "dest": "/apple-touch-icon.png",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1",
+      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
+    },
+    {
+      "src": "/_next/(.*)",
+      "dest": "/_next/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/dashboard"
+    },
+    {
+      "src": "/vault",
+      "dest": "/vault"
+    },
+    {
+      "src": "/temp-email",
+      "dest": "/temp-email"
+    },
+    {
+      "src": "/profile",
+      "dest": "/profile"
+    },
+    {
+      "src": "/privacy-news",
+      "dest": "/privacy-news"
+    },
+    {
+      "src": "/password-checker",
+      "dest": "/password-checker"
+    },
+    {
+      "src": "/fake-data",
+      "dest": "/fake-data"
+    },
+    {
+      "src": "/breach-monitor",
+      "dest": "/breach-monitor"
+    },
+    {
+      "src": "/error",
+      "dest": "/error"
+    },
+    {
+      "src": "/not-found",
+      "dest": "/not-found"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev",
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "regions": ["iad1"],
+  "crons": [],
+  "public": true,
+  "github": {
+    "enabled": false
+  }
+}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Header from '@/components/Header'
 import Card, { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
@@ -27,12 +27,7 @@ export default function PrivacyNewsPage() {
     { id: 'business', name: 'Technology Business', count: 0 },
     { id: 'domains', name: 'Security Expert Sources', count: 0 }
   ]
-
-  useEffect(() => {
-    fetchNews()
-  }, [selectedCategory])
-
-  const fetchNews = async () => {
+  const fetchNews = useCallback(async () => {
     setIsLoading(true)
     try {
       const params = new URLSearchParams()
@@ -73,7 +68,11 @@ export default function PrivacyNewsPage() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [selectedCategory])
+
+  useEffect(() => {
+    fetchNews()
+  }, [fetchNews])
   const categorizeArticle = (article) => {
     const title = (article.title || '').toLowerCase()
     const description = (article.description || '').toLowerCase()
