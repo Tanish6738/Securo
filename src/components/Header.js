@@ -69,7 +69,7 @@ export default function Header() {
             </nav>
           </SignedOut>{" "}
           <SignedIn>
-            <nav className="hidden md:flex space-x-1">
+            <nav className="md:flex space-x-1 flex items-center w-full justify-around gap-8">
               {[
                 { href: "/dashboard", text: "Dashboard" },
                 { href: "/breach-monitor", text: "Breach Monitor" },
