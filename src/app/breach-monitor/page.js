@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Card, { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
+import AIAssistant from '@/components/AIAssistant'
 import { 
   ShieldCheckIcon, 
   ExclamationTriangleIcon,
@@ -13,7 +14,8 @@ import {
   GlobeAltIcon,
   ChartBarIcon,
   ClockIcon,
-  InformationCircleIcon
+  InformationCircleIcon,
+  SparklesIcon
 } from '@heroicons/react/24/outline'
 import './scrollbar.css'
 
@@ -30,6 +32,8 @@ export default function BreachMonitorPage() {
   const [selectedBreachWebsite, setSelectedBreachWebsite] = useState(null)
   const [selectedDomainBreach, setSelectedDomainBreach] = useState(null)
   const [selectedRecentBreach, setSelectedRecentBreach] = useState(null)
+  // AI Assistant state
+  const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false)
 
   const checkEmailBreach = async (e) => {
     e.preventDefault()
@@ -966,8 +970,23 @@ export default function BreachMonitorPage() {
                                   </div>
                                 </CardContent>
                               </Card>
-                            </div>
-                          )}
+                            </div>                          )}
+                        </div>
+                      )}
+
+                      {/* AI Assistant Button - Show after detailed analytics results */}
+                      {checkType === 'analytics' && (
+                        <div className="mt-6 text-center">
+                          <Button
+                            onClick={() => setIsAIAssistantOpen(true)}
+                            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+                          >
+                            <SparklesIcon className="h-5 w-5 mr-2" />
+                            Analyze with AI
+                          </Button>
+                          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                            Get personalized insights and recommendations from our AI assistant
+                          </p>
                         </div>
                       )}
                     </div>
@@ -1553,9 +1572,16 @@ export default function BreachMonitorPage() {
                 </div>
               </CardContent>
             </Card>
-          )}
-        </div>
+          )}        </div>
       </div>
+
+      {/* AI Assistant Component */}
+      <AIAssistant
+        isOpen={isAIAssistantOpen}
+        onClose={() => setIsAIAssistantOpen(false)}
+        breachData={results}
+        userEmail={email}
+      />
     </>
   )
 }
