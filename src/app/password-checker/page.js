@@ -1,134 +1,139 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Header from '@/components/Header'
-import Card, { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import Button from '@/components/ui/Button'
-import Input from '@/components/ui/Input'
-import { 
-  KeyIcon, 
+import { useState, useEffect } from "react";
+import Header from "@/components/Header";
+import Card, {
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import {
+  KeyIcon,
   ExclamationTriangleIcon,
   CheckCircleIcon,
   EyeIcon,
   EyeSlashIcon,
-  ShieldCheckIcon
-} from '@heroicons/react/24/outline'
+  ShieldCheckIcon,
+} from "@heroicons/react/24/outline";
 
 export default function PasswordCheckerPage() {
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [results, setResults] = useState(null)
-  const [error, setError] = useState('')
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState(null);
+  const [error, setError] = useState("");
   const [strength, setStrength] = useState({
     score: 0,
     feedback: [],
-    suggestions: []
-  })
+    suggestions: [],
+  });
 
   // Simple password strength calculator
   const calculateStrength = (password) => {
-    let score = 0
-    const feedback = []
-    const suggestions = []
+    let score = 0;
+    const feedback = [];
+    const suggestions = [];
 
     if (password.length >= 8) {
-      score += 1
+      score += 1;
     } else {
-      suggestions.push('Use at least 8 characters')
+      suggestions.push("Use at least 8 characters");
     }
 
     if (/[a-z]/.test(password)) {
-      score += 1
+      score += 1;
     } else {
-      suggestions.push('Add lowercase letters')
+      suggestions.push("Add lowercase letters");
     }
 
     if (/[A-Z]/.test(password)) {
-      score += 1
+      score += 1;
     } else {
-      suggestions.push('Add uppercase letters')
+      suggestions.push("Add uppercase letters");
     }
 
     if (/[0-9]/.test(password)) {
-      score += 1
+      score += 1;
     } else {
-      suggestions.push('Add numbers')
+      suggestions.push("Add numbers");
     }
 
     if (/[^A-Za-z0-9]/.test(password)) {
-      score += 1
+      score += 1;
     } else {
-      suggestions.push('Add special characters (!@#$%^&*)')
+      suggestions.push("Add special characters (!@#$%^&*)");
     }
 
     // Feedback based on score
     if (score <= 2) {
-      feedback.push('Weak password')
+      feedback.push("Weak password");
     } else if (score <= 3) {
-      feedback.push('Fair password')
+      feedback.push("Fair password");
     } else if (score <= 4) {
-      feedback.push('Good password')
+      feedback.push("Good password");
     } else {
-      feedback.push('Strong password')
+      feedback.push("Strong password");
     }
 
-    return { score, feedback, suggestions }
-  }
+    return { score, feedback, suggestions };
+  };
 
   useEffect(() => {
     if (password) {
-      const newStrength = calculateStrength(password)
-      setStrength(newStrength)
+      const newStrength = calculateStrength(password);
+      setStrength(newStrength);
     } else {
-      setStrength({ score: 0, feedback: [], suggestions: [] })
+      setStrength({ score: 0, feedback: [], suggestions: [] });
     }
-  }, [password])
+  }, [password]);
 
   const checkPasswordBreach = async (e) => {
-    e.preventDefault()
-    if (!password) return
+    e.preventDefault();
+    if (!password) return;
 
-    setLoading(true)
-    setError('')
-    setResults(null)
+    setLoading(true);
+    setError("");
+    setResults(null);
 
     try {
-      const response = await fetch('/api/password-check', {
-        method: 'POST',
+      const response = await fetch("/api/password-check", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ password }),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to check password')
+        throw new Error(data.error || "Failed to check password");
       }
 
-      setResults(data)
+      setResults(data);
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const getStrengthColor = (score) => {
-    if (score <= 2) return 'bg-red-500'
-    if (score <= 3) return 'bg-yellow-500'
-    if (score <= 4) return 'bg-blue-500'
-    return 'bg-green-500'
-  }
+    if (score <= 2) return "bg-red-500";
+    if (score <= 3) return "bg-yellow-500";
+    if (score <= 4) return "bg-blue-500";
+    return "bg-green-500";
+  };
 
   const getStrengthText = (score) => {
-    if (score <= 2) return 'Weak'
-    if (score <= 3) return 'Fair'
-    if (score <= 4) return 'Good'
-    return 'Strong'
-  }
+    if (score <= 2) return "Weak";
+    if (score <= 3) return "Fair";
+    if (score <= 4) return "Good";
+    return "Strong";
+  };
 
   return (
     <>
@@ -136,9 +141,12 @@ export default function PasswordCheckerPage() {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Password Checker</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Password Checker
+            </h1>
             <p className="text-gray-600 dark:text-gray-400">
-              Analyze your password strength and check if it has been compromised in data breaches.
+              Analyze your password strength and check if it has been
+              compromised in data breaches.
             </p>
           </div>
 
@@ -148,25 +156,25 @@ export default function PasswordCheckerPage() {
               <CardTitle className="flex items-center">
                 <KeyIcon className="h-6 w-6 mr-2 text-blue-600 dark:text-blue-400" />
                 Password Analysis
-              </CardTitle>
-              <CardDescription>
-                Enter a password to check its strength and breach status. Your password is never stored or transmitted in plain text.
+              </CardTitle>              <CardDescription>
+                Enter a password to check its strength and breach status. Your
+                password is hashed before being checked against breach databases. We never store it.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={checkPasswordBreach} className="space-y-6">
                 <div className="relative">
                   <Input
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     placeholder="Enter password to analyze"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full pr-10"
-                  />
-                  <button
+                  />                  <button
                     type="button"
                     className="absolute inset-y-0 right-0 pr-3 flex items-center"
                     onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? (
                       <EyeSlashIcon className="h-5 w-5 text-gray-400" />
@@ -214,8 +222,8 @@ export default function PasswordCheckerPage() {
                   </div>
                 )}
 
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={loading || !password}
                   className="w-full sm:w-auto"
                 >
@@ -247,15 +255,15 @@ export default function PasswordCheckerPage() {
                     </div>
                   </div>
                 </div>
-              )}
-
-              {results && (
+              )}              {results && results.isCompromised !== undefined && (
                 <div className="mt-6">
-                  <div className={`p-4 rounded-md ${
-                    results.isCompromised 
-                      ? 'bg-red-50 dark:bg-red-900/20' 
-                      : 'bg-green-50 dark:bg-green-900/20'
-                  }`}>
+                  <div
+                    className={`p-4 rounded-md ${
+                      results.isCompromised
+                        ? "bg-red-50 dark:bg-red-900/20"
+                        : "bg-green-50 dark:bg-green-900/20"
+                    }`}
+                  >
                     <div className="flex">
                       {results.isCompromised ? (
                         <ExclamationTriangleIcon className="h-5 w-5 text-red-400" />
@@ -263,25 +271,63 @@ export default function PasswordCheckerPage() {
                         <CheckCircleIcon className="h-5 w-5 text-green-400" />
                       )}
                       <div className="ml-3">
-                        <h3 className={`text-sm font-medium ${
-                          results.isCompromised 
-                            ? 'text-red-800 dark:text-red-200' 
-                            : 'text-green-800 dark:text-green-200'
-                        }`}>
-                          {results.isCompromised ? 'Password Compromised!' : 'Password Secure'}
+                        <h3
+                          className={`text-sm font-medium ${
+                            results.isCompromised
+                              ? "text-red-800 dark:text-red-200"
+                              : "text-green-800 dark:text-green-200"
+                          }`}
+                        >
+                          {results.isCompromised
+                            ? "Password Compromised!"
+                            : "Password Secure"}
                         </h3>
-                        <p className={`text-sm mt-1 ${
-                          results.isCompromised 
-                            ? 'text-red-700 dark:text-red-300' 
-                            : 'text-green-700 dark:text-green-300'
-                        }`}>
-                          {results.isCompromised 
+                        <p
+                          className={`text-sm mt-1 ${
+                            results.isCompromised
+                              ? "text-red-700 dark:text-red-300"
+                              : "text-green-700 dark:text-green-300"
+                          }`}
+                        >
+                          {results.isCompromised
                             ? `This password has been found in ${results.occurrences} data breach(es). You should change it immediately.`
-                            : 'This password has not been found in any known data breaches.'
-                          }
+                            : "This password has not been found in any known data breaches."}
                         </p>
+                        {results.note && (
+                          <div className="mt-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-md border border-yellow-200 dark:border-yellow-800">
+                            <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                              <span className="font-medium">Note:</span> {results.note}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </div>
+                    {results.characteristics && (
+                      <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-md">
+                        <h4 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">
+                          Password Characteristics (from breach data):
+                        </h4>
+                        <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                          {results.characteristics
+                            .split(";")
+                            .map((item, idx) => {
+                              const [labelCode, value] = item.split(":");
+                              const labelMap = {
+                                D: "Digits",
+                                A: "Alphabets",
+                                S: "Special Characters",
+                                L: "Length",
+                              };
+                              return (
+                                <li key={idx} className="flex items-center">
+                                  <span className="w-1.5 h-1.5 bg-blue-600 dark:bg-blue-400 rounded-full mr-2"></span>
+                                  {labelMap[labelCode] || labelCode}: {value}
+                                </li>
+                              );
+                            })}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -307,7 +353,7 @@ export default function PasswordCheckerPage() {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-3">
                     <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5" />
                     <div>
@@ -319,19 +365,21 @@ export default function PasswordCheckerPage() {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-3">
                     <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5" />
                     <div>
                       <h4 className="font-medium text-gray-900 dark:text-white">
                         Avoid personal information
-                      </h4>                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Don&apos;t use names, birthdays, or other personal details.
+                      </h4>{" "}
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Don&apos;t use names, birthdays, or other personal
+                        details.
                       </p>
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
                     <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5" />
@@ -344,7 +392,7 @@ export default function PasswordCheckerPage() {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-3">
                     <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5" />
                     <div>
@@ -352,11 +400,12 @@ export default function PasswordCheckerPage() {
                         Consider a password manager
                       </h4>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Use tools to generate and store strong, unique passwords.
+                        Use tools to generate and store strong, unique
+                        passwords.
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-3">
                     <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5" />
                     <div>
@@ -375,5 +424,5 @@ export default function PasswordCheckerPage() {
         </div>
       </div>
     </>
-  )
+  );
 }

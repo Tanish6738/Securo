@@ -20,6 +20,7 @@
     "faker": "^6.6.6",
     "framer-motion": "^12.16.0",
     "gridfs-stream": "^1.1.1",
+    "keccak": "^3.0.4",
     "mongodb": "^6.17.0",
     "mongoose": "^8.15.1",
     "multer": "^2.0.1",

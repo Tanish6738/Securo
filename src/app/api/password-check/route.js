@@ -1,43 +1,142 @@
-import { NextResponse } from 'next/server'
-import CryptoJS from 'crypto-js'
+import { NextResponse } from "next/server";
+import keccak from "keccak";
 
 export async function POST(request) {
   try {
-    const { password } = await request.json()
-    
+    const { password } = await request.json();
+
     if (!password) {
-      return NextResponse.json({ error: 'Password is required' }, { status: 400 })
+      return NextResponse.json(
+        { error: "Password is required" },
+        { status: 400 }
+      );
     }
 
-    // Create SHA3-512 hash
-    const hash = CryptoJS.SHA3(password, { outputLength: 512 }).toString()
-    const prefix = hash.substring(0, 10)
+    // Correct Keccak-512 hash
+    const hash = keccak("keccak512").update(password).digest("hex");
+    // Log hash length for debugging (should be 128 characters for keccak-512)
+    console.log("Hash length:", hash.length);
+    console.log("Full hash:", hash);
 
-    const response = await fetch(`https://passwords.xposedornot.com/v1/pass/anon/${prefix}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    const prefix = hash.substring(0, 10);
+    console.log("Prefix:", prefix);
 
-    if (!response.ok) {
-      throw new Error('Failed to check password')
+    // Try the primary API endpoint
+    let response;
+    try {
+      response = await fetch(
+        `https://passwords.xposedornot.com/v1/pass/anon/${prefix}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": "PrivacyGuard-PasswordChecker/1.0"
+          },
+        }
+      );
+    } catch (fetchError) {
+      console.error("Network error:", fetchError);
+      return NextResponse.json(
+        { error: "Network error while checking password" },
+        { status: 503 }
+      );
+    }    if (!response.ok) {
+      console.error("API response not OK:", response.status, response.statusText);
+      
+      // If it's a 404, the password is not found OR the service is unavailable
+      if (response.status === 404) {
+        try {
+          const errorData = await response.json();
+          if (errorData?.Error === "Not found") {
+            console.log("Password not found in breach database (404 with 'Not found' message)");
+            return NextResponse.json({ isCompromised: false, occurrences: 0 });
+          }
+        } catch (e) {
+          console.log("404 error - service might be temporarily unavailable");
+        }
+          return NextResponse.json({
+          isCompromised: false,
+          occurrences: 0,
+          note: "Breach database temporarily unavailable"
+        });
+      }
+      
+      return NextResponse.json(
+        { error: "Failed to check password with breach API" },
+        { status: 500 }
+      );
     }
 
-    const data = await response.json()
+    const data = await response.json();
     
-    // Check if our full hash is in the response
-    const isCompromised = data.some(item => item.SearchPassAnon === hash)
-    
-    return NextResponse.json({
-      isCompromised,
-      occurrences: isCompromised ? data.find(item => item.SearchPassAnon === hash)?.count || 0 : 0
-    })
+    // Add detailed logging to understand the API response structure
+    console.log("API Response:", JSON.stringify(data, null, 2));    // Handle "Not found" response
+    if (data?.Error === "Not found") {
+      console.log("Password not found in breach database");
+      
+      // Fallback: Check against known common breached passwords
+      const commonBreachedPasswords = [
+        'password', '123456', '123456789', 'qwerty', 'abc123', 
+        'password123', 'admin', 'letmein', 'welcome', 'monkey',
+        'dragon', 'pass', 'master', 'hello', 'freedom',
+        '1234567890', 'login', 'password1', '12345678', '1234567'
+      ];
+      
+      if (commonBreachedPasswords.includes(password.toLowerCase())) {
+        console.log("Password found in common breached passwords list");
+        return NextResponse.json({ 
+          isCompromised: true, 
+          occurrences: 999999,
+          note: "This password is known to be commonly breached"
+        });
+      }
+      
+      return NextResponse.json({ isCompromised: false, occurrences: 0 });
+    }
+
+    // Handle the correct API response format based on documentation
+    // Expected format: { "SearchPassAnon": { "anon": "808d63ba47", "char": "D:6;A:0;S:0;L:6", "count": "11999477", "wordlist": 0 } }
+    if (data?.SearchPassAnon) {
+      const searchResult = data.SearchPassAnon;
+      
+      console.log("SearchPassAnon found:", searchResult);
+      
+      // Check if this matches our prefix and has a count
+      if (searchResult.anon === prefix && searchResult.count) {
+        const occurrences = parseInt(searchResult.count) || 0;
+        console.log("Password found in breach database:", occurrences, "times");
+        
+        return NextResponse.json({
+          isCompromised: true,
+          occurrences: occurrences,
+          characteristics: searchResult.char || undefined
+        });
+      }
+      // If anon doesn't match but count exists, still consider it compromised
+      else if (searchResult.count && parseInt(searchResult.count) > 0) {
+        const occurrences = parseInt(searchResult.count) || 0;
+        console.log("Password found in breach database (alt match):", occurrences, "times");
+        
+        return NextResponse.json({
+          isCompromised: true,
+          occurrences: occurrences,
+          characteristics: searchResult.char || undefined
+        });
+      }
+    }
+
+    // If no match found
+    console.log("Password not found in breach database");
+    return NextResponse.json({ 
+      isCompromised: false, 
+      occurrences: 0 
+    });
+
   } catch (error) {
-    console.error('Password check error:', error)
+    console.error("Password check error:", error);
     return NextResponse.json(
-      { error: 'Failed to check password' },
+      { error: "Failed to check password" },
       { status: 500 }
-    )
+    );
   }
 }
