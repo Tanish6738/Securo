@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 import Header from '@/components/Header'
 import Card, { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
@@ -323,13 +324,13 @@ export default function PrivacyNewsPage() {
                             Read More
                             <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
                           </Button>
-                        </div>
-
-                        {article.urlToImage && (
+                        </div>                        {article.urlToImage && (
                           <div className="mt-4">
-                            <img
+                            <Image
                               src={article.urlToImage}
                               alt={article.title}
+                              width={800}
+                              height={192}
                               className="w-full h-48 object-cover rounded-lg"
                               onError={(e) => {
                                 e.target.style.display = 'none'

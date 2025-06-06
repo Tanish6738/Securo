@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import Card, {
@@ -1366,13 +1367,14 @@ export default function VaultPage() {
                                 </button>
                               </div>
                             </div>
-                            
-                            {/* Image Container */}
+                              {/* Image Container */}
                             <div className="flex-1 flex items-center justify-center p-2 sm:p-4 overflow-auto">
                               <div className="relative w-full h-full flex items-center justify-center">
-                                <img
+                                <Image
                                   src={previewContent.url}
                                   alt={previewContent.originalName}
+                                  width={800}
+                                  height={600}
                                   className="preview-image max-w-full max-h-full object-contain rounded-lg sm:rounded-xl shadow-2xl cursor-grab active:cursor-grabbing transition-transform duration-200"
                                   style={{
                                     maxWidth: '100%',
