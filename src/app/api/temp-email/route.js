@@ -4,8 +4,13 @@ export async function POST(request) {
   try {
     const { customName } = await request.json()
     
+    // Set default API base if environment variable is not set
+    const API_BASE = process.env.MAILTM_API_BASE || 'https://api.mail.tm'
+    
+    console.log('Using API Base:', API_BASE)
+    
     // First, get a domain for temporary email
-    const domainResponse = await fetch(`${process.env.MAILTM_API_BASE}/domains`, {
+    const domainResponse = await fetch(`${API_BASE}/domains`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -13,7 +18,10 @@ export async function POST(request) {
     })
 
     if (!domainResponse.ok) {
-      throw new Error('Failed to fetch domains')
+      console.error('Domain fetch failed:', domainResponse.status, domainResponse.statusText)
+      const errorBody = await domainResponse.text()
+      console.error('Domain fetch error body:', errorBody)
+      throw new Error(`Failed to fetch domains: ${domainResponse.status} ${domainResponse.statusText}`)
     }
 
     const domains = await domainResponse.json()
@@ -51,7 +59,7 @@ export async function POST(request) {
       
       console.log(`Attempt ${attempt + 1}: Trying to create account with email: ${email}`)
       
-      const accountResponse = await fetch(`${process.env.MAILTM_API_BASE}/accounts`, {
+      const accountResponse = await fetch(`${API_BASE}/accounts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,10 +80,11 @@ export async function POST(request) {
         console.log(`Email ${email} already exists, trying again...`)
         continue
       } else {
-        // Other error, throw
+        // Other error, log and throw
         const errorData = await accountResponse.text()
         console.error('Account creation failed with error:', errorData)
-        throw new Error('Failed to create account due to server error')
+        console.error('Response status:', accountResponse.status)
+        throw new Error(`Failed to create account: ${accountResponse.status} ${accountResponse.statusText}`)
       }
     }
 
@@ -84,7 +93,7 @@ export async function POST(request) {
     }
     
     // Get authentication token
-    const authResponse = await fetch(`${process.env.MAILTM_API_BASE}/token`, {
+    const authResponse = await fetch(`${API_BASE}/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -99,6 +108,8 @@ export async function POST(request) {
     if (authResponse.ok) {
       const authData = await authResponse.json()
       token = authData.token
+    } else {
+      console.warn('Failed to get auth token, using account ID as fallback')
     }
     
     return NextResponse.json({
@@ -112,7 +123,10 @@ export async function POST(request) {
   } catch (error) {
     console.error('Temp email generation error:', error)
     return NextResponse.json(
-      { error: 'Failed to generate temporary email' },
+      { 
+        error: 'Failed to generate temporary email',
+        details: error.message
+      },
       { status: 500 }
     )
   }
@@ -127,8 +141,11 @@ export async function GET(request) {
       return NextResponse.json({ error: 'Token is required' }, { status: 400 })
     }
 
+    // Set default API base if environment variable is not set
+    const API_BASE = process.env.MAILTM_API_BASE || 'https://api.mail.tm'
+
     // Fetch messages using authentication token
-    const response = await fetch(`${process.env.MAILTM_API_BASE}/messages?page=1`, {
+    const response = await fetch(`${API_BASE}/messages?page=1`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -145,7 +162,8 @@ export async function GET(request) {
           error: 'Authentication failed - token may be expired'
         })
       }
-      throw new Error('Failed to fetch messages')
+      console.error('Messages fetch failed:', response.status, response.statusText)
+      throw new Error(`Failed to fetch messages: ${response.status} ${response.statusText}`)
     }
 
     const data = await response.json()
@@ -157,7 +175,10 @@ export async function GET(request) {
   } catch (error) {
     console.error('Messages fetch error:', error)
     return NextResponse.json(
-      { error: 'Failed to fetch messages' },
+      { 
+        error: 'Failed to fetch messages',
+        details: error.message
+      },
       { status: 500 }
     )
   }
