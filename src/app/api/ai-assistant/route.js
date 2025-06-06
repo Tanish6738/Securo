@@ -75,6 +75,8 @@ For BAR CHARTS (comparisons, counts):
 }
 \`\`\`
 
+CRITICAL: NEVER use Chart.js format with "labels" and "datasets" arrays. ALWAYS use the format above with a "data" array containing objects with "name" and "value" properties.
+
 For LINE CHARTS (timelines, trends):
 \`\`\`json
 {
@@ -105,6 +107,15 @@ For tables:
 
 IMPORTANT: When users ask for charts, timelines, or visual data, ALWAYS include the JSON block even if you also provide textual analysis.
 
+NEVER USE Chart.js FORMAT! Always use the Recharts format shown above.
+
+FORBIDDEN FORMATS (DO NOT USE):
+- {"labels": [...], "datasets": [...]} ❌
+- {"chartData": {"labels": [...], "datasets": [...]}} ❌
+
+REQUIRED FORMAT:
+- {"chartType": "...", "chartData": {"title": "...", "data": [{"name": "...", "value": ...}]}} ✅
+
 Current user query: "${message}"
 
 Please provide a helpful response based on the user's breach data and query. If they ask for visual data (charts, graphs, tables), include the appropriate JSON structure in your response.
@@ -114,20 +125,78 @@ Please provide a helpful response based on the user's breach data and query. If 
     const response = await result.response
     let text = response.text()    // Try to extract structured data (charts/tables) from the response
     let structuredData = null
+    let jsonString = ''
     try {
       // Look for JSON code blocks in the response
       const jsonMatches = text.match(/```json\s*([\s\S]*?)\s*```/g)
       if (jsonMatches && jsonMatches.length > 0) {
         // Get the last JSON match (most recent request)
         const lastMatch = jsonMatches[jsonMatches.length - 1]
-        const jsonString = lastMatch.replace(/```json\s*/, '').replace(/\s*```/, '')
-        structuredData = JSON.parse(jsonString)
+        jsonString = lastMatch.replace(/```json\s*/, '').replace(/\s*```/, '').trim()
+        
+        // Clean up any potential formatting issues
+        jsonString = jsonString.replace(/\n\s*/g, ' ').replace(/,\s*}/g, '}').replace(/,\s*]/g, ']')
+        
+        console.log('Attempting to parse JSON:', jsonString)
+        
+        const parsed = JSON.parse(jsonString)
+        
+        // Validate the structure and convert Chart.js format to Recharts format if needed
+        if (parsed.chartData && parsed.chartData.labels && parsed.chartData.datasets) {
+          console.log('Converting Chart.js format to Recharts format')
+          // Convert Chart.js format to Recharts format
+          const { labels, datasets } = parsed.chartData
+          const data = labels.map((label, index) => ({
+            name: label,
+            value: datasets[0]?.data?.[index] || 0
+          }))
+          
+          structuredData = {
+            chartType: parsed.chartType,
+            chartData: {
+              title: parsed.chartData.title || 'Chart',
+              description: parsed.chartData.description,
+              data: data
+            }
+          }
+        } else if (parsed.chartData && Array.isArray(parsed.chartData.data)) {
+          // Already in correct format
+          structuredData = parsed
+        } else {
+          console.log('Unknown chart data format:', parsed)
+        }
         
         // Remove the JSON block from the text response
         text = text.replace(lastMatch, '').trim()
-      }
-    } catch (e) {
+      }    } catch (e) {
       console.error('Error parsing structured data:', e)
+      console.error('Raw JSON string:', jsonString)
+      
+      // Try to provide a fallback response with example data structure
+      if (jsonString.includes('chartType') || jsonString.includes('chart')) {
+        console.log('Attempting to provide fallback chart structure')
+        try {
+          // Try to extract chart type at least
+          const chartTypeMatch = jsonString.match(/"chartType":\s*"(\w+)"/);
+          const titleMatch = jsonString.match(/"title":\s*"([^"]+)"/);
+          
+          if (chartTypeMatch) {
+            structuredData = {
+              chartType: chartTypeMatch[1],
+              chartData: {
+                title: titleMatch ? titleMatch[1] : 'Data Analysis',
+                data: [
+                  { name: 'Error', value: 1 }
+                ],
+                description: 'Error parsing chart data. Please try again with a different request.'
+              }
+            };
+          }
+        } catch (fallbackError) {
+          console.error('Fallback parsing also failed:', fallbackError);
+        }
+      }
+      
       // Continue with plain text response if JSON parsing fails
     }
 
@@ -175,6 +244,55 @@ Please provide a helpful response based on the user's breach data and query. If 
           chartData: {
             title: 'Breaches by Industry',
             data: pieData
+          }
+        }
+      }
+        // Auto-generate radar chart for radar/security metrics requests
+      else if (lowerMessage.includes('radar') || lowerMessage.includes('security metrics') || lowerMessage.includes('metrics')) {
+        // Calculate security metrics from breach data
+        const totalBreaches = breaches.length
+        const riskScore = breachData?.BreachMetrics?.risk?.[0]?.risk_score || 0
+        const totalRecords = breaches.reduce((sum, breach) => sum + (breach.xposed_records || 0), 0)
+        
+        // Get unique data types exposed
+        const dataTypesSet = new Set()
+        breaches.forEach(breach => {
+          if (breach.xposed_data) {
+            breach.xposed_data.split(',').forEach(type => {
+              dataTypesSet.add(type.trim())
+            })
+          }
+        })
+        
+        // Calculate password risk based on password_risk field
+        let passwordRiskScore = 0
+        let passwordRiskCount = 0
+        breaches.forEach(breach => {
+          if (breach.password_risk) {
+            const risk = breach.password_risk.toLowerCase()
+            if (risk.includes('plaintext')) passwordRiskScore += 100
+            else if (risk.includes('easy')) passwordRiskScore += 75
+            else if (risk.includes('hard')) passwordRiskScore += 25
+            else passwordRiskScore += 50 // unknown/other
+            passwordRiskCount++
+          }
+        })
+        const avgPasswordRisk = passwordRiskCount > 0 ? passwordRiskScore / passwordRiskCount : 50
+        
+        const radarData = [
+          { name: 'Breach Count', value: Math.min(totalBreaches * 2, 100) }, // Scale to 100
+          { name: 'Password Risk', value: Math.min(avgPasswordRisk, 100) },
+          { name: 'Data Types Exposed', value: Math.min(dataTypesSet.size * 15, 100) }, // Scale to 100
+          { name: 'Records Exposed', value: Math.min(Math.log10(totalRecords + 1) * 10, 100) }, // Log scale
+          { name: 'Overall Risk Score', value: Math.min(riskScore * 10, 100) }
+        ]
+        
+        structuredData = {
+          chartType: 'radar',
+          chartData: {
+            title: 'Security Risk Analysis',
+            description: 'Multi-dimensional view of your security exposure metrics',
+            data: radarData
           }
         }
       }
