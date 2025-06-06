@@ -23,30 +23,65 @@ export async function POST(request) {
       throw new Error('No available domains')
     }
 
-    // Generate email with custom name or random
-    const username = customName || Math.random().toString(36).substring(2, 15)
-    const email = `${username}@${domain}`
-    const password = Math.random().toString(36).substring(2, 15)
-
-    // Create account
-    const accountResponse = await fetch(`${process.env.MAILTM_API_BASE}/accounts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        address: email,
-        password: password
-      })
-    })
-
-    if (!accountResponse.ok) {
-      const errorData = await accountResponse.text()
-      console.error('Account creation failed:', errorData)
-      throw new Error('Failed to create account')
+    // Function to generate a unique email address
+    const generateUniqueEmail = (baseName, attempt = 0) => {
+      let username
+      if (baseName) {
+        // If custom name provided, add timestamp and attempt number for uniqueness
+        const timestamp = Date.now().toString().slice(-6)
+        const suffix = attempt > 0 ? `_${attempt}` : ''
+        username = `${baseName}${timestamp}${suffix}`
+      } else {
+        // Generate random username with timestamp for uniqueness
+        const randomStr = Math.random().toString(36).substring(2, 10)
+        const timestamp = Date.now().toString().slice(-4)
+        username = `${randomStr}${timestamp}`
+      }
+      return `${username}@${domain}`
     }
-    
-    const account = await accountResponse.json()
+
+    // Try to create account with retries for unique email
+    let account = null
+    let email = null
+    let password = Math.random().toString(36).substring(2, 15)
+    const maxAttempts = 5
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      email = generateUniqueEmail(customName, attempt)
+      
+      console.log(`Attempt ${attempt + 1}: Trying to create account with email: ${email}`)
+      
+      const accountResponse = await fetch(`${process.env.MAILTM_API_BASE}/accounts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address: email,
+          password: password
+        })
+      })
+
+      if (accountResponse.ok) {
+        account = await accountResponse.json()
+        console.log(`Successfully created account: ${email}`)
+        break
+      } else if (accountResponse.status === 422) {
+        // Email already exists, try again with different name
+        const errorData = await accountResponse.text()
+        console.log(`Email ${email} already exists, trying again...`)
+        continue
+      } else {
+        // Other error, throw
+        const errorData = await accountResponse.text()
+        console.error('Account creation failed with error:', errorData)
+        throw new Error('Failed to create account due to server error')
+      }
+    }
+
+    if (!account) {
+      throw new Error('Failed to create unique email after multiple attempts')
+    }
     
     // Get authentication token
     const authResponse = await fetch(`${process.env.MAILTM_API_BASE}/token`, {
