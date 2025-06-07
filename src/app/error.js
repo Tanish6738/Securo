@@ -9,18 +9,17 @@ export default function Error({ error, reset }) {
     // Log the error to an error reporting service
     console.error('Application error:', error)
   }, [error])
-
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-theme-background flex items-center justify-center px-4">
       <div className="text-center max-w-md">
-        <div className="inline-flex items-center justify-center w-20 h-20 bg-red-900/50 border border-red-500/30 rounded-full mb-6">
-          <ExclamationTriangleIcon className="h-10 w-10 text-red-400" />
+        <div className="inline-flex items-center justify-center w-20 h-20 bg-theme-primary/10 border border-theme-primary/30 rounded-full mb-6">
+          <ExclamationTriangleIcon className="h-10 w-10 text-theme-primary" />
         </div>
         
-        <h1 className="text-3xl font-bold text-white mb-4">
+        <h1 className="text-3xl font-bold text-theme-text mb-4">
           Security Alert
         </h1>
-          <p className="text-gray-400 mb-8 leading-relaxed">
+          <p className="text-theme-text-secondary mb-8 leading-relaxed">
           We&apos;ve encountered a security anomaly. Don&apos;t worry - your data remains protected. 
           Our systems are automatically recovering.
         </p>
@@ -28,7 +27,7 @@ export default function Error({ error, reset }) {
         <div className="space-y-4">
           <Button 
             onClick={reset}
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 w-full"
+            className="btn-primary w-full"
           >
             <ArrowPathIcon className="h-5 w-5 mr-2" />
             Restore Security Dashboard
@@ -37,13 +36,13 @@ export default function Error({ error, reset }) {
           <Button 
             variant="outline" 
             onClick={() => window.location.href = '/'}
-            className="border-gray-600 text-gray-300 hover:bg-gray-800 w-full"
+            className="btn-outline-primary w-full"
           >
             Return to Safety
           </Button>
         </div>
         
-        <p className="text-xs text-gray-500 mt-6">
+        <p className="text-xs text-theme-text-secondary mt-6">
           Error ID: {error?.digest || 'UNKNOWN'} • Time: {new Date().toISOString()}
         </p>
       </div>

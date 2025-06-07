@@ -101,9 +101,9 @@ export default function PricingSection() {
       transition: { duration: 0.2 }
     },
     tap: { scale: 0.95 }
-  }
+  }  
   return (
-    <div id="pricing" className="py-24 bg-white dark:bg-gray-900">
+    <div id="pricing" className="py-24 bg-theme-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -112,13 +112,13 @@ export default function PricingSection() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-theme-text mb-4">
             Flexible Pricing for Everyone
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-theme-text-secondary max-w-2xl mx-auto">
             Choose the plan that best fits your privacy needs.
           </p>
-        </motion.div>        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch perspective-1000">
+        </motion.div><div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch perspective-1000">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -129,18 +129,16 @@ export default function PricingSection() {
               whileHover="hover"
               viewport={{ once: true, amount: 0.2 }}
               className="flex group"
-            >
-              <Card 
+            >              <Card 
                 className={`relative w-full flex flex-col rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden
                             ${plan.highlight 
-                              ? 'border-2 border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 dark:border-blue-400' 
-                              : 'bg-white/90 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700'
+                              ? 'border-2 border-theme-primary bg-theme-primary/5' 
+                              : 'card-theme'
                             } backdrop-blur-sm`}
-              >
-                {/* Animated background */}
+              >                {/* Animated background */}
                 {plan.highlight && (
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-indigo-400/10"
+                    className="absolute inset-0 bg-theme-primary/10"
                     animate={{
                       backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
                     }}
@@ -154,14 +152,13 @@ export default function PricingSection() {
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ delay: 0.5, duration: 0.5 }}
-                    className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-lg"
+                    className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-theme-primary text-theme-background px-4 py-1 rounded-full text-sm font-semibold shadow-lg"
                   >
                     Most Popular
                   </motion.div>
                 )}
 
-                <CardHeader className="relative p-8 text-center">
-                  <CardTitle className={`text-2xl font-bold mb-2 ${plan.highlight ? 'text-blue-700 dark:text-blue-300' : 'text-gray-900 dark:text-white'}`}>
+                <CardHeader className="relative p-8 text-center">                  <CardTitle className={`text-2xl font-bold mb-2 ${plan.highlight ? 'text-theme-primary' : 'text-theme-text'}`}>
                     {plan.name}
                   </CardTitle>
                   
@@ -170,17 +167,17 @@ export default function PricingSection() {
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <span className={`text-5xl font-extrabold ${plan.highlight ? 'text-blue-600 dark:text-blue-400' : 'text-gray-900 dark:text-white'}`}>
+                    <span className={`text-5xl font-extrabold ${plan.highlight ? 'text-theme-primary' : 'text-theme-text'}`}>
                       {plan.price}
                     </span>
                     {plan.pricePeriod && (
-                      <span className="text-gray-500 dark:text-gray-400 text-lg">
+                      <span className="text-theme-text-secondary text-lg">
                         {plan.pricePeriod}
                       </span>
                     )}
                   </motion.div>
                   
-                  <CardDescription className={`text-lg ${plan.highlight ? 'text-blue-600 dark:text-blue-200' : 'text-gray-600 dark:text-gray-400'}`}>
+                  <CardDescription className={`text-lg ${plan.highlight ? 'text-theme-primary' : 'text-theme-text-secondary'}`}>
                     {plan.description}
                   </CardDescription>
                 </CardHeader>
@@ -200,10 +197,9 @@ export default function PricingSection() {
                         <motion.div
                           whileHover={{ scale: 1.2, rotate: 360 }}
                           transition={{ duration: 0.3 }}
-                        >
-                          <CheckIcon className={`flex-shrink-0 h-6 w-6 mr-3 mt-0.5 ${plan.highlight ? 'text-blue-500' : 'text-green-500'}`} />
+                        >                          <CheckIcon className={`flex-shrink-0 h-6 w-6 mr-3 mt-0.5 ${plan.highlight ? 'text-theme-primary' : 'text-theme-success'}`} />
                         </motion.div>
-                        <span className={`text-sm leading-relaxed ${plan.highlight ? 'text-gray-700 dark:text-gray-200' : 'text-gray-600 dark:text-gray-300'} group-hover/feature:text-gray-900 dark:group-hover/feature:text-white transition-colors duration-200`}>
+                        <span className={`text-sm leading-relaxed ${plan.highlight ? 'text-theme-text' : 'text-theme-text-secondary'} group-hover/feature:text-theme-text transition-colors duration-200`}>
                           {feature}
                         </span>
                       </motion.li>
@@ -217,29 +213,22 @@ export default function PricingSection() {
                     initial="initial"
                     whileHover="hover"
                     whileTap="tap"
-                  >
-                    <Button 
+                  >                    <Button 
                       size="lg" 
-                      className={`relative w-full text-lg font-semibold overflow-hidden ${
-                        plan.highlight 
-                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg' 
-                          : 'bg-gray-800 hover:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-500 text-white'
-                      } transition-all duration-300`}
+                      variant={plan.highlight ? "primary" : "outline"}
+                      className={`relative w-full text-lg font-semibold overflow-hidden transition-all duration-300`}
                     >
-                      <span className="relative z-10">{plan.buttonText}</span>
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
+                      <span className="relative z-10">{plan.buttonText}</span>                      <motion.div
+                        className="absolute inset-0 bg-theme-text/20"
                         initial={{ x: "-100%" }}
                         whileHover={{ x: "100%" }}
                         transition={{ duration: 0.6 }}
                       />
                     </Button>
                   </motion.div>
-                </div>
-
-                {/* Animated border glow */}
+                </div>                {/* Animated border glow */}
                 <motion.div
-                  className={`absolute inset-0 rounded-2xl ${plan.highlight ? 'border-2 border-blue-400' : 'border border-gray-300'} opacity-0`}
+                  className={`absolute inset-0 rounded-2xl ${plan.highlight ? 'border-2 border-theme-primary' : 'border border-theme-border'} opacity-0`}
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 />

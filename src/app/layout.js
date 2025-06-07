@@ -2,6 +2,8 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { dark } from '@clerk/themes';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import ThemeInitializer from '@/components/ThemeInitializer';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -83,35 +85,38 @@ export default function RootLayout({ children }) {
       appearance={{
         baseTheme: dark,
         variables: {
-          colorPrimary: '#3b82f6',
-          colorBackground: '#111827',
-          colorInputBackground: '#1f2937',
-          colorInputText: '#f9fafb',
+          colorPrimary: '#00A99D',
+          colorBackground: '#1B212C',
+          colorInputBackground: '#151B24',
+          colorInputText: '#E1E6EB',
         },
         elements: {
-          formButtonPrimary: 'bg-blue-600 hover:bg-blue-700 text-sm normal-case',
-          card: 'bg-gray-800 border border-gray-700',
-          headerTitle: 'text-white',
-          headerSubtitle: 'text-gray-300',
+          formButtonPrimary: 'bg-theme-primary hover:bg-theme-primary/90 text-sm normal-case',
+          card: 'bg-theme-secondary border border-theme-border/20',
+          headerTitle: 'text-theme-text',
+          headerSubtitle: 'text-theme-text-secondary',
         }
       }}
     >
       <html lang="en" className="h-full">
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="theme-color" content="#111827" />
+          <meta name="theme-color" content="#1B212C" />
           <link rel="icon" href="/favicon.ico" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           <link rel="manifest" href="/manifest.json" />
         </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-900 text-white font-sans`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen font-sans`}
         >
-          <div className="min-h-screen flex flex-col">
-            <main className="flex-1">
-              {children}
-            </main>
-          </div>
+          <ThemeInitializer />
+          <ThemeProvider>
+            <div className="min-h-screen flex flex-col bg-theme-background text-theme-text">
+              <main className="flex-1">
+                {children}
+              </main>
+            </div>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

@@ -79,13 +79,12 @@ export default function TestimonialsSection() {  const testimonials = [
       }
     })
   }
-
   return (
-    <div id="testimonials" className="relative py-24 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 overflow-hidden">
+    <div id="testimonials" className="relative py-24 bg-theme-background overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-blue-200/20 dark:bg-blue-800/20 blur-2xl" />
-        <div className="absolute bottom-20 right-10 w-40 h-40 rounded-full bg-indigo-200/20 dark:bg-indigo-800/20 blur-2xl" />
+        <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-theme-primary/10 blur-2xl" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 rounded-full bg-theme-accent/10 blur-2xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -95,11 +94,10 @@ export default function TestimonialsSection() {  const testimonials = [
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        >          <h2 className="text-3xl md:text-4xl font-bold text-theme-text mb-4">
             Trusted by Professionals
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-theme-text-secondary max-w-2xl mx-auto">
             Hear what our users say about PrivacyGuard.
           </p>
         </motion.div>
@@ -116,32 +114,29 @@ export default function TestimonialsSection() {  const testimonials = [
               viewport={{ once: true, amount: 0.2 }}
               className="group"
             >
-              <Card className="relative h-full flex flex-col bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-gray-700/50 rounded-2xl overflow-hidden">
-                {/* Animated background gradient */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 opacity-0"
+              <Card className="relative h-full flex flex-col card-theme backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 rounded-2xl overflow-hidden">
+                {/* Animated background gradient */}                <motion.div
+                  className="absolute inset-0 bg-theme-primary/5 opacity-0"
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 />                {/* Quote decoration */}
-                <div className="absolute top-4 left-4 text-6xl text-blue-200 dark:text-blue-800 font-serif">&ldquo;</div>
+                <div className="absolute top-4 left-4 text-6xl text-theme-primary/30 font-serif">&ldquo;</div>
 
                 <CardHeader className="relative flex items-center space-x-4 p-8 pb-4">
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ duration: 0.3 }}
                     className="relative"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full blur-md opacity-30 group-hover:opacity-50 transition-opacity duration-300" />
-                    <div className="relative w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                  >                    <div className="absolute inset-0 bg-theme-primary/30 rounded-full blur-md opacity-30 group-hover:opacity-50 transition-opacity duration-300" />
+                    <div className="relative w-16 h-16 rounded-full bg-theme-primary flex items-center justify-center text-theme-background font-bold text-xl shadow-lg">
                       {testimonial.name.substring(0,1)}
                     </div>
                   </motion.div>
                   
-                  <div className="flex-1">
-                    <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                  <div className="flex-1">                    <CardTitle className="text-lg font-semibold text-theme-text group-hover:text-theme-primary transition-colors duration-300">
                       {testimonial.name}
                     </CardTitle>
-                    <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+                    <p className="text-sm text-theme-primary font-medium">
                       {testimonial.role}
                     </p>
                     
@@ -169,15 +164,13 @@ export default function TestimonialsSection() {  const testimonials = [
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                  >                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg italic relative z-10">
+                  >                    <p className="text-theme-text-secondary leading-relaxed text-lg italic relative z-10">
                       &ldquo;{testimonial.quote}&rdquo;
                     </p>
                   </motion.div>
-                </CardContent>
-
-                {/* Animated border */}
+                </CardContent>                {/* Animated border */}
                 <motion.div
-                  className="absolute inset-0 rounded-2xl border-2 border-blue-400 opacity-0"
+                  className="absolute inset-0 rounded-2xl border-2 border-theme-primary opacity-0"
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 />
@@ -196,8 +189,7 @@ export default function TestimonialsSection() {  const testimonials = [
             duration: 4,
             repeat: Infinity,
             ease: "easeInOut"
-          }}
-          className="absolute top-1/4 left-8 w-8 h-8 bg-blue-200 dark:bg-blue-800 rounded-full opacity-20"
+          }}          className="absolute top-1/4 left-8 w-8 h-8 bg-theme-primary/20 rounded-full opacity-20"
         />
         
         <motion.div
@@ -211,7 +203,7 @@ export default function TestimonialsSection() {  const testimonials = [
             ease: "easeInOut",
             delay: 1
           }}
-          className="absolute bottom-1/4 right-12 w-6 h-6 bg-indigo-200 dark:bg-indigo-800 rounded-full opacity-20"
+          className="absolute bottom-1/4 right-12 w-6 h-6 bg-theme-accent/20 rounded-full opacity-20"
         />
       </div>
     </div>

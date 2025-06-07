@@ -57,13 +57,13 @@ export default function FAQSection() {
         duration: 0.4
       }
     }
-  }  
+  }    
   return (
-    <div id="faq" className="relative py-24 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 overflow-hidden">
+    <div id="faq" className="relative py-24 bg-theme-background overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0">
-        <div className="absolute top-32 left-16 w-24 h-24 rounded-full bg-blue-200/10 dark:bg-blue-800/10 blur-xl" />
-        <div className="absolute bottom-32 right-16 w-32 h-32 rounded-full bg-indigo-200/10 dark:bg-indigo-800/10 blur-xl" />
+        <div className="absolute top-32 left-16 w-24 h-24 rounded-full bg-theme-primary/10 blur-xl" />
+        <div className="absolute bottom-32 right-16 w-32 h-32 rounded-full bg-theme-accent/10 blur-xl" />
       </div>
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,11 +73,10 @@ export default function FAQSection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        >          <h2 className="text-3xl md:text-4xl font-bold text-theme-text mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-theme-text-secondary max-w-2xl mx-auto">
             Get answers to common questions about PrivacyGuard.
           </p>
         </motion.div>
@@ -92,23 +91,22 @@ export default function FAQSection() {
           {faqs.map((faq, index) => (              <motion.div
                 key={index}
                 variants={itemVariants}
-                className="group bg-white dark:bg-gray-700 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200/50 dark:border-gray-600/50"
+                className="group card-theme rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.2 }}
               >
                 <motion.button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200 relative overflow-hidden"
+                  className="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-theme-secondary/50 transition-colors duration-200 relative overflow-hidden"
                   whileTap={{ scale: 0.98 }}
-                >
-                  {/* Hover effect background */}
+                >                  {/* Hover effect background */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 opacity-0"
+                    className="absolute inset-0 bg-theme-primary/5 opacity-0"
                     whileHover={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
                   />
                   
-                  <span className="relative text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                  <span className="relative text-lg font-semibold text-theme-text group-hover:text-theme-primary transition-colors duration-200">
                     {faq.question}
                   </span>
                   
@@ -120,11 +118,10 @@ export default function FAQSection() {
                     <motion.div
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.2 }}
-                    >
-                      {openIndex === index ? (
-                        <ChevronUpIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                    >                      {openIndex === index ? (
+                        <ChevronUpIcon className="h-6 w-6 text-theme-primary" />
                       ) : (
-                        <ChevronDownIcon className="h-6 w-6 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200" />
+                        <ChevronDownIcon className="h-6 w-6 text-theme-text-secondary group-hover:text-theme-primary transition-colors duration-200" />
                       )}
                     </motion.div>
                   </motion.div>
@@ -148,17 +145,14 @@ export default function FAQSection() {
                     initial={{ y: -10 }}
                     animate={{ y: openIndex === index ? 0 : -10 }}
                     transition={{ duration: 0.3, delay: openIndex === index ? 0.1 : 0 }}
-                  >
-                    <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-600 to-transparent mb-4" />
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
+                  >                    <div className="w-full h-px bg-gradient-to-r from-transparent via-theme-border to-transparent mb-4" />
+                    <p className="text-theme-text-secondary leading-relaxed text-lg">
                       {faq.answer}
                     </p>
                   </motion.div>
-                </motion.div>
-
-                {/* Animated border on hover */}
+                </motion.div>                {/* Animated border on hover */}
                 <motion.div
-                  className="absolute inset-0 rounded-2xl border-2 border-blue-400 opacity-0"
+                  className="absolute inset-0 rounded-2xl border-2 border-theme-primary opacity-0"
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 />

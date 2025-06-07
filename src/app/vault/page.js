@@ -520,64 +520,68 @@ export default function VaultPage() {
   };
   if (!isLoaded) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50 flex items-center justify-center">
+      <div className="min-h-screen bg-theme-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-indigo-600 border-t-transparent mx-auto mb-4"></div>
-          <p className="text-gray-600 font-medium">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-theme-primary border-t-transparent mx-auto mb-4"></div>
+          <p className="text-theme-textSecondary font-medium">Loading...</p>
         </div>
       </div>
     );
-  }  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
+  }
+  return (
+    <div className="min-h-screen bg-theme-background">
       <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">        {/* User-Friendly Header Section */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
+        {" "}
+        {/* User-Friendly Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="relative"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl blur-3xl opacity-20 transform scale-110"></div>
-          <div className="relative bg-gray-800/70 backdrop-blur-lg border border-gray-700/40 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/20">
+          {" "}
+          <div className="absolute inset-0 bg-gradient-to-r from-theme-primary/20 via-theme-primary/30 to-theme-primary/20 rounded-3xl blur-3xl opacity-20 transform scale-110"></div>
+          <div className="relative bg-theme-card/70 backdrop-blur-lg border border-theme-border/40 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/20">
             <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6">
               <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
+                {" "}
                 <div className="relative flex-shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-br from-indigo-400 to-purple-600 rounded-2xl blur-lg opacity-40"></div>
-                  <div className="relative p-3 sm:p-4 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-lg">
+                  <div className="absolute inset-0 bg-gradient-to-br from-theme-primary/40 to-theme-primary/60 rounded-2xl blur-lg opacity-40"></div>
+                  <div className="relative p-3 sm:p-4 bg-gradient-to-br from-theme-primary to-theme-primary/80 rounded-2xl shadow-lg">
                     <LockClosedIcon className="h-10 w-10 sm:h-12 sm:w-12 text-white" />
                   </div>
                 </div>
-
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3">
-                    <h1 className="text-2xl sm:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    <h1 className="text-2xl sm:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-white to-theme-text bg-clip-text text-transparent">
                       Secure Vault
                     </h1>
                     <div className="px-3 py-1.5 bg-gradient-to-r from-green-900/60 to-emerald-900/60 border border-green-700/40 rounded-full self-start">
                       <div className="flex items-center gap-1.5">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                        <span className="text-sm font-medium text-green-300">
+                        {" "}
+                        <div className="w-2 h-2 bg-theme-success rounded-full animate-pulse"></div>
+                        <span className="text-sm font-medium text-theme-success">
                           Protected
                         </span>
                       </div>
                     </div>
                   </div>
-
-                  <p className="text-gray-300 mb-4 text-base sm:text-lg leading-relaxed">
+                  <p className="text-theme-text mb-4 text-base sm:text-lg leading-relaxed">
                     Your private vault protected with military-grade encryption.
-                    Store sensitive files securely with zero-knowledge architecture.
-                  </p>
-
+                    Store sensitive files securely with zero-knowledge
+                    architecture.
+                  </p>{" "}
                   <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm">
                     <div className="flex items-center gap-2 min-w-fit">
-                      <FolderSolidIcon className="h-5 w-5 text-indigo-400" />
+                      <FolderSolidIcon className="h-5 w-5 text-theme-primary" />
                       <span className="font-semibold text-white">
                         {filteredItems.length}
                       </span>
-                      <span className="text-gray-400">files</span>
+                      <span className="text-theme-textSecondary">files</span>
                     </div>
                     <div className="flex items-center gap-2 min-w-fit">
-                      <ArchiveBoxIcon className="h-5 w-5 text-purple-400" />
+                      <ArchiveBoxIcon className="h-5 w-5 text-theme-primary" />
                       <span className="font-semibold text-white">
                         {formatFileSize(
                           filteredItems.reduce(
@@ -586,25 +590,26 @@ export default function VaultPage() {
                           )
                         )}
                       </span>
-                      <span className="text-gray-400">total</span>
-                    </div>
+                      <span className="text-theme-textSecondary">total</span>
+                    </div>{" "}
                     <div className="flex items-center gap-2 min-w-fit">
-                      <ShieldCheckIcon className="h-5 w-5 text-green-400" />
-                      <span className="text-green-300 font-medium">
+                      <ShieldCheckIcon className="h-5 w-5 text-theme-success" />
+                      <span className="text-theme-success font-medium">
                         AES-256 Encrypted
                       </span>
                     </div>
                   </div>
                 </div>
-              </div>              
+              </div>
               <div className="flex flex-col sm:flex-row items-center gap-4">
+                {" "}
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => fileInputRef.current?.click()}
-                  className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold shadow-xl shadow-indigo-500/25 hover:shadow-2xl hover:shadow-indigo-500/40 transition-all duration-300 touch-manipulation"
+                  className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-theme-primary to-theme-primary/80 text-white rounded-2xl font-semibold shadow-xl shadow-theme-primary/25 hover:shadow-2xl hover:shadow-theme-primary/40 transition-all duration-300 touch-manipulation"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-700 to-purple-700 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-theme-primary/80 to-theme-primary/60 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="relative flex items-center justify-center gap-3">
                     <PlusIcon className="h-5 w-5 sm:h-6 sm:w-6" />
                     <span className="text-sm sm:text-base">Upload Files</span>
@@ -613,25 +618,27 @@ export default function VaultPage() {
               </div>
             </div>
           </div>
-        </motion.div>        {/* User-Friendly Search and Filters */}
+        </motion.div>{" "}
+        {/* User-Friendly Search and Filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <Card className="border-0 shadow-xl shadow-black/30 bg-gray-800/80 backdrop-blur-lg rounded-2xl overflow-hidden">
+          {" "}
+          <Card className="border-0 shadow-xl shadow-black/30 bg-theme-card/80 backdrop-blur-lg rounded-2xl overflow-hidden">
             <CardContent className="p-4 sm:p-6">
               <div className="space-y-4">
                 {/* Enhanced Search - Full Width on Mobile */}
                 <div className="w-full relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"></div>
-                  <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-indigo-400 transition-colors duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-theme-primary/20 to-theme-primary/30 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"></div>
+                  <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-theme-textSecondary group-focus-within:text-theme-primary transition-colors duration-300" />
                   <Input
                     type="text"
                     placeholder="Search your files..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-12 h-12 sm:h-14 text-base border-gray-600/50 bg-gray-900/50 backdrop-blur-sm focus:border-indigo-400 focus:ring-indigo-500/30 rounded-xl transition-all duration-300 w-full text-white placeholder-gray-400"
+                    className="pl-12 h-12 sm:h-14 text-base border-theme-border/50 bg-theme-secondary/50 backdrop-blur-sm focus:border-theme-primary focus:ring-theme-primary/30 rounded-xl transition-all duration-300 w-full text-theme-text placeholder-theme-textSecondary"
                   />
                 </div>
 
@@ -639,11 +646,12 @@ export default function VaultPage() {
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   {/* Filter Controls */}
                   <div className="flex flex-col sm:flex-row gap-3 flex-1">
+                    {" "}
                     <div className="relative flex-1 sm:flex-none sm:min-w-[140px]">
                       <select
                         value={filterBy}
                         onChange={(e) => setFilterBy(e.target.value)}
-                        className="appearance-none w-full px-4 py-3 pr-10 border border-gray-600/50 rounded-xl bg-gray-900/70 backdrop-blur-sm text-gray-200 focus:border-indigo-400 focus:ring-indigo-500/30 focus:ring-2 focus:ring-opacity-20 transition-all duration-300 text-sm sm:text-base"
+                        className="appearance-none w-full px-4 py-3 pr-10 border border-theme-border/50 rounded-xl bg-theme-secondary/70 backdrop-blur-sm text-theme-text focus:border-theme-primary focus:ring-theme-primary/30 focus:ring-2 focus:ring-opacity-20 transition-all duration-300 text-sm sm:text-base"
                       >
                         <option value="all">All Files</option>
                         <option value="documents">📄 Documents</option>
@@ -652,43 +660,41 @@ export default function VaultPage() {
                         <option value="audio">🎵 Audio</option>
                         <option value="archives">📦 Archives</option>
                       </select>
-                      <ChevronDownIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                      <ChevronDownIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-theme-textSecondary pointer-events-none" />
                     </div>
-                    
                     <div className="relative flex-1 sm:flex-none sm:min-w-[140px]">
                       <select
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
-                        className="appearance-none w-full px-4 py-3 pr-10 border border-gray-600/50 rounded-xl bg-gray-900/70 backdrop-blur-sm text-gray-200 focus:border-indigo-400 focus:ring-indigo-500/30 focus:ring-2 focus:ring-opacity-20 transition-all duration-300 text-sm sm:text-base"
+                        className="appearance-none w-full px-4 py-3 pr-10 border border-theme-border/50 rounded-xl bg-theme-secondary/70 backdrop-blur-sm text-theme-text focus:border-theme-primary focus:ring-theme-primary/30 focus:ring-2 focus:ring-opacity-20 transition-all duration-300 text-sm sm:text-base"
                       >
                         <option value="name">Sort by Name</option>
                         <option value="date">Sort by Date</option>
                         <option value="size">Sort by Size</option>
                         <option value="type">Sort by Type</option>
                       </select>
-                      <ChevronDownIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                      <ChevronDownIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-theme-textSecondary pointer-events-none" />
                     </div>
-                  </div>
-
+                  </div>{" "}
                   {/* View Mode Toggle - Larger Touch Targets */}
-                  <div className="flex bg-gray-700/70 backdrop-blur-sm rounded-xl p-1 shadow-inner self-center">
+                  <div className="flex bg-theme-border/70 backdrop-blur-sm rounded-xl p-1 shadow-inner self-center">
                     <button
-                      onClick={() => setViewMode('grid')}
+                      onClick={() => setViewMode("grid")}
                       className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 min-w-[70px] justify-center ${
-                        viewMode === 'grid' 
-                          ? 'bg-gray-800 text-indigo-400 shadow-md shadow-black/50' 
-                          : 'text-gray-400 hover:text-gray-200'
+                        viewMode === "grid"
+                          ? "bg-theme-card text-theme-primary shadow-md shadow-black/50"
+                          : "text-theme-textSecondary hover:text-theme-text"
                       }`}
                     >
                       <Squares2X2Icon className="h-4 w-4" />
                       <span className="hidden sm:inline">Grid</span>
                     </button>
                     <button
-                      onClick={() => setViewMode('list')}
+                      onClick={() => setViewMode("list")}
                       className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 min-w-[70px] justify-center ${
-                        viewMode === 'list' 
-                          ? 'bg-gray-800 text-indigo-400 shadow-md shadow-black/50' 
-                          : 'text-gray-400 hover:text-gray-200'
+                        viewMode === "list"
+                          ? "bg-theme-card text-theme-primary shadow-md shadow-black/50"
+                          : "text-theme-textSecondary hover:text-theme-text"
                       }`}
                     >
                       <ListBulletIcon className="h-4 w-4" />
@@ -698,9 +704,8 @@ export default function VaultPage() {
                 </div>
               </div>
             </CardContent>
-          </Card>        
+          </Card>
         </motion.div>
-
         {/* Two Section Layout */}
         <div className="grid lg:grid-cols-5 gap-6 sm:gap-8">
           {/* File Upload Section */}
@@ -715,32 +720,34 @@ export default function VaultPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className={`relative transition-all duration-500 touch-manipulation ${
-                dragActive ? "transform scale-105 rotate-1" : "hover:scale-[1.02]"
+                dragActive
+                  ? "transform scale-105 rotate-1"
+                  : "hover:scale-[1.02]"
               }`}
             >
+              {" "}
               <div
-                className={`absolute inset-0 bg-gradient-to-br from-indigo-400/20 to-purple-400/20 rounded-2xl sm:rounded-3xl blur-xl transition-all duration-500 ${
+                className={`absolute inset-0 bg-gradient-to-br from-theme-primary/20 to-theme-primary/30 rounded-2xl sm:rounded-3xl blur-xl transition-all duration-500 ${
                   dragActive ? "opacity-100 scale-110" : "opacity-0 scale-100"
                 }`}
               ></div>
-
               <Card
                 className={`relative border-2 border-dashed transition-all duration-500 rounded-2xl sm:rounded-3xl overflow-hidden ${
                   dragActive
-                    ? "border-indigo-400 bg-gradient-to-br from-indigo-900/50 to-purple-900/50 shadow-2xl shadow-indigo-500/30"
-                    : "border-gray-600/50 hover:border-indigo-400/50 bg-gray-800/50 backdrop-blur-sm hover:bg-gray-800/70"
+                    ? "border-theme-primary bg-gradient-to-br from-theme-primary/10 to-theme-primary/20 shadow-2xl shadow-theme-primary/30"
+                    : "border-theme-border/50 hover:border-theme-primary/50 bg-theme-card/50 backdrop-blur-sm hover:bg-theme-card/70"
                 }`}
               >
                 <CardHeader className="text-center pb-3">
-                  <CardTitle className="text-lg sm:text-xl font-bold text-white flex items-center justify-center gap-2">
-                    <CloudArrowUpIcon className="h-6 w-6 text-indigo-400" />
+                  <CardTitle className="text-lg sm:text-xl font-bold text-theme-text flex items-center justify-center gap-2">
+                    <CloudArrowUpIcon className="h-6 w-6 text-theme-primary" />
                     File Upload
                   </CardTitle>
-                  <CardDescription className="text-gray-300">
+                  <CardDescription className="text-theme-text">
                     Drag & drop or click to upload
                   </CardDescription>
                 </CardHeader>
-                
+
                 <CardContent className="p-4 sm:p-6 text-center">
                   <motion.div
                     animate={
@@ -751,75 +758,74 @@ export default function VaultPage() {
                     transition={{ duration: 0.3 }}
                     className="mb-4 sm:mb-6"
                   >
+                    {" "}
                     <div
                       className={`mx-auto h-16 w-16 sm:h-20 sm:w-20 rounded-xl sm:rounded-2xl flex items-center justify-center transition-all duration-500 ${
                         dragActive
-                          ? "bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg"
-                          : "bg-gradient-to-br from-gray-700 to-gray-800 text-gray-400 hover:from-indigo-800 hover:to-purple-800 hover:text-indigo-300"
+                          ? "bg-gradient-to-br from-theme-primary to-theme-primary/80 text-white shadow-lg"
+                          : "bg-gradient-to-br from-theme-secondary to-theme-card text-theme-textSecondary hover:from-theme-primary/20 hover:to-theme-primary/30 hover:text-theme-primary"
                       }`}
                     >
                       <CloudArrowUpIcon className="h-8 w-8 sm:h-10 sm:w-10" />
                     </div>
                   </motion.div>
-
                   <h3
                     className={`text-lg sm:text-xl font-bold mb-2 sm:mb-3 transition-colors duration-300 ${
-                      dragActive ? "text-indigo-300" : "text-gray-200"
+                      dragActive ? "text-theme-primary" : "text-theme-text"
                     }`}
                   >
                     {dragActive ? "Drop your files here!" : "Upload Files"}
                   </h3>
-
-                  <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base px-2">
+                  <p className="text-theme-textSecondary mb-4 sm:mb-6 text-sm sm:text-base px-2">
                     Secure your documents with military-grade encryption
                   </p>
-
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => fileInputRef.current?.click()}
-                    className="inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 shadow-lg shadow-indigo-500/25 hover:shadow-xl touch-manipulation min-h-[44px] w-full justify-center"
+                    className="inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-theme-primary to-theme-primary/80 hover:from-theme-primary/80 hover:to-theme-primary/60 text-white rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 shadow-lg shadow-theme-primary/25 hover:shadow-xl touch-manipulation min-h-[44px] w-full justify-center"
                   >
                     <FolderIcon className="h-5 w-5 sm:h-6 sm:w-6" />
                     <span className="text-sm sm:text-base">Choose Files</span>
                   </motion.button>
-
                   <input
                     ref={fileInputRef}
                     type="file"
                     onChange={handleFileSelect}
                     accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif,.mp4,.mov,.zip,.rar,.xlsx,.xls,.ppt,.pptx,.csv,.json,.xml,.mp3,.wav,.avi,.mkv,.webm,.svg,.bmp,.tiff,.psd,.ai,.eps,.rtf,.odt,.ods,.odp"
                     className="hidden"
-                  />
-
-                  <div className="mt-4 sm:mt-6 text-sm text-gray-400 bg-gray-900/50 rounded-xl p-3 sm:p-4">
+                  />{" "}
+                  <div className="mt-4 sm:mt-6 text-sm text-theme-textSecondary bg-theme-secondary/50 rounded-xl p-3 sm:p-4">
                     <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                      {" "}
                       <span className="flex items-center gap-1">
-                        <DocumentSolidIcon className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
+                        <DocumentSolidIcon className="h-3 w-3 sm:h-4 sm:w-4 text-theme-primary" />
                         <span className="hidden sm:inline">Documents</span>
                         <span className="sm:hidden">Docs</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <PhotoSolidIcon className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
+                        <PhotoSolidIcon className="h-3 w-3 sm:h-4 sm:w-4 text-theme-accent" />
                         <span className="hidden sm:inline">Images</span>
                         <span className="sm:hidden">Pics</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <VideoSolidIcon className="h-3 w-3 sm:h-4 sm:w-4 text-red-400" />
+                        <VideoSolidIcon className="h-3 w-3 sm:h-4 sm:w-4 text-theme-error" />
                         <span className="hidden sm:inline">Videos</span>
                         <span className="sm:hidden">Vids</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <AudioSolidIcon className="h-3 w-3 sm:h-4 sm:w-4 text-green-400" />
+                        <AudioSolidIcon className="h-3 w-3 sm:h-4 sm:w-4 text-theme-success" />
                         Audio
                       </span>
                       <span className="flex items-center gap-1">
-                        <ArchiveSolidIcon className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-400" />
+                        <ArchiveSolidIcon className="h-3 w-3 sm:h-4 sm:w-4 text-theme-warning" />
                         <span className="hidden sm:inline">Archives</span>
                         <span className="sm:hidden">Zips</span>
                       </span>
                     </div>
-                    <p className="mt-2 text-xs text-center">Maximum file size: 10MB</p>
+                    <p className="mt-2 text-xs text-center">
+                      Maximum file size: 10MB
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -833,38 +839,39 @@ export default function VaultPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <Card className="border-0 shadow-xl shadow-black/30 bg-gray-800/80 backdrop-blur-lg rounded-2xl sm:rounded-3xl overflow-hidden">
+              {" "}
+              <Card className="border-0 shadow-xl shadow-black/30 bg-theme-card/80 backdrop-blur-lg rounded-2xl sm:rounded-3xl overflow-hidden">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg sm:text-xl font-bold text-white flex items-center justify-between">
+                  <CardTitle className="text-lg sm:text-xl font-bold text-theme-text flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <FolderSolidIcon className="h-6 w-6 text-indigo-400" />
+                      <FolderSolidIcon className="h-6 w-6 text-theme-primary" />
                       Your Files
-                      <span className="px-2 py-1 bg-indigo-600/20 text-indigo-300 rounded-lg text-sm font-medium">
+                      <span className="px-2 py-1 bg-theme-primary/20 text-theme-primary rounded-lg text-sm font-medium">
                         {filteredItems.length}
                       </span>
                     </div>
                   </CardTitle>
-                  <CardDescription className="text-gray-300">
+                  <CardDescription className="text-theme-text">
                     Manage and access your encrypted files
                   </CardDescription>
                 </CardHeader>
-                
+
                 <CardContent className="p-4 sm:p-6">
                   {loading ? (
                     <div className="py-16 text-center">
                       <div className="mb-6">
                         <div className="relative mx-auto w-16 h-16">
-                          <div className="absolute inset-0 bg-gradient-to-br from-indigo-400 to-purple-600 rounded-full animate-spin opacity-20"></div>
-                          <div className="absolute inset-2 bg-gradient-to-br from-indigo-500 to-purple-700 rounded-full animate-ping"></div>
-                          <div className="absolute inset-4 bg-gray-800 rounded-full flex items-center justify-center">
-                            <LockClosedIcon className="h-6 w-6 text-indigo-400" />
+                          <div className="absolute inset-0 bg-gradient-to-br from-theme-primary/40 to-theme-primary/60 rounded-full animate-spin opacity-20"></div>
+                          <div className="absolute inset-2 bg-gradient-to-br from-theme-primary/50 to-theme-primary/70 rounded-full animate-ping"></div>
+                          <div className="absolute inset-4 bg-theme-card rounded-full flex items-center justify-center">
+                            <LockClosedIcon className="h-6 w-6 text-theme-primary" />
                           </div>
                         </div>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-200 mb-2">
+                      <h3 className="text-xl font-bold text-theme-text mb-2">
                         Decrypting Your Files
                       </h3>
-                      <p className="text-gray-400">
+                      <p className="text-theme-textSecondary">
                         Please wait while we securely access your vault...
                       </p>
                     </div>
@@ -872,18 +879,18 @@ export default function VaultPage() {
                     <div className="py-16 text-center">
                       <div className="mb-8">
                         <div className="relative mx-auto w-24 h-24">
-                          <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-800 rounded-full"></div>
-                          <div className="absolute inset-6 bg-gray-800 rounded-full flex items-center justify-center">
-                            <FolderIcon className="h-8 w-8 text-gray-500" />
+                          <div className="absolute inset-0 bg-gradient-to-br from-theme-secondary to-theme-card rounded-full"></div>
+                          <div className="absolute inset-6 bg-theme-card rounded-full flex items-center justify-center">
+                            <FolderIcon className="h-8 w-8 text-theme-textSecondary" />
                           </div>
                         </div>
                       </div>
-                      <h3 className="text-2xl font-bold text-gray-200 mb-3">
+                      <h3 className="text-2xl font-bold text-theme-text mb-3">
                         {vaultItems.length === 0
                           ? "Your vault awaits"
                           : "No matching files"}
                       </h3>
-                      <p className="text-gray-400 mb-8 text-lg max-w-md mx-auto">
+                      <p className="text-theme-textSecondary mb-8 text-lg max-w-md mx-auto">
                         {vaultItems.length === 0
                           ? "Start building your secure digital fortress by uploading your first file."
                           : "Try adjusting your search terms or filters to find what you're looking for."}
@@ -893,7 +900,7 @@ export default function VaultPage() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => fileInputRef.current?.click()}
-                          className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold shadow-xl shadow-indigo-500/25 hover:shadow-2xl hover:shadow-indigo-500/40 transition-all duration-300"
+                          className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-theme-primary to-theme-primary/80 text-white rounded-2xl font-semibold shadow-xl shadow-theme-primary/25 hover:shadow-2xl hover:shadow-theme-primary/40 transition-all duration-300"
                         >
                           <CloudArrowUpIcon className="h-6 w-6" />
                           Upload Your First File
@@ -908,200 +915,208 @@ export default function VaultPage() {
                           : "space-y-3 sm:space-y-4"
                       }
                     >
-              <AnimatePresence>
-                {filteredItems.map((item, index) => (
-                  <motion.div
-                    key={item._id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.4, delay: index * 0.05 }}                    className={
-                      viewMode === "grid"
-                        ? "group relative bg-gray-800/80 backdrop-blur-lg rounded-xl sm:rounded-2xl border border-gray-700/40 shadow-lg shadow-black/50 hover:shadow-2xl hover:shadow-indigo-500/30 transition-all duration-500 overflow-hidden touch-manipulation"
-                        : "group bg-gray-800/80 backdrop-blur-lg rounded-xl sm:rounded-2xl border border-gray-700/40 shadow-lg hover:shadow-xl shadow-black/30 hover:shadow-indigo-500/20 transition-all duration-300 p-4 sm:p-6 touch-manipulation"
-                    }
-                  >
-                    {viewMode === "grid" ? (
-                      <>
-                        {/* Enhanced Grid File Preview */}                        <div className="relative aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center overflow-hidden">
-                          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20"></div>
+                      <AnimatePresence>
+                        {filteredItems.map((item, index) => (
+                          <motion.div
+                            key={item._id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 0.4, delay: index * 0.05 }}
+                            className={
+                              viewMode === "grid"
+                                ? "group relative bg-theme-card/80 backdrop-blur-lg rounded-xl sm:rounded-2xl border border-theme-border/40 shadow-lg shadow-black/50 hover:shadow-2xl hover:shadow-theme-primary/30 transition-all duration-500 overflow-hidden touch-manipulation"
+                                : "group bg-theme-card/80 backdrop-blur-lg rounded-xl sm:rounded-2xl border border-theme-border/40 shadow-lg hover:shadow-xl shadow-black/30 hover:shadow-theme-primary/20 transition-all duration-300 p-4 sm:p-6 touch-manipulation"
+                            }
+                          >
+                            {viewMode === "grid" ? (
+                              <>
+                                {/* Enhanced Grid File Preview */}{" "}
+                                <div className="relative aspect-square bg-gradient-to-br from-theme-secondary to-theme-card flex items-center justify-center overflow-hidden">
+                                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20"></div>
 
-                          <div className="relative">
-                            {getFileIcon(
-                              item.originalName,
-                              item.mimeType,
-                              "h-16 w-16 sm:h-20 sm:w-20"
-                            )}
+                                  <div className="relative">
+                                    {getFileIcon(
+                                      item.originalName,
+                                      item.mimeType,
+                                      "h-16 w-16 sm:h-20 sm:w-20"
+                                    )}
+                                    {/* File Extension Badge */}{" "}
+                                    <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 bg-theme-secondary rounded-full shadow-lg flex items-center justify-center border-2 border-theme-border">
+                                      <span className="text-xs font-bold text-theme-text">
+                                        {item.originalName
+                                          .split(".")
+                                          .pop()
+                                          ?.toUpperCase()
+                                          .slice(0, 3)}
+                                      </span>
+                                    </div>
+                                  </div>
 
-                            {/* File Extension Badge */}                            <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 bg-gray-900 rounded-full shadow-lg flex items-center justify-center border-2 border-gray-700">
-                              <span className="text-xs font-bold text-gray-200">
-                                {item.originalName
-                                  .split(".")
-                                  .pop()
-                                  ?.toUpperCase()
-                                  .slice(0, 3)}
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Enhanced Touch-Friendly Actions Overlay */}
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                            <div className="flex items-center gap-2 sm:gap-3">
-                              <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => handlePreview(item)}
-                                className="p-2.5 sm:p-3 bg-gray-800/95 backdrop-blur-sm rounded-full text-gray-200 hover:bg-gray-700 hover:text-indigo-400 transition-all shadow-lg hover:shadow-xl touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
-                              >
-                                <EyeIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                              </motion.button>
-                              <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => handleDownload(item)}
-                                className="p-2.5 sm:p-3 bg-gray-800/95 backdrop-blur-sm rounded-full text-gray-200 hover:bg-gray-700 hover:text-blue-400 transition-all shadow-lg hover:shadow-xl touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
-                              >
-                                <ArrowDownTrayIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                              </motion.button>
-                              <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => handleDelete(item)}
-                                className="p-2.5 sm:p-3 bg-gray-800/95 backdrop-blur-sm rounded-full text-gray-200 hover:bg-red-900/80 hover:text-red-300 transition-all shadow-lg hover:shadow-xl touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
-                              >
-                                <TrashIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                              </motion.button>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Enhanced Grid File Info */}
-                        <div className="p-3 sm:p-5">
-                          <div className="mb-2 sm:mb-3">
-                            <h3 className="font-semibold text-gray-200 truncate group-hover:text-indigo-400 transition-colors mb-1 text-sm sm:text-base">
-                              {item.originalName}
-                            </h3>                            <div className="flex items-center justify-between text-xs sm:text-sm">
-                              <span className="text-gray-400 font-medium">
-                                {formatFileSize(item.size)}
-                              </span>
-                              <span className="text-gray-500">
-                                {formatDate(item.uploadedAt || item.createdAt)}
-                              </span>
-                            </div>
-                          </div>
-
-                          {item.description && (
-                            <p className="text-xs sm:text-sm text-gray-400 line-clamp-2 mb-2 sm:mb-3">
-                              {item.description}
-                            </p>
-                          )}
-
-                          {item.tags && item.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-1 sm:gap-1.5">
-                              {item.tags.slice(0, 2).map((tag) => (
-                                <span
-                                  key={tag}
-                                  className="inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-xs font-medium bg-indigo-900/60 text-indigo-300 border border-indigo-700/40"
-                                >
-                                  {tag}
-                                </span>
-                              ))}
-                              {item.tags.length > 2 && (
-                                <span className="text-xs text-gray-500 px-1">
-                                  +{item.tags.length - 2}
-                                </span>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </>
-                    ) : (
-                      /* Enhanced List View */
-                      <div className="flex items-center gap-4 sm:gap-6">                        <div className="flex-shrink-0">
-                          <div className="relative">
-                            {getFileIcon(
-                              item.originalName,
-                              item.mimeType,
-                              "h-10 w-10 sm:h-12 sm:w-12"
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between mb-2">
-                            <div className="flex-1 min-w-0 pr-2">
-                              <h3 className="font-semibold text-gray-200 truncate group-hover:text-indigo-400 transition-colors text-base sm:text-lg">
-                                {item.originalName}
-                              </h3>
-                              <div className="flex items-center gap-3 sm:gap-6 text-xs sm:text-sm mt-1">                                <span className="text-gray-400 font-medium">
-                                  {formatFileSize(item.size)}
-                                </span>
-                                <span className="text-gray-500">
-                                  {formatDate(item.uploadedAt || item.createdAt)}
-                                </span>
-                                {item.description && (
-                                  <span className="text-gray-400 truncate max-w-xs hidden sm:inline">
-                                    {item.description}
-                                  </span>
-                                )}
+                                  {/* Enhanced Touch-Friendly Actions Overlay */}
+                                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                    <div className="flex items-center gap-2 sm:gap-3">
+                                      {" "}
+                                      <motion.button
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={() => handlePreview(item)}
+                                        className="p-2.5 sm:p-3 bg-theme-card/95 backdrop-blur-sm rounded-full text-theme-text hover:bg-theme-secondary hover:text-theme-primary transition-all shadow-lg hover:shadow-xl touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+                                      >
+                                        <EyeIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                                      </motion.button>
+                                      <motion.button
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={() => handleDownload(item)}
+                                        className="p-2.5 sm:p-3 bg-theme-card/95 backdrop-blur-sm rounded-full text-theme-text hover:bg-theme-secondary hover:text-blue-400 transition-all shadow-lg hover:shadow-xl touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+                                      >
+                                        <ArrowDownTrayIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                                      </motion.button>
+                                      <motion.button
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={() => handleDelete(item)}
+                                        className="p-2.5 sm:p-3 bg-theme-card/95 backdrop-blur-sm rounded-full text-theme-text hover:bg-red-900/80 hover:text-red-300 transition-all shadow-lg hover:shadow-xl touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+                                      >
+                                        <TrashIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                                      </motion.button>
+                                    </div>
+                                  </div>
+                                </div>
+                                {/* Enhanced Grid File Info */}
+                                <div className="p-3 sm:p-5">
+                                  <div className="mb-2 sm:mb-3">
+                                    {" "}
+                                    <h3 className="font-semibold text-theme-text truncate group-hover:text-theme-primary transition-colors mb-1 text-sm sm:text-base">
+                                      {item.originalName}
+                                    </h3>{" "}
+                                    <div className="flex items-center justify-between text-xs sm:text-sm">
+                                      <span className="text-theme-textSecondary font-medium">
+                                        {formatFileSize(item.size)}
+                                      </span>
+                                      <span className="text-theme-textSecondary/70">
+                                        {formatDate(
+                                          item.uploadedAt || item.createdAt
+                                        )}
+                                      </span>
+                                    </div>
+                                  </div>{" "}
+                                  {item.description && (
+                                    <p className="text-xs sm:text-sm text-theme-textSecondary line-clamp-2 mb-2 sm:mb-3">
+                                      {item.description}
+                                    </p>
+                                  )}
+                                  {item.tags && item.tags.length > 0 && (
+                                    <div className="flex flex-wrap gap-1 sm:gap-1.5">
+                                      {item.tags.slice(0, 2).map((tag) => (
+                                        <span
+                                          key={tag}
+                                          className="inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-xs font-medium bg-theme-primary/20 text-theme-primary border border-theme-primary/40"
+                                        >
+                                          {tag}
+                                        </span>
+                                      ))}
+                                      {item.tags.length > 2 && (
+                                        <span className="text-xs text-theme-textSecondary/70 px-1">
+                                          +{item.tags.length - 2}
+                                        </span>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              </>
+                            ) : (
+                              /* Enhanced List View */
+                              <div className="flex items-center gap-4 sm:gap-6">
+                                {" "}
+                                <div className="flex-shrink-0">
+                                  <div className="relative">
+                                    {getFileIcon(
+                                      item.originalName,
+                                      item.mimeType,
+                                      "h-10 w-10 sm:h-12 sm:w-12"
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start justify-between mb-2">
+                                    <div className="flex-1 min-w-0 pr-2">
+                                      {" "}
+                                      <h3 className="font-semibold text-theme-text truncate group-hover:text-theme-primary transition-colors text-base sm:text-lg">
+                                        {item.originalName}
+                                      </h3>
+                                      <div className="flex items-center gap-3 sm:gap-6 text-xs sm:text-sm mt-1">
+                                        {" "}
+                                        <span className="text-theme-textSecondary font-medium">
+                                          {formatFileSize(item.size)}
+                                        </span>
+                                        <span className="text-theme-textSecondary/70">
+                                          {formatDate(
+                                            item.uploadedAt || item.createdAt
+                                          )}
+                                        </span>
+                                        {item.description && (
+                                          <span className="text-theme-textSecondary truncate max-w-xs hidden sm:inline">
+                                            {item.description}
+                                          </span>
+                                        )}
+                                      </div>
+                                    </div>{" "}
+                                    {/* Enhanced Touch-Friendly Action Buttons */}
+                                    <div className="flex items-center gap-1 sm:gap-2 ml-2">
+                                      <button
+                                        onClick={() => handlePreview(item)}
+                                        className="p-2 sm:p-2.5 text-theme-textSecondary hover:text-theme-primary hover:bg-theme-primary/10 rounded-lg transition-all touch-manipulation min-h-[40px] min-w-[40px] sm:min-h-[44px] sm:min-w-[44px] flex items-center justify-center"
+                                      >
+                                        <EyeIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                                      </button>
+                                      <button
+                                        onClick={() => handleDownload(item)}
+                                        className="p-2 sm:p-2.5 text-theme-textSecondary hover:text-theme-primary hover:bg-theme-primary/10 rounded-lg transition-all touch-manipulation min-h-[40px] min-w-[40px] sm:min-h-[44px] sm:min-w-[44px] flex items-center justify-center"
+                                      >
+                                        <ArrowDownTrayIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                                      </button>
+                                      <button
+                                        onClick={() => handleDelete(item)}
+                                        className="p-2 sm:p-2.5 text-theme-textSecondary hover:text-theme-error hover:bg-theme-error/10 rounded-lg transition-all touch-manipulation min-h-[40px] min-w-[40px] sm:min-h-[44px] sm:min-w-[44px] flex items-center justify-center"
+                                      >
+                                        <TrashIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                                      </button>
+                                    </div>
+                                  </div>{" "}
+                                  {/* Mobile-Friendly Description */}
+                                  {item.description && (
+                                    <p className="text-xs sm:text-sm text-theme-textSecondary truncate mb-2 sm:hidden">
+                                      {item.description}
+                                    </p>
+                                  )}
+                                  {item.tags && item.tags.length > 0 && (
+                                    <div className="flex flex-wrap gap-1 sm:gap-1.5">
+                                      {item.tags.map((tag) => (
+                                        <span
+                                          key={tag}
+                                          className="inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-xs font-medium bg-theme-secondary text-theme-text border border-theme-border/20"
+                                        >
+                                          {tag}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  )}{" "}
+                                </div>
                               </div>
-                            </div>
-                            
-                            {/* Enhanced Touch-Friendly Action Buttons */}
-                            <div className="flex items-center gap-1 sm:gap-2 ml-2">
-                              <button
-                                onClick={() => handlePreview(item)}
-                                className="p-2 sm:p-2.5 text-gray-400 hover:text-indigo-400 hover:bg-indigo-900/50 rounded-lg transition-all touch-manipulation min-h-[40px] min-w-[40px] sm:min-h-[44px] sm:min-w-[44px] flex items-center justify-center"
-                              >
-                                <EyeIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                              </button>
-                              <button
-                                onClick={() => handleDownload(item)}
-                                className="p-2 sm:p-2.5 text-gray-400 hover:text-blue-400 hover:bg-blue-900/50 rounded-lg transition-all touch-manipulation min-h-[40px] min-w-[40px] sm:min-h-[44px] sm:min-w-[44px] flex items-center justify-center"
-                              >
-                                <ArrowDownTrayIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                              </button>
-                              <button
-                                onClick={() => handleDelete(item)}
-                                className="p-2 sm:p-2.5 text-gray-400 hover:text-red-400 hover:bg-red-900/50 rounded-lg transition-all touch-manipulation min-h-[40px] min-w-[40px] sm:min-h-[44px] sm:min-w-[44px] flex items-center justify-center"
-                              >
-                                <TrashIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                              </button>
-                            </div>
-                          </div>
-
-                          {/* Mobile-Friendly Description */}
-                          {item.description && (
-                            <p className="text-xs sm:text-sm text-gray-600 truncate mb-2 sm:hidden">
-                              {item.description}
-                            </p>
-                          )}
-
-                          {item.tags && item.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-1 sm:gap-1.5">
-                              {item.tags.map((tag) => (
-                                <span
-                                  key={tag}
-                                  className="inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200"
-                                >
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-                          )}                        </div>
-                      </div>
-                    )}
-                  </motion.div>
-                ))}
-              </AnimatePresence>            </div>
-          )}
+                            )}
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>{" "}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </motion.div>
           </div>
         </div>
       </main>
-
       {/* Enhanced Mobile-Friendly Password Modal */}
       <AnimatePresence>
         {showPasswordModal && (
@@ -1110,48 +1125,49 @@ export default function VaultPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4"
-          >            <motion.div
+          >
+            {" "}
+            <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="relative bg-gray-800 rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md overflow-hidden max-h-[90vh] overflow-y-auto border border-gray-700"
+              className="relative bg-theme-secondary rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md overflow-hidden max-h-[90vh] overflow-y-auto border border-theme-border/20"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-black"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-theme-secondary via-theme-background to-theme-secondary"></div>
 
               <div className="relative p-4 sm:p-6 lg:p-8">
                 <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                  <div className="p-2 sm:p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl sm:rounded-2xl shadow-lg">
+                  <div className="p-2 sm:p-3 bg-gradient-to-br from-theme-primary to-theme-primary/80 rounded-xl sm:rounded-2xl shadow-lg">
                     <LockClosedIcon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                   </div>
                   <div>
                     <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
                       {hasVaultPassword ? "Vault Access" : "Create Vault"}
                     </h3>
-                    <p className="text-gray-300 text-xs sm:text-sm">
+                    <p className="text-theme-textSecondary text-xs sm:text-sm">
                       {hasVaultPassword
                         ? "Enter your password"
                         : "Set a secure password"}
                     </p>
                   </div>
                 </div>
-
                 <div className="mb-4 sm:mb-6">
-                  <p className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">
+                  <p className="text-theme-textSecondary mb-3 sm:mb-4 text-sm sm:text-base">
                     {hasVaultPassword
                       ? "Please enter your vault password to continue with this action."
                       : "Create a strong password to encrypt your vault. This password cannot be recovered if lost."}
                   </p>
 
                   {!hasVaultPassword && (
-                    <div className="mb-3 sm:mb-4 p-3 sm:p-4 bg-gradient-to-r from-amber-900/40 to-orange-900/40 border border-amber-700/50 rounded-xl">
+                    <div className="mb-3 sm:mb-4 p-3 sm:p-4 bg-gradient-to-r from-theme-warning/40 to-theme-warning/20 border border-theme-warning/50 rounded-xl">
                       <div className="flex items-start gap-2 sm:gap-3">
-                        <ExclamationTriangleIcon className="h-5 w-5 sm:h-6 sm:w-6 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <ExclamationTriangleIcon className="h-5 w-5 sm:h-6 sm:w-6 text-theme-warning mt-0.5 flex-shrink-0" />
                         <div className="text-xs sm:text-sm">
-                          <p className="font-semibold text-amber-200 mb-1">
+                          <p className="font-semibold text-theme-warning mb-1">
                             Security Notice
                           </p>
-                          <p className="text-amber-300">
+                          <p className="text-theme-warning/80">
                             This password encrypts your files with
                             military-grade security. Store it safely - we cannot
                             recover it if forgotten.
@@ -1162,35 +1178,37 @@ export default function VaultPage() {
                   )}
 
                   <div className="relative">
+                    {" "}
                     <Input
                       type="password"
                       placeholder="Enter your vault password"
                       value={vaultPassword}
                       onChange={(e) => setVaultPassword(e.target.value)}
-                      className="h-11 sm:h-12 lg:h-14 text-sm sm:text-base border-gray-600 focus:border-indigo-400 focus:ring-indigo-500/30 bg-gray-900/50 backdrop-blur-sm touch-manipulation text-white placeholder-gray-400"
+                      className="h-11 sm:h-12 lg:h-14 text-sm sm:text-base border-theme-border/30 focus:border-theme-primary focus:ring-theme-primary/30 bg-theme-secondary/50 backdrop-blur-sm touch-manipulation text-theme-text placeholder-theme-textSecondary"
                       onKeyPress={(e) =>
                         e.key === "Enter" && executeCurrentAction()
                       }
                     />
                   </div>
                 </div>
-
                 <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                  {" "}
                   <Button
                     onClick={() => {
-                      setShowPasswordModal(false);                      setVaultPassword("");
+                      setShowPasswordModal(false);
+                      setVaultPassword("");
                       setSelectedFile(null);
                       setCurrentAction(null);
                     }}
                     variant="outline"
-                    className="flex-1 h-11 sm:h-12 lg:h-14 rounded-xl border-gray-600 hover:border-gray-500 bg-gray-800 text-gray-200 hover:bg-gray-700 text-sm sm:text-base touch-manipulation"
+                    className="flex-1 h-11 sm:h-12 lg:h-14 rounded-xl border-theme-border hover:border-theme-border/70 bg-theme-secondary text-theme-text hover:bg-theme-secondary/70 text-sm sm:text-base touch-manipulation"
                   >
                     Cancel
                   </Button>
                   <Button
                     onClick={executeCurrentAction}
                     disabled={!vaultPassword || loading}
-                    className="flex-1 h-11 sm:h-12 lg:h-14 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl shadow-lg shadow-indigo-500/25 text-sm sm:text-base touch-manipulation"
+                    className="flex-1 h-11 sm:h-12 lg:h-14 bg-gradient-to-r from-theme-primary to-theme-primary/80 hover:from-theme-primary/90 hover:to-theme-primary/70 text-white rounded-xl shadow-lg shadow-theme-primary/25 text-sm sm:text-base touch-manipulation"
                   >
                     {loading ? (
                       <div className="flex items-center gap-2">
@@ -1201,8 +1219,9 @@ export default function VaultPage() {
                       "Continue"
                     )}
                   </Button>
-                </div>                {selectedFile && (
-                  <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gray-900/70 rounded-xl border border-gray-700">
+                </div>{" "}
+                {selectedFile && (
+                  <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-theme-secondary/70 rounded-xl border border-theme-border/20">
                     <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                       {getFileIcon(
                         selectedFile.name,
@@ -1210,10 +1229,10 @@ export default function VaultPage() {
                         "h-6 w-6 sm:h-8 sm:w-8"
                       )}
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-gray-200 truncate text-sm sm:text-base">
+                        <p className="font-medium text-theme-text truncate text-sm sm:text-base">
                           {selectedFile.name}
                         </p>
-                        <p className="text-xs sm:text-sm text-gray-400">
+                        <p className="text-xs sm:text-sm text-theme-textSecondary">
                           {formatFileSize(selectedFile.size)}
                         </p>
                       </div>
@@ -1224,12 +1243,13 @@ export default function VaultPage() {
                         placeholder="Description (optional)"
                         value={uploadDescription}
                         onChange={(e) => setUploadDescription(e.target.value)}
-                        className="bg-gray-800 border-gray-600 h-10 sm:h-11 text-sm sm:text-base touch-manipulation text-gray-200 placeholder-gray-400 focus:border-indigo-400"
-                      />                      <Input
+                        className="bg-theme-secondary border-theme-border/30 h-10 sm:h-11 text-sm sm:text-base touch-manipulation text-theme-text placeholder-theme-textSecondary focus:border-theme-primary"
+                      />{" "}
+                      <Input
                         placeholder="Tags (comma-separated, optional)"
                         value={uploadTags}
                         onChange={(e) => setUploadTags(e.target.value)}
-                        className="bg-gray-800 border-gray-600 h-10 sm:h-11 text-sm sm:text-base touch-manipulation text-gray-200 placeholder-gray-400 focus:border-indigo-400"
+                        className="bg-theme-secondary border-theme-border/30 h-10 sm:h-11 text-sm sm:text-base touch-manipulation text-theme-text placeholder-theme-textSecondary focus:border-theme-primary"
                       />
                     </div>
                   </div>
@@ -1238,7 +1258,8 @@ export default function VaultPage() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>      {/* Enhanced Mobile-Friendly Preview Modal */}
+      </AnimatePresence>{" "}
+      {/* Enhanced Mobile-Friendly Preview Modal */}
       <AnimatePresence>
         {showPreviewModal && (
           <motion.div
@@ -1246,17 +1267,19 @@ export default function VaultPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4"
-          >            <motion.div
+          >
+            {" "}
+            <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="relative bg-gray-800 rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-4xl lg:max-w-6xl h-[85vh] sm:h-5/6 flex flex-col overflow-hidden border border-gray-700"
+              className="relative bg-theme-secondary rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-4xl lg:max-w-6xl h-[85vh] sm:h-5/6 flex flex-col overflow-hidden border border-theme-border/20"
             >
               {/* Enhanced Modal Header */}
-              <div className="flex items-center justify-between p-3 sm:p-4 lg:p-6 border-b border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900 shrink-0">
+              <div className="flex items-center justify-between p-3 sm:p-4 lg:p-6 border-b border-theme-border/20 bg-gradient-to-r from-theme-secondary to-theme-background shrink-0">
                 <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 min-w-0 flex-1">
-                  <div className="p-1.5 sm:p-2 bg-gray-700 rounded-lg sm:rounded-xl shadow-sm shrink-0">
+                  <div className="p-1.5 sm:p-2 bg-theme-background rounded-lg sm:rounded-xl shadow-sm shrink-0">
                     {getFileIcon(
                       previewItem?.originalName,
                       previewItem?.mimeType,
@@ -1267,16 +1290,21 @@ export default function VaultPage() {
                     <h3 className="text-sm sm:text-lg lg:text-xl font-bold text-white truncate">
                       {previewItem?.originalName}
                     </h3>
-                    <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 text-xs sm:text-sm text-gray-300 overflow-hidden">
-                      <span className="shrink-0">{formatFileSize(previewItem?.size)}</span>
+                    <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 text-xs sm:text-sm text-theme-textSecondary overflow-hidden">
+                      <span className="shrink-0">
+                        {formatFileSize(previewItem?.size)}
+                      </span>
                       <span className="hidden sm:inline">•</span>
-                      <span className="hidden sm:inline truncate">{previewItem?.mimeType}</span>
+                      <span className="hidden sm:inline truncate">
+                        {previewItem?.mimeType}
+                      </span>
                       <span className="hidden lg:inline">•</span>
                       <span className="hidden lg:inline shrink-0">
                         {formatDate(
                           previewItem?.uploadedAt || previewItem?.createdAt
                         )}
-                      </span>                    </div>
+                      </span>{" "}
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-1 sm:gap-2 lg:gap-3 shrink-0">
@@ -1285,7 +1313,7 @@ export default function VaultPage() {
                     variant="outline"
                     size="sm"
                     disabled={loading}
-                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 lg:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm touch-manipulation min-h-[36px] sm:min-h-[40px] bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600"
+                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 lg:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm touch-manipulation min-h-[36px] sm:min-h-[40px] bg-theme-background border-theme-border/30 text-theme-text hover:bg-theme-border/10"
                   >
                     <ArrowDownTrayIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                     <span className="hidden sm:inline">Download</span>
@@ -1294,80 +1322,103 @@ export default function VaultPage() {
                     onClick={closePreview}
                     variant="outline"
                     size="sm"
-                    className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl touch-manipulation min-h-[36px] min-w-[36px] sm:min-h-[40px] sm:min-w-[40px] flex items-center justify-center bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600"
+                    className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl touch-manipulation min-h-[36px] min-w-[36px] sm:min-h-[40px] sm:min-w-[40px] flex items-center justify-center bg-theme-background border-theme-border/30 text-theme-text hover:bg-theme-border/10"
                   >
                     <XMarkIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </div>
-              </div>              {/* Enhanced Modal Content */}
+              </div>{" "}
+              {/* Enhanced Modal Content */}
               <div className="flex-1 overflow-hidden">
                 {previewLoading ? (
-                  <div className="flex items-center justify-center h-full bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+                  <div className="flex items-center justify-center h-full bg-gradient-to-br from-theme-secondary to-theme-background p-4">
                     <div className="text-center">
-                      <div className="relative mx-auto w-12 h-12 sm:w-16 sm:h-16 mb-3 sm:mb-4">                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-400 to-purple-600 rounded-full animate-spin opacity-20"></div>
-                        <div className="absolute inset-1 sm:inset-2 bg-gradient-to-br from-indigo-500 to-purple-700 rounded-full animate-ping"></div>
-                        <div className="absolute inset-2 sm:inset-4 bg-gray-800 rounded-full flex items-center justify-center">
-                          <EyeIcon className="h-4 w-4 sm:h-6 sm:w-6 text-indigo-400" />
+                      <div className="relative mx-auto w-12 h-12 sm:w-16 sm:h-16 mb-3 sm:mb-4">
+                        {" "}
+                        <div className="absolute inset-0 bg-gradient-to-br from-theme-primary to-theme-primary/80 rounded-full animate-spin opacity-20"></div>
+                        <div className="absolute inset-1 sm:inset-2 bg-gradient-to-br from-theme-primary to-theme-primary/60 rounded-full animate-ping"></div>
+                        <div className="absolute inset-2 sm:inset-4 bg-theme-secondary rounded-full flex items-center justify-center">
+                          <EyeIcon className="h-4 w-4 sm:h-6 sm:w-6 text-theme-primary" />
                         </div>
                       </div>
                       <h4 className="text-base sm:text-lg font-semibold text-white mb-1 sm:mb-2">
                         Decrypting Preview
                       </h4>
-                      <p className="text-gray-300 text-sm sm:text-base">
+                      <p className="text-theme-textSecondary text-sm sm:text-base">
                         Preparing your file for secure viewing...
                       </p>
                     </div>
                   </div>
                 ) : previewContent ? (
-                  <div className="h-full p-3 sm:p-4 lg:p-6 bg-gradient-to-br from-gray-700 to-gray-800">
+                  <div className="h-full p-3 sm:p-4 lg:p-6 bg-gradient-to-br from-theme-background to-theme-secondary">
                     {previewContent.type === "text" ? (
-                      <div className="bg-gray-900 rounded-xl sm:rounded-2xl shadow-inner h-full p-3 sm:p-4 lg:p-6 overflow-auto border border-gray-700">
-                        <pre className="whitespace-pre-wrap text-xs sm:text-sm font-mono text-gray-200 leading-relaxed">
+                      <div className="bg-theme-background rounded-xl sm:rounded-2xl shadow-inner h-full p-3 sm:p-4 lg:p-6 overflow-auto border border-theme-border/20">
+                        <pre className="whitespace-pre-wrap text-xs sm:text-sm font-mono text-theme-text leading-relaxed">
                           {previewContent.content}
                         </pre>
                       </div>
-                    ) : previewContent.type === "binary" ? (                      <div className="flex items-center justify-center h-full">                        {previewContent.mimeType?.startsWith("image/") ? (
+                    ) : previewContent.type === "binary" ? (
+                      <div className="flex items-center justify-center h-full">
+                        {" "}
+                        {previewContent.mimeType?.startsWith("image/") ? (
                           <div className="w-full h-full flex flex-col">
                             {/* Image Controls */}
                             <div className="flex justify-center mb-2 sm:mb-4">
-                              <div className="flex items-center gap-2 bg-gray-800/90 backdrop-blur-sm rounded-lg p-2 border border-gray-600">
+                              <div className="flex items-center gap-2 bg-theme-secondary/90 backdrop-blur-sm rounded-lg p-2 border border-theme-border/30">
                                 <button
                                   onClick={() => {
-                                    const img = document.querySelector('.preview-image');
-                                    const currentScale = parseFloat(img.style.transform?.match(/scale\(([^)]+)\)/)?.[1] || '1');
-                                    const newScale = Math.min(currentScale * 1.2, 3);
+                                    const img =
+                                      document.querySelector(".preview-image");
+                                    const currentScale = parseFloat(
+                                      img.style.transform?.match(
+                                        /scale\(([^)]+)\)/
+                                      )?.[1] || "1"
+                                    );
+                                    const newScale = Math.min(
+                                      currentScale * 1.2,
+                                      3
+                                    );
                                     img.style.transform = `scale(${newScale})`;
                                   }}
-                                  className="p-1.5 hover:bg-gray-700 rounded text-gray-300 hover:text-white transition-colors"
+                                  className="p-1.5 hover:bg-theme-border/30 rounded text-theme-textSecondary hover:text-white transition-colors"
                                   title="Zoom In"
                                 >
                                   <PlusIcon className="h-4 w-4" />
                                 </button>
                                 <button
                                   onClick={() => {
-                                    const img = document.querySelector('.preview-image');
-                                    const currentScale = parseFloat(img.style.transform?.match(/scale\(([^)]+)\)/)?.[1] || '1');
-                                    const newScale = Math.max(currentScale / 1.2, 0.3);
+                                    const img =
+                                      document.querySelector(".preview-image");
+                                    const currentScale = parseFloat(
+                                      img.style.transform?.match(
+                                        /scale\(([^)]+)\)/
+                                      )?.[1] || "1"
+                                    );
+                                    const newScale = Math.max(
+                                      currentScale / 1.2,
+                                      0.3
+                                    );
                                     img.style.transform = `scale(${newScale})`;
                                   }}
-                                  className="p-1.5 hover:bg-gray-700 rounded text-gray-300 hover:text-white transition-colors"
+                                  className="p-1.5 hover:bg-theme-border/30 rounded text-theme-textSecondary hover:text-white transition-colors"
                                   title="Zoom Out"
                                 >
                                   <XMarkIcon className="h-4 w-4" />
                                 </button>
                                 <button
                                   onClick={() => {
-                                    const img = document.querySelector('.preview-image');
-                                    img.style.transform = 'scale(1)';
+                                    const img =
+                                      document.querySelector(".preview-image");
+                                    img.style.transform = "scale(1)";
                                   }}
-                                  className="px-2 py-1.5 hover:bg-gray-700 rounded text-gray-300 hover:text-white transition-colors text-xs"
+                                  className="px-2 py-1.5 hover:bg-theme-border/30 rounded text-theme-textSecondary hover:text-white transition-colors text-xs"
                                   title="Reset Zoom"
                                 >
                                   Reset
                                 </button>
                               </div>
                             </div>
-                              {/* Image Container */}
+                            {/* Image Container */}
                             <div className="flex-1 flex items-center justify-center p-2 sm:p-4 overflow-auto">
                               <div className="relative w-full h-full flex items-center justify-center">
                                 <Image
@@ -1377,29 +1428,33 @@ export default function VaultPage() {
                                   height={600}
                                   className="preview-image max-w-full max-h-full object-contain rounded-lg sm:rounded-xl shadow-2xl cursor-grab active:cursor-grabbing transition-transform duration-200"
                                   style={{
-                                    maxWidth: '100%',
-                                    maxHeight: '100%',
-                                    width: 'auto',
-                                    height: 'auto',
-                                    transformOrigin: 'center center'
+                                    maxWidth: "100%",
+                                    maxHeight: "100%",
+                                    width: "auto",
+                                    height: "auto",
+                                    transformOrigin: "center center",
                                   }}
                                   draggable={false}
                                   onLoad={(e) => {
                                     // Ensure image fits properly in container
                                     const img = e.target;
                                     const container = img.parentElement;
-                                    const containerRect = container.getBoundingClientRect();
-                                    const imgAspectRatio = img.naturalWidth / img.naturalHeight;
-                                    const containerAspectRatio = containerRect.width / containerRect.height;
-                                    
+                                    const containerRect =
+                                      container.getBoundingClientRect();
+                                    const imgAspectRatio =
+                                      img.naturalWidth / img.naturalHeight;
+                                    const containerAspectRatio =
+                                      containerRect.width /
+                                      containerRect.height;
+
                                     if (imgAspectRatio > containerAspectRatio) {
                                       // Image is wider than container
-                                      img.style.width = '100%';
-                                      img.style.height = 'auto';
+                                      img.style.width = "100%";
+                                      img.style.height = "auto";
                                     } else {
                                       // Image is taller than container
-                                      img.style.width = 'auto';
-                                      img.style.height = '100%';
+                                      img.style.width = "auto";
+                                      img.style.height = "100%";
                                     }
                                   }}
                                   onMouseDown={(e) => {
@@ -1407,56 +1462,87 @@ export default function VaultPage() {
                                     const img = e.target;
                                     const startX = e.clientX;
                                     const startY = e.clientY;
-                                    const currentTransform = img.style.transform || '';
-                                    const translateMatch = currentTransform.match(/translate\(([^)]+)\)/);
-                                    const startTranslateX = translateMatch ? parseFloat(translateMatch[1].split(',')[0]) : 0;
-                                    const startTranslateY = translateMatch ? parseFloat(translateMatch[1].split(',')[1]) : 0;
-                                    
+                                    const currentTransform =
+                                      img.style.transform || "";
+                                    const translateMatch =
+                                      currentTransform.match(
+                                        /translate\(([^)]+)\)/
+                                      );
+                                    const startTranslateX = translateMatch
+                                      ? parseFloat(
+                                          translateMatch[1].split(",")[0]
+                                        )
+                                      : 0;
+                                    const startTranslateY = translateMatch
+                                      ? parseFloat(
+                                          translateMatch[1].split(",")[1]
+                                        )
+                                      : 0;
+
                                     const handleMouseMove = (e) => {
                                       const deltaX = e.clientX - startX;
                                       const deltaY = e.clientY - startY;
-                                      const newTranslateX = startTranslateX + deltaX;
-                                      const newTranslateY = startTranslateY + deltaY;
-                                      
-                                      const scaleMatch = currentTransform.match(/scale\(([^)]+)\)/);
-                                      const scale = scaleMatch ? scaleMatch[1] : '1';
-                                      
+                                      const newTranslateX =
+                                        startTranslateX + deltaX;
+                                      const newTranslateY =
+                                        startTranslateY + deltaY;
+
+                                      const scaleMatch =
+                                        currentTransform.match(
+                                          /scale\(([^)]+)\)/
+                                        );
+                                      const scale = scaleMatch
+                                        ? scaleMatch[1]
+                                        : "1";
+
                                       img.style.transform = `translate(${newTranslateX}px, ${newTranslateY}px) scale(${scale})`;
                                     };
-                                    
+
                                     const handleMouseUp = () => {
-                                      document.removeEventListener('mousemove', handleMouseMove);
-                                      document.removeEventListener('mouseup', handleMouseUp);
+                                      document.removeEventListener(
+                                        "mousemove",
+                                        handleMouseMove
+                                      );
+                                      document.removeEventListener(
+                                        "mouseup",
+                                        handleMouseUp
+                                      );
                                     };
-                                    
-                                    document.addEventListener('mousemove', handleMouseMove);
-                                    document.addEventListener('mouseup', handleMouseUp);
+
+                                    document.addEventListener(
+                                      "mousemove",
+                                      handleMouseMove
+                                    );
+                                    document.addEventListener(
+                                      "mouseup",
+                                      handleMouseUp
+                                    );
                                   }}
                                 />
                               </div>
-                            </div>
-                            
+                            </div>{" "}
                             {/* Image Info */}
                             <div className="mt-2 text-center">
-                              <p className="text-xs text-gray-400">
+                              <p className="text-xs text-theme-textSecondary">
                                 Click and drag to pan • Use controls to zoom
                               </p>
                             </div>
                           </div>
                         ) : previewContent.mimeType?.startsWith("video/") ? (
-                          <div className="bg-black rounded-xl sm:rounded-2xl shadow-lg overflow-hidden w-full max-w-full border border-gray-700">
+                          <div className="bg-black rounded-xl sm:rounded-2xl shadow-lg overflow-hidden w-full max-w-full border border-theme-border/20">
                             <video
                               src={previewContent.url}
                               controls
                               className="max-w-full max-h-full w-full"
                             >
                               Your browser does not support the video tag.
-                            </video>                          </div>
+                            </video>{" "}
+                          </div>
                         ) : previewContent.mimeType?.startsWith("audio/") ? (
-                          <div className="text-center bg-gray-800 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 shadow-lg max-w-lg mx-auto border border-gray-700">
+                          <div className="text-center bg-theme-secondary rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 shadow-lg max-w-lg mx-auto border border-theme-border/20">
                             <div className="mb-4 sm:mb-6">
-                              <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-green-800 to-emerald-800 rounded-full flex items-center justify-center">
-                                <AudioSolidIcon className="h-8 w-8 sm:h-10 sm:w-10 text-green-400" />
+                              <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-theme-success/80 to-theme-success rounded-full flex items-center justify-center">
+                                <AudioSolidIcon className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
                               </div>
                             </div>
                             <h4 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4 truncate">
@@ -1471,7 +1557,7 @@ export default function VaultPage() {
                             </audio>
                           </div>
                         ) : previewContent.mimeType?.includes("pdf") ? (
-                          <div className="w-full h-full bg-gray-900 rounded-xl sm:rounded-2xl shadow-lg overflow-hidden border border-gray-700">
+                          <div className="w-full h-full bg-theme-background rounded-xl sm:rounded-2xl shadow-lg overflow-hidden border border-theme-border/20">
                             <iframe
                               src={previewContent.url}
                               className="w-full h-full border-0"
@@ -1479,21 +1565,21 @@ export default function VaultPage() {
                             />
                           </div>
                         ) : (
-                          <div className="text-center bg-gray-800 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 shadow-lg max-w-lg mx-auto border border-gray-700">
+                          <div className="text-center bg-theme-secondary rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 shadow-lg max-w-lg mx-auto border border-theme-border/20">
                             <div className="mb-4 sm:mb-6">
-                              <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-gray-700 to-gray-800 rounded-full flex items-center justify-center">
-                                <DocumentSolidIcon className="h-8 w-8 sm:h-10 sm:w-10 text-gray-400" />
+                              <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-theme-border to-theme-border/60 rounded-full flex items-center justify-center">
+                                <DocumentSolidIcon className="h-8 w-8 sm:h-10 sm:w-10 text-theme-textSecondary" />
                               </div>
                             </div>
                             <h4 className="text-base sm:text-lg font-semibold text-white mb-2">
                               Preview not available
                             </h4>
-                            <p className="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">
+                            <p className="text-theme-textSecondary mb-4 sm:mb-6 text-sm sm:text-base">
                               This file type cannot be previewed directly.
                             </p>
                             <Button
                               onClick={() => handleDownload(previewItem)}
-                              className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base touch-manipulation"
+                              className="bg-gradient-to-r from-theme-primary to-theme-primary/80 hover:from-theme-primary/90 hover:to-theme-primary/70 text-white px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base touch-manipulation"
                             >
                               <ArrowDownTrayIcon className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
                               Download to view
@@ -1503,16 +1589,16 @@ export default function VaultPage() {
                       </div>
                     ) : (
                       <div className="flex items-center justify-center h-full p-4">
-                        <div className="text-center bg-gray-800 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 shadow-lg max-w-lg mx-auto border border-gray-700">
+                        <div className="text-center bg-theme-secondary rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 shadow-lg max-w-lg mx-auto border border-theme-border/20">
                           <div className="mb-4 sm:mb-6">
-                            <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-red-800 to-red-900 rounded-full flex items-center justify-center">
-                              <ExclamationTriangleIcon className="h-8 w-8 sm:h-10 sm:w-10 text-red-400" />
+                            <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-theme-error/80 to-theme-error rounded-full flex items-center justify-center">
+                              <ExclamationTriangleIcon className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
                             </div>
                           </div>
                           <h4 className="text-base sm:text-lg font-semibold text-white mb-2">
                             Preview failed
                           </h4>
-                          <p className="text-gray-300 text-sm sm:text-base">
+                          <p className="text-theme-textSecondary text-sm sm:text-base">
                             Unable to preview this file.
                           </p>
                         </div>

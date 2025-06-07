@@ -171,28 +171,26 @@ export default function ProfilePage() {
     setNewEmail('')
     setSavedChanges(false)
   }
-
   if (!isLoaded) {
     return (
       <>
         <Header />
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-          <div className="animate-spin h-8 w-8 border-2 border-blue-600 border-t-transparent rounded-full" />
+        <div className="min-h-screen bg-theme-background flex items-center justify-center">
+          <div className="animate-spin h-8 w-8 border-2 border-theme-primary border-t-transparent rounded-full" />
         </div>
       </>
     )
   }
 
   return (
-    <>
-      <Header />
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <>      <Header />
+      <div className="min-h-screen bg-theme-background py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+            <h1 className="text-3xl font-bold text-theme-text">
               Profile & Settings
             </h1>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-theme-textSecondary">
               Manage your account, privacy settings, and security preferences.
             </p>
           </div>
@@ -206,44 +204,42 @@ export default function ProfilePage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <div className="grid md:grid-cols-2 gap-6">                <div>
+                  <label className="block text-sm font-medium text-theme-text mb-2">
                     Full Name
                   </label>
                   <Input
                     value={user?.fullName || ''}
                     disabled
-                    className="bg-gray-100 dark:bg-gray-800"
+                    className="bg-theme-inputBackground"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-theme-text mb-2">
                     Primary Email
                   </label>
                   <Input
                     value={user?.primaryEmailAddress?.emailAddress || ''}
                     disabled
-                    className="bg-gray-100 dark:bg-gray-800"
+                    className="bg-theme-inputBackground"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-theme-text mb-2">
                     Member Since
                   </label>
                   <Input
                     value={new Date(user?.createdAt).toLocaleDateString() || ''}
                     disabled
-                    className="bg-gray-100 dark:bg-gray-800"
+                    className="bg-theme-inputBackground"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-theme-text mb-2">
                     Account Status
-                  </label>
-                  <div className="flex items-center space-x-2">
-                    <CheckIcon className="h-4 w-4 text-green-600" />
-                    <span className="text-sm text-green-600 font-medium">Active</span>
+                  </label>                <div className="flex items-center space-x-2">
+                    <CheckIcon className="h-4 w-4 text-theme-success" />
+                    <span className="text-sm text-theme-success font-medium">Active</span>
                   </div>
                 </div>
               </div>
@@ -262,25 +258,23 @@ export default function ProfilePage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {monitoredEmails.map((emailData) => (
-                  <div key={emailData.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <div className="space-y-4">                {monitoredEmails.map((emailData) => (
+                  <div key={emailData.id} className="flex items-center justify-between p-3 bg-theme-surface rounded-lg">
                     <div>
-                      <div className="font-medium text-gray-900 dark:text-gray-100">
+                      <div className="font-medium text-theme-text">
                         {emailData.email}
                         {emailData.isPrimary && (
-                          <span className="ml-2 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
+                          <span className="ml-2 text-xs bg-theme-primary/10 text-theme-primary px-2 py-1 rounded">
                             Primary
                           </span>
                         )}
-                      </div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400">
+                      </div>                      <div className="text-sm text-theme-textSecondary">
                         {emailData.breachCount > 0 ? (
-                          <span className="text-red-600 dark:text-red-400">
+                          <span className="text-theme-error">
                             Found in {emailData.breachCount} breach(es)
                           </span>
                         ) : (
-                          <span className="text-green-600 dark:text-green-400">
+                          <span className="text-theme-success">
                             No breaches found
                           </span>
                         )}
@@ -335,25 +329,23 @@ export default function ProfilePage() {
                 Notification Settings
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
+            <CardContent>              <div className="space-y-4">
                 {Object.entries(settings.notifications).map(([key, value]) => (
                   <div key={key} className="flex items-center justify-between">
                     <div>
-                      <h4 className="font-medium text-gray-900 dark:text-gray-100 capitalize">
+                      <h4 className="font-medium text-theme-text capitalize">
                         {key.replace(/([A-Z])/g, ' $1').trim()}
                       </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-theme-textSecondary">
                         {key === 'breachAlerts' && 'Get notified when your emails are found in new breaches'}
                         {key === 'weeklyReports' && 'Receive weekly security reports and summaries'}
                         {key === 'securityTips' && 'Get tips and recommendations for better security'}
                         {key === 'productUpdates' && 'Stay informed about new features and updates'}
                       </p>
                     </div>
-                    <button
-                      onClick={() => updateSetting('notifications', key, !value)}
+                    <button                      onClick={() => updateSetting('notifications', key, !value)}
                       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                        value ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'
+                        value ? 'bg-theme-primary' : 'bg-theme-inputBackground'
                       }`}
                     >
                       <span
@@ -376,24 +368,22 @@ export default function ProfilePage() {
                 Privacy Settings
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
+            <CardContent>              <div className="space-y-4">
                 {Object.entries(settings.privacy).map(([key, value]) => (
                   <div key={key} className="flex items-center justify-between">
                     <div>
-                      <h4 className="font-medium text-gray-900 dark:text-gray-100 capitalize">
+                      <h4 className="font-medium text-theme-text capitalize">
                         {key.replace(/([A-Z])/g, ' $1').trim()}
                       </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-theme-textSecondary">
                         {key === 'dataCollection' && 'Allow collection of usage data for service improvement'}
                         {key === 'analytics' && 'Enable analytics to help us understand user behavior'}
                         {key === 'thirdPartySharing' && 'Allow sharing anonymized data with security partners'}
                       </p>
-                    </div>
-                    <button
+                    </div>                    <button
                       onClick={() => updateSetting('privacy', key, !value)}
                       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                        value ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'
+                        value ? 'bg-theme-primary' : 'bg-theme-inputBackground'
                       }`}
                     >
                       <span
@@ -417,20 +407,19 @@ export default function ProfilePage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
+              <div className="space-y-6">                <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                    <h4 className="font-medium text-theme-text">
                       Two-Factor Authentication
                     </h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-theme-textSecondary">
                       Add an extra layer of security to your account
                     </p>
                   </div>
                   <button
                     onClick={() => updateSetting('security', 'twoFactorEnabled', !settings.security.twoFactorEnabled)}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      settings.security.twoFactorEnabled ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'
+                      settings.security.twoFactorEnabled ? 'bg-theme-primary' : 'bg-theme-inputBackground'
                     }`}
                   >
                     <span
@@ -439,16 +428,14 @@ export default function ProfilePage() {
                       }`}
                     />
                   </button>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                </div>                <div>
+                  <label className="block text-sm font-medium text-theme-text mb-2">
                     Session Timeout (minutes)
                   </label>
                   <select
                     value={settings.security.sessionTimeout}
                     onChange={(e) => updateSetting('security', 'sessionTimeout', parseInt(e.target.value))}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                    className="w-full px-3 py-2 border border-theme-border rounded-md bg-theme-inputBackground text-theme-text"
                   >
                     <option value={15}>15 minutes</option>
                     <option value={30}>30 minutes</option>
@@ -456,21 +443,19 @@ export default function ProfilePage() {
                     <option value={120}>2 hours</option>
                     <option value={0}>Never</option>
                   </select>
-                </div>
-
-                <div className="flex items-center justify-between">
+                </div>                <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                    <h4 className="font-medium text-theme-text">
                       Password Change Reminders
                     </h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-theme-textSecondary">
                       Get reminded to change your password periodically
                     </p>
                   </div>
                   <button
                     onClick={() => updateSetting('security', 'passwordChangeReminder', !settings.security.passwordChangeReminder)}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      settings.security.passwordChangeReminder ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'
+                      settings.security.passwordChangeReminder ? 'bg-theme-primary' : 'bg-theme-inputBackground'
                     }`}
                   >
                     <span
@@ -512,12 +497,11 @@ export default function ProfilePage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+              <div className="space-y-4">                <div>
+                  <h4 className="font-medium text-theme-text mb-2">
                     Delete Account
                   </h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                  <p className="text-sm text-theme-textSecondary mb-4">
                     Once you delete your account, there is no going back. Please be certain.
                   </p>
                   <Button variant="outline" className="text-red-600 border-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">

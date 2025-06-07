@@ -262,10 +262,9 @@ What would you like to know about your security data?`,
 
     if (availableTypes.length <= 1) return null;
 
-    return (
-      <div className="flex flex-wrap items-center gap-2 p-3 bg-muted/30 rounded-lg mt-2">
+    return (      <div className="flex flex-wrap items-center gap-2 p-3 bg-theme-secondary/30 rounded-lg mt-2">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-muted-foreground">Chart Type:</span>
+          <span className="text-xs font-medium text-theme-text-secondary">Chart Type:</span>
           {availableTypes.map((type) => (
             <Button
               key={type}
@@ -285,12 +284,11 @@ What would you like to know about your security data?`,
         </div>
         
         {/* Time filter for timeline data */}
-        {currentData.some(item => !isNaN(parseInt(item.name))) && (
-          <div className="flex items-center gap-2 ml-4">
-            <CalendarIcon className="h-3 w-3 text-muted-foreground" />
-            <span className="text-xs font-medium text-muted-foreground">Filter:</span>
+        {currentData.some(item => !isNaN(parseInt(item.name))) && (          <div className="flex items-center gap-2 ml-4">
+            <CalendarIcon className="h-3 w-3 text-theme-text-secondary" />
+            <span className="text-xs font-medium text-theme-text-secondary">Filter:</span>
             <select
-              className="text-xs border rounded px-2 py-1 bg-background"
+              className="text-xs border border-theme-border/20 rounded px-2 py-1 bg-theme-secondary text-theme-text"
               onChange={(e) => {
                 const range = e.target.value.split('-');
                 if (range.length === 2) {
@@ -338,9 +336,8 @@ What would you like to know about your security data?`,
     const minValue = Math.min(...processedData.map(item => item.value || 0));
 
     // Enhanced legend component
-    const renderLegend = () => (
-      <div className="mt-4 p-3 bg-muted/30 rounded-lg">
-        <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+    const renderLegend = () => (      <div className="mt-4 p-3 bg-theme-secondary/30 rounded-lg">
+        <h4 className="text-sm font-semibold mb-2 flex items-center gap-2 text-theme-text">
           <Info className="h-4 w-4" />
           Data Legend & Summary
         </h4>
@@ -348,30 +345,29 @@ What would you like to know about your security data?`,
           {processedData.map((entry, index) => (
             <div key={index} className="flex items-center space-x-2">
               <div 
-                className="w-3 h-3 rounded-full border" 
+                className="w-3 h-3 rounded-full border border-theme-border/20" 
                 style={{ backgroundColor: COLORS[index % COLORS.length] }}
               />
-              <span className="text-xs text-muted-foreground truncate">
+              <span className="text-xs text-theme-text-secondary truncate">
                 {entry.name || entry.subject}: {entry.value} 
                 {totalValue > 0 && `(${((entry.value / totalValue) * 100).toFixed(1)}%)`}
               </span>
             </div>
           ))}
-        </div>
-        <div className="text-xs text-muted-foreground space-y-1">
+        </div>        <div className="text-xs text-theme-text-secondary space-y-1">
           <div className="flex justify-between">
             <span>Total:</span>
-            <span className="font-medium">{totalValue.toLocaleString()}</span>
+            <span className="font-medium text-theme-text">{totalValue.toLocaleString()}</span>
           </div>
           <div className="flex justify-between">
             <span>Average:</span>
-            <span className="font-medium">{averageValue.toFixed(1)}</span>
+            <span className="font-medium text-theme-text">{averageValue.toFixed(1)}</span>
           </div>
           <div className="flex justify-between">
             <span>Range:</span>
-            <span className="font-medium">{minValue} - {maxValue}</span>
+            <span className="font-medium text-theme-text">{minValue} - {maxValue}</span>
           </div>
-          <div className="pt-1 border-t">
+          <div className="pt-1 border-t border-theme-border/20">
             <span className="text-xs">Source: Breach monitoring analysis • {processedData.length} data points</span>
           </div>
         </div>
@@ -387,9 +383,8 @@ What would you like to know about your security data?`,
               <CardHeader className="items-center pb-0">
                 <CardTitle className="text-sm font-medium">
                   {title || "Security Breach Distribution"}
-                </CardTitle>
-                {description && (
-                  <p className="text-xs text-muted-foreground text-center">
+                </CardTitle>                {description && (
+                  <p className="text-xs text-theme-text-secondary text-center">
                     {description}
                   </p>
                 )}
@@ -846,15 +841,14 @@ What would you like to know about your security data?`,
                 </tr>
               </thead>
               <tbody className="bg-background divide-y divide-border">
-                {rows.map((row, rowIndex) => (
-                  <tr
+                {rows.map((row, rowIndex) => (                  <tr
                     key={rowIndex}
-                    className="hover:bg-muted/30 transition-colors"
+                    className="hover:bg-theme-secondary/30 transition-colors"
                   >
                     {row.map((cell, cellIndex) => (
                       <td
                         key={cellIndex}
-                        className="px-4 py-3 text-sm text-foreground break-words max-w-xs"
+                        className="px-4 py-3 text-sm text-theme-text break-words max-w-xs"
                       >
                         <div className="truncate" title={cell}>
                           {cell}
@@ -878,13 +872,12 @@ What would you like to know about your security data?`,
   };
 
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-6xl h-[90vh] flex flex-col bg-white dark:bg-gray-900">
-        <CardHeader className="flex flex-row items-center justify-between border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
-          <CardTitle className="flex items-center text-lg">
-            <ChatBubbleLeftRightIcon className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400" />
+      <Card className="w-full max-w-6xl h-[90vh] flex flex-col bg-theme-background">
+        <CardHeader className="flex flex-row items-center justify-between border-b border-theme-border/20 flex-shrink-0">
+          <CardTitle className="flex items-center text-lg text-theme-text">
+            <ChatBubbleLeftRightIcon className="h-5 w-5 mr-2 text-theme-primary" />
             AI Security Analyst
           </CardTitle>
           <Button
@@ -904,12 +897,11 @@ What would you like to know about your security data?`,
               <div
                 key={index}
                 className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
-              >
-                <div
+              >                <div
                   className={`max-w-[70%] p-4 rounded-lg break-words ${
                     message.role === "user"
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      ? "bg-theme-primary text-white"
+                      : "bg-theme-secondary text-theme-text"
                   }`}
                 >
                   <div className="whitespace-pre-wrap break-words">
@@ -934,19 +926,17 @@ What would you like to know about your security data?`,
                   </div>
                 </div>
               </div>
-            ))}
-
-            {isLoading && (
+            ))}            {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+                <div className="bg-theme-secondary p-4 rounded-lg">
                   <div className="animate-pulse flex space-x-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-theme-text-secondary rounded-full animate-bounce"></div>
                     <div
-                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                      className="w-2 h-2 bg-theme-text-secondary rounded-full animate-bounce"
                       style={{ animationDelay: "0.1s" }}
                     ></div>
                     <div
-                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                      className="w-2 h-2 bg-theme-text-secondary rounded-full animate-bounce"
                       style={{ animationDelay: "0.2s" }}
                     ></div>
                   </div>
@@ -955,10 +945,8 @@ What would you like to know about your security data?`,
             )}
 
             <div ref={messagesEndRef} />
-          </div>
-
-          {/* Quick Action Buttons */}
-          <div className="border-t border-gray-200 dark:border-gray-700 p-4 flex-shrink-0 bg-white dark:bg-gray-900">
+          </div>          {/* Quick Action Buttons */}
+          <div className="border-t border-theme-border/20 p-4 flex-shrink-0 bg-theme-background">
             <div className="flex flex-wrap gap-2 mb-4">
               <Button
                 variant="outline"

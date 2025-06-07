@@ -11,24 +11,35 @@ import {
   ShieldCheckIcon,
   Bars3Icon,
   XMarkIcon,
+  PaintBrushIcon,
+  SunIcon,
+  MoonIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useTheme } from "@/components/ThemeProvider";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  return (
-    <header className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
-      {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 via-transparent to-indigo-50/50 dark:from-blue-900/10 dark:via-transparent dark:to-indigo-900/10" />
+  const { currentTheme, setTheme, predefinedThemes } = useTheme();
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+  const toggleTheme = () => {
+    // Quick toggle between dark and light themes
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+  };
+
+  return (
+    <header className="bg-theme-background/95 backdrop-blur-sm shadow-sm border-b border-theme-border sticky top-0 z-50">
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-theme-primary via-transparent to-theme-accent" />{" "}
+      <div className="relative max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+        <div className="flex justify-between items-center h-14 sm:h-16">
           {" "}
           {/* Logo */}
           <motion.div
-            className="flex items-center"
+            className="flex items-center flex-shrink-0"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
           >
@@ -36,20 +47,21 @@ export default function Header() {
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.6 }}
             >
-              <ShieldCheckIcon className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+              <ShieldCheckIcon className="h-6 w-6 sm:h-8 sm:w-8 text-theme-primary" />
             </motion.div>
-            <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
+            <span className="ml-1 sm:ml-2 text-lg sm:text-xl font-bold text-theme-text">
               <Link
                 href="/"
-                className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                className="hover:text-theme-primary transition-colors duration-200"
               >
-                PrivacyGuard
+                <span className="hidden xs:inline">PrivacyGuard</span>
+                <span className="xs:hidden">PG</span>
               </Link>
             </span>
           </motion.div>{" "}
           {/* Desktop Navigation */}
           <SignedOut>
-            <nav className="hidden md:flex space-x-1">
+            <nav className="lg:flex space-x-1 flex w-2/3 gap-4 justify-around items-center">
               {[
                 { href: "#features", text: "Features" },
                 { href: "#testimonials", text: "Testimonials" },
@@ -59,7 +71,7 @@ export default function Header() {
                 <motion.a
                   key={item.href}
                   href={item.href}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="text-theme-text-secondary hover:text-theme-primary px-2 lg:px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-theme-secondary"
                   whileHover={{ scale: 1.02, y: -1 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -69,21 +81,23 @@ export default function Header() {
             </nav>
           </SignedOut>{" "}
           <SignedIn>
-            <nav className="md:flex space-x-1 flex items-center w-full justify-around gap-8">
+            {/* Desktop Navigation - Responsive Grid */}
+            <nav className="xl:flex space-x-1 flex w-2/3 gap-4 justify-around items-center">
               {[
                 { href: "/dashboard", text: "Dashboard" },
-                { href: "/breach-monitor", text: "Breach Monitor" },
-                { href: "/password-checker", text: "Password Checker" },
-                { href: "/fake-data", text: "Fake Data" },
-                { href: "/temp-email", text: "Temp Email" },
+                { href: "/breach-monitor", text: "Monitor" },
+                { href: "/password-checker", text: "Password" },
+                { href: "/fake-data", text: "Data" },
+                { href: "/temp-email", text: "Email" },
                 { href: "/vault", text: "Vault" },
-                { href: "/privacy-news", text: "Privacy News" },
+                { href: "/privacy-news", text: "News" },
                 { href: "/profile", text: "Profile" },
+                { href: "/theme-settings", text: "Theme" },
               ].map((item) => (
                 <motion.div key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-white dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    className="text-theme-text hover:text-theme-primary px-2 py-2 text-xs xl:text-sm font-medium rounded-lg transition-all duration-200 hover:bg-theme-secondary"
                   >
                     <motion.span
                       whileHover={{ scale: 1.02, y: -1 }}
@@ -96,19 +110,46 @@ export default function Header() {
                 </motion.div>
               ))}
             </nav>
+
+            {/* Tablet Navigation - Compact */}
+            <nav className="hidden lg:flex xl:hidden space-x-1">
+              {[
+                { href: "/dashboard", text: "Dashboard", icon: "🏠" },
+                { href: "/breach-monitor", text: "Monitor", icon: "🛡️" },
+                { href: "/vault", text: "Vault", icon: "🔐" },
+                { href: "/profile", text: "Profile", icon: "👤" },
+              ].map((item) => (
+                <motion.div key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="flex items-center text-theme-text hover:text-theme-primary px-2 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-theme-secondary"
+                    title={item.text}
+                  >
+                    <motion.span
+                      whileHover={{ scale: 1.02, y: -1 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="block"
+                    >
+                      <span className="mr-1">{item.icon}</span>
+                      <span className="hidden lg:inline">{item.text}</span>
+                    </motion.span>
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
           </SignedIn>{" "}
           {/* Auth Buttons */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-1 sm:space-x-3">
             <SignedOut>
-              <SignInButton mode="modal" >
+              <SignInButton mode="modal">
                 <motion.button
-                  className="relative text-white dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 group"
+                  className="relative text-theme-text hover:text-theme-primary px-2 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 hover:bg-theme-secondary group"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <span className="relative z-10">Sign In</span>
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg opacity-0 group-hover:opacity-100"
+                    className="absolute inset-0 bg-theme-primary/10 rounded-lg opacity-0 group-hover:opacity-100"
                     initial={{ opacity: 0 }}
                     whileHover={{ opacity: 1 }}
                     transition={{ duration: 0.2 }}
@@ -117,7 +158,7 @@ export default function Header() {
               </SignInButton>
               <SignUpButton mode="modal">
                 <motion.button
-                  className="relative bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2 rounded-lg text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+                  className="relative btn-primary px-3 sm:px-6 py-1 sm:py-2 rounded-lg text-xs sm:text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
                   whileHover={{ scale: 1.02, y: -1 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -133,13 +174,13 @@ export default function Header() {
 
                   {/* Glow effect */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-blue-400/50 to-indigo-400/50 rounded-lg blur-lg opacity-0 group-hover:opacity-75"
+                    className="absolute inset-0 bg-theme-primary/50 rounded-lg blur-lg opacity-0 group-hover:opacity-75"
                     initial={{ opacity: 0 }}
                     whileHover={{ opacity: 0.75 }}
                     transition={{ duration: 0.3 }}
                   />
                 </motion.button>
-              </SignUpButton>
+              </SignUpButton>{" "}
             </SignedOut>
             <SignedIn>
               <motion.div
@@ -150,22 +191,22 @@ export default function Header() {
                   appearance={{
                     elements: {
                       avatarBox:
-                        "h-9 w-9 ring-2 ring-blue-500/20 hover:ring-blue-500/40 transition-all duration-200",
+                        "h-7 w-7 sm:h-9 sm:w-9 ring-2 ring-theme-primary/20 hover:ring-theme-primary/40 transition-all duration-200",
                       userButtonPopoverCard:
-                        "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl",
+                        "bg-theme-background border border-theme-border shadow-xl",
                       userButtonPopoverActionButton:
-                        "hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300",
-                      userButtonPopoverActionButtonText:
-                        "text-gray-700 dark:text-gray-300",
+                        "hover:bg-theme-secondary text-theme-text",
+                      userButtonPopoverActionButtonText: "text-theme-text",
                       userButtonPopoverFooter: "hidden",
                     },
                   }}
                 />
               </motion.div>
-            </SignedIn>{" "}
+            </SignedIn>
+
             {/* Mobile menu button */}
             <motion.button
-              className="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              className="lg:hidden xl:hidden p-1 sm:p-2 rounded-lg text-theme-text-secondary hover:bg-theme-secondary transition-colors duration-200"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -175,9 +216,9 @@ export default function Header() {
                 transition={{ duration: 0.3 }}
               >
                 {mobileMenuOpen ? (
-                  <XMarkIcon className="h-6 w-6" />
+                  <XMarkIcon className="h-5 w-5 sm:h-6 sm:w-6" />
                 ) : (
-                  <Bars3Icon className="h-6 w-6" />
+                  <Bars3Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                 )}
               </motion.div>
             </motion.button>
@@ -186,7 +227,7 @@ export default function Header() {
         {/* Mobile Navigation */}
         <SignedOut>
           <motion.div
-            className={mobileMenuOpen ? "md:hidden block" : "md:hidden hidden"}
+            className={mobileMenuOpen ? "lg:hidden block" : "lg:hidden hidden"}
             initial={{ opacity: 0, height: 0 }}
             animate={{
               opacity: mobileMenuOpen ? 1 : 0,
@@ -194,31 +235,37 @@ export default function Header() {
             }}
             transition={{ duration: 0.3 }}
           >
-            <div className="pt-2 pb-3 space-y-1 bg-gray-50 dark:bg-gray-800/50 rounded-lg mx-4 mb-4">
+            <div className="pt-2 pb-3 space-y-1 bg-theme-secondary/50 rounded-lg mx-2 sm:mx-4 mb-4">
               {[
-                { href: "#features", text: "Features" },
-                { href: "#testimonials", text: "Testimonials" },
-                { href: "#pricing", text: "Pricing" },
-                { href: "#faq", text: "FAQ" },
+                { href: "#features", text: "Features", icon: "✨" },
+                { href: "#testimonials", text: "Testimonials", icon: "💬" },
+                { href: "#pricing", text: "Pricing", icon: "💰" },
+                { href: "#faq", text: "FAQ", icon: "❓" },
               ].map((item, index) => (
                 <motion.a
                   key={item.href}
                   href={item.href}
-                  className="block px-4 py-3 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
+                  className="flex items-center px-3 sm:px-4 py-3 text-base font-medium text-theme-text-secondary hover:text-theme-primary hover:bg-theme-background rounded-lg transition-all duration-200"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ x: 5 }}
+                  onClick={() => setMobileMenuOpen(false)}
                 >
+                  <span className="mr-3 text-lg">{item.icon}</span>
                   {item.text}
                 </motion.a>
               ))}
             </div>
           </motion.div>
-        </SignedOut>{" "}
+        </SignedOut>
         <SignedIn>
           <motion.div
-            className={mobileMenuOpen ? "md:hidden block" : "md:hidden hidden"}
+            className={
+              mobileMenuOpen
+                ? "lg:hidden xl:hidden block"
+                : "lg:hidden xl:hidden hidden"
+            }
             initial={{ opacity: 0, height: 0 }}
             animate={{
               opacity: mobileMenuOpen ? 1 : 0,
@@ -226,42 +273,48 @@ export default function Header() {
             }}
             transition={{ duration: 0.3 }}
           >
-            <div className="pt-2 pb-3 space-y-1 bg-gray-50 dark:bg-gray-800/50 rounded-lg mx-4 mb-4">
+            <div className="pt-2 pb-3 space-y-1 bg-theme-secondary/50 rounded-lg mx-2 sm:mx-4 mb-4 max-h-[70vh] overflow-y-auto">
               {[
-                { href: "/dashboard", text: "Dashboard" },
-                { href: "/breach-monitor", text: "Breach Monitor" },
-                { href: "/password-checker", text: "Password Checker" },
-                { href: "/fake-data", text: "Fake Data" },
-                { href: "/temp-email", text: "Temp Email" },
-                { href: "/vault", text: "Vault" },
-                { href: "/privacy-news", text: "Privacy News" },
-                { href: "/profile", text: "Profile" },
+                { href: "/dashboard", text: "Dashboard", icon: "🏠" },
+                { href: "/breach-monitor", text: "Breach Monitor", icon: "🛡️" },
+                {
+                  href: "/password-checker",
+                  text: "Password Checker",
+                  icon: "🔐",
+                },
+                { href: "/fake-data", text: "Fake Data", icon: "🎭" },
+                { href: "/temp-email", text: "Temp Email", icon: "📧" },
+                { href: "/vault", text: "Vault", icon: "🗄️" },
+                { href: "/privacy-news", text: "Privacy News", icon: "📰" },
+                { href: "/profile", text: "Profile", icon: "👤" },
+                { href: "/theme-settings", text: "Theme Settings", icon: "🎨" },
               ].map((item, index) => (
                 <motion.div key={item.href}>
                   <Link
                     href={item.href}
-                    className="block px-4 py-3 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
+                    className="flex items-center px-3 sm:px-4 py-3 text-base font-medium text-theme-text-secondary hover:text-theme-primary hover:bg-theme-background rounded-lg transition-all duration-200"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     <motion.span
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                       whileHover={{ x: 5 }}
-                      className="block"
+                      className="flex items-center w-full"
                     >
+                      <span className="mr-3 text-lg">{item.icon}</span>
                       {item.text}
                     </motion.span>
                   </Link>
                 </motion.div>
               ))}
             </div>
-          </motion.div>{" "}
+          </motion.div>
         </SignedIn>
-      </div>
-
+      </div>{" "}
       {/* Bottom border glow effect */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"
+        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-theme-primary/20 to-transparent"
         animate={{
           opacity: [0.5, 1, 0.5],
         }}
