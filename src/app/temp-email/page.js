@@ -69,9 +69,10 @@ export default function TempEmailPage() {
     // Save emails to localStorage whenever emails change
     localStorage.setItem("tempEmails", JSON.stringify(emails));
   }, [emails]);
-
   const checkServiceHealth = async () => {
     try {
+      console.log('API_BASE:', API_BASE);
+      console.log('NODE_ENV:', process.env.NODE_ENV);
       const response = await fetch(`${API_BASE}/health`);
       const health = await response.json();
       setServiceStatus(health.status === "healthy" ? "healthy" : "unhealthy");
