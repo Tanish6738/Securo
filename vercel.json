@@ -1,3 +1,93 @@
 {
-  
+  "version": 2,
+  "name": "privacyguard",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "env": {
+    "MONGODB_URI": "@mongodb_uri",
+    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": "@clerk_publishable_key",
+    "CLERK_SECRET_KEY": "@clerk_secret_key",
+    "NEXT_PUBLIC_NEWSAPI_KEY": "@newsapi_key",
+    "XPOSEDORNOT_API_BASE": "https://api.xposedornot.com/v1/",
+    "MAILTM_API_BASE": "https://api.mail.tm",
+    "NEXT_PUBLIC_APP_URL": "@app_url"
+  },
+  "functions": {
+    "src/app/api/vault/route.js": {
+      "maxDuration": 30
+    },
+    "src/app/api/vault/download/route.js": {
+      "maxDuration": 30
+    },
+    "src/app/api/vault/preview/route.js": {
+      "maxDuration": 30
+    },
+    "src/app/api/temp-email/route.js": {
+      "maxDuration": 25
+    },
+    "src/app/api/temp-email/messages/route.js": {
+      "maxDuration": 25
+    },
+    "src/app/api/temp-email/debug/route.js": {
+      "maxDuration": 25
+    },
+    "src/app/api/temp-email/fallback/route.js": {
+      "maxDuration": 25
+    },
+    "src/app/api/password-check/route.js": {
+      "maxDuration": 20
+    },
+    "src/app/api/breach-check/route.js": {
+      "maxDuration": 20
+    },
+    "src/app/api/privacy-news/route.js": {
+      "maxDuration": 15
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-Requested-With, Content-Type, Authorization"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "origin-when-cross-origin"
+        }
+      ]
+    }
+  ],
+  "regions": ["iad1"],
+  "framework": "nextjs"
 }
