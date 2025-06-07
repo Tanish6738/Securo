@@ -199,7 +199,7 @@ export default function Header() {
 
           <SignedIn>
             {/* Full Desktop Navigation */}
-            <nav className="hidden 2xl:flex items-center space-x-1">
+            <nav className="hidden w-full justify-around 2xl:flex items-center pl-4 ">
               {authenticatedNavItems.map((item, index) => (
                 <motion.div
                   key={item.href}
