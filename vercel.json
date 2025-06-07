@@ -1,14 +1,15 @@
 {
   "version": 2,
-  "name": "privacyguard",
-  "env": {
-    "MONGODB_URI": "@mongodb_uri",
-    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": "@clerk_publishable_key",
-    "CLERK_SECRET_KEY": "@clerk_secret_key",
-    "NEXT_PUBLIC_NEWSAPI_KEY": "@newsapi_key",
+  "name": "privacyguard",  "env": {
+    "MONGODB_URI": "mongodb+srv://zatchbell:tanishq@cluster0.btajmgg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_dmFsaWQtc3BhbmllbC05Ny5jbGVyay5hY2NvdW50cy5kZXYk",
+    "CLERK_SECRET_KEY": "sk_test_3ttmMzaS4AzDN2cO2zwFMdUpmGpNCy4LsgHuyAUoI5",
+    "NEXT_PUBLIC_NEWSAPI_KEY": "89fc2a87d477499b9fdfae5ce1a6c56e",
     "XPOSEDORNOT_API_BASE": "https://api.xposedornot.com/v1/",
     "MAILTM_API_BASE": "https://api.mail.tm",
-    "NEXT_PUBLIC_APP_URL": "@app_url"
+    "NEXT_PUBLIC_APP_URL": "https://your-app-url.vercel.app",
+    "GEMINI_API_KEY": "AIzaSyBHVhK69JfkelhLAXp2bepUFwv3ohw4VoY",
+    "NEXT_PUBLIC_MAIL_SERVICE_URL": ""
   },
   "functions": {
     "src/app/api/vault/route.js": {
