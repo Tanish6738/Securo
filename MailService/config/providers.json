@@ -1,0 +1,31 @@
+{
+  "providers": [
+    {
+      "name": "mail.tm",
+      "baseUrl": "https://api.mail.tm",
+      "active": true,
+      "priority": 1,
+      "features": [
+        "email_creation",
+        "message_fetching",
+        "auth_tokens"
+      ],
+      "limits": {
+        "maxEmailsPerHour": 10,
+        "maxMessagesPerRequest": 50
+      }
+    }
+  ],
+  "settings": {
+    "defaultTtlHours": 24,
+    "cleanupIntervalMinutes": 30,
+    "maxEmailsPerIP": 10,
+    "maxAttemptsPerEmail": 5
+  },
+  "endpoints": {
+    "tempEmail": "/api/temp-email",
+    "messages": "/api/messages",
+    "debug": "/api/debug",
+    "health": "/health"
+  }
+}
