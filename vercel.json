@@ -1,12 +1,6 @@
 {
   "version": 2,
   "name": "privacyguard",
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ],
   "env": {
     "MONGODB_URI": "@mongodb_uri",
     "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": "@clerk_publishable_key",
