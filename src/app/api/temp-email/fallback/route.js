@@ -1,9 +1,36 @@
 import { NextResponse } from 'next/server'
+import { API_BASE } from "../../../../config/api.js";
 
-// Fallback temporary email service using multiple providers
+// Fallback temporary email service with multiple providers
 export async function POST(request) {
   try {
-    const { customName } = await request.json()
+    const body = await request.json()
+    
+    console.log('🔄 Attempting primary MailService...')
+    
+    // First try our primary MailService
+    try {
+      const response = await fetch(`${API_BASE}/api/temp-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('✅ Primary MailService successful');
+        return NextResponse.json(data);
+      }
+      
+      console.log('⚠️ Primary MailService failed, trying fallback...');
+    } catch (error) {
+      console.log('⚠️ Primary MailService error, trying fallback:', error.message);
+    }
+
+    // Fallback to direct mail.tm implementation
+    const { customName } = body;
     
     console.log('🔄 Using fallback temp email service...')
     

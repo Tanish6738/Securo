@@ -1,18 +1,42 @@
 import { NextResponse } from 'next/server'
+import { API_BASE } from "../../../../config/api.js";
 
 export async function GET(request) {
   const debugInfo = {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
     vercelRegion: process.env.VERCEL_REGION || 'unknown',
-    apiBase: process.env.MAILTM_API_BASE || 'https://api.mail.tm',
+    mailServiceUrl: API_BASE,
+    fallbackApiBase: process.env.MAILTM_API_BASE || 'https://api.mail.tm',
     checks: []
   }
 
   try {
-    // Test 1: Basic connectivity to api.mail.tm
-    console.log('🔍 Testing basic connectivity to api.mail.tm...')
-    debugInfo.checks.push({ test: 'Basic connectivity', status: 'testing' })
+    // Test 1: Primary MailService connectivity
+    console.log('🔍 Testing connectivity to MailService...')
+    debugInfo.checks.push({ test: 'MailService connectivity', status: 'testing' })
+    
+    const mailServiceTest = await fetch(`${API_BASE}/health`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'PrivacyGuard-Debug/1.0'
+      },
+      timeout: 10000 // 10 second timeout
+    })
+
+    debugInfo.checks[0].status = mailServiceTest.ok ? 'success' : 'failed'
+    debugInfo.checks[0].statusCode = mailServiceTest.status
+    debugInfo.checks[0].statusText = mailServiceTest.statusText
+
+    if (mailServiceTest.ok) {
+      const healthData = await mailServiceTest.json()
+      debugInfo.checks[0].response = healthData
+    }
+
+    // Test 2: Fallback connectivity to api.mail.tm
+    console.log('🔍 Testing fallback connectivity to api.mail.tm...')
+    debugInfo.checks.push({ test: 'Fallback connectivity', status: 'testing' })
     
     const connectivityTest = await fetch('https://api.mail.tm/domains', {
       method: 'GET',
@@ -23,9 +47,9 @@ export async function GET(request) {
       timeout: 10000 // 10 second timeout
     })
 
-    debugInfo.checks[0].status = connectivityTest.ok ? 'success' : 'failed'
-    debugInfo.checks[0].statusCode = connectivityTest.status
-    debugInfo.checks[0].statusText = connectivityTest.statusText
+    debugInfo.checks[1].status = connectivityTest.ok ? 'success' : 'failed'
+    debugInfo.checks[1].statusCode = connectivityTest.status
+    debugInfo.checks[1].statusText = connectivityTest.statusText
 
     if (connectivityTest.ok) {
       const domainsData = await connectivityTest.json()
