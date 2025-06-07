@@ -78,33 +78,38 @@ export default function BreachMonitorPage() {
 
     try {
       const response = await fetch(`/api/breaches?domain=${encodeURIComponent(domain)}`)
-      const data = await response.json()
-
+      
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to check domain')
+        const errorData = await response.json().catch(() => ({ error: 'Failed to check domain' }))
+        throw new Error(errorData.error || 'Failed to check domain')
       }
 
+      const data = await response.json()
       setDomainResults(data)
     } catch (error) {
+      console.error('Domain breach check error:', error)
       setError(error.message)
     } finally {
       setLoading(false)
     }
   }
+  
   const fetchRecentBreaches = async () => {
     setLoading(true)
     setError('')
 
     try {
       const response = await fetch('/api/breaches')
-      const data = await response.json()
-
+      
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to fetch breaches')
+        const errorData = await response.json().catch(() => ({ error: 'Failed to fetch breaches' }))
+        throw new Error(errorData.error || 'Failed to fetch breaches')
       }
 
+      const data = await response.json()
       setRecentBreaches(data.exposedBreaches || [])
     } catch (error) {
+      console.error('Recent breaches fetch error:', error)
       setError(error.message)
     } finally {
       setLoading(false)
@@ -124,11 +129,16 @@ export default function BreachMonitorPage() {
   const handleRecentBreachSelect = (breach) => {
     setSelectedRecentBreach(breach)
   }
-
   // Get breach details for a website
   const getBreachDetails = async (breachName) => {
     try {
       const response = await fetch('/api/breaches')
+      
+      if (!response.ok) {
+        console.error('Failed to fetch breach details:', response.status)
+        return null
+      }
+      
       const data = await response.json()
       
       if (data.exposedBreaches) {

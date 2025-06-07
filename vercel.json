@@ -7,11 +7,10 @@
     "NEXT_PUBLIC_NEWSAPI_KEY": "89fc2a87d477499b9fdfae5ce1a6c56e",
     "XPOSEDORNOT_API_BASE": "https://api.xposedornot.com/v1/",
     "MAILTM_API_BASE": "https://api.mail.tm",
-    "NEXT_PUBLIC_APP_URL": "https://your-app-url.vercel.app",
+    "NEXT_PUBLIC_APP_URL": "https://securo-app-v0.vercel.app",
     "GEMINI_API_KEY": "AIzaSyBHVhK69JfkelhLAXp2bepUFwv3ohw4VoY",
     "NEXT_PUBLIC_MAIL_SERVICE_URL": ""
-  },
-  "functions": {
+  },  "functions": {
     "src/app/api/vault/route.js": {
       "maxDuration": 30
     },
@@ -39,7 +38,25 @@
     "src/app/api/breach-check/route.js": {
       "maxDuration": 20
     },
+    "src/app/api/breaches/route.js": {
+      "maxDuration": 20
+    },
     "src/app/api/privacy-news/route.js": {
+      "maxDuration": 15
+    },
+    "src/app/api/ai-assistant/route.js": {
+      "maxDuration": 30
+    },
+    "src/app/api/user/route.js": {
+      "maxDuration": 15
+    },
+    "src/app/api/test-analytics/route.js": {
+      "maxDuration": 15
+    },
+    "src/app/api/monitored-emails/route.js": {
+      "maxDuration": 20
+    },
+    "src/app/api/fake-data/route.js": {
       "maxDuration": 15
     }
   },
