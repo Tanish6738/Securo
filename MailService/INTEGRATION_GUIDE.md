@@ -11,7 +11,7 @@ Create a configuration file or update your existing API calls:
 ```javascript
 // config/api.js
 const API_BASE = process.env.NODE_ENV === 'production' 
-  ? 'https://your-mailservice-domain.com' 
+  ? 'https://securo-mail-service.onrender.com' 
   : 'http://localhost:3001';
 
 export { API_BASE };

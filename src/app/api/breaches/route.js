@@ -21,12 +21,11 @@ export async function GET(request) {
     }
 
     const apiUrl = `${process.env.XPOSEDORNOT_API_BASE}${endpoint}`
-    console.log('Fetching from:', apiUrl)
-
-    const response = await fetch(apiUrl, {
+    console.log('Fetching from:', apiUrl)  ;  const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'x-api-key': process.env.XPOSEDORNOT_API_KEY,
       },
     })
 

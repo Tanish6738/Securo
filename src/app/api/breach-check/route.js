@@ -46,12 +46,11 @@ export async function POST(request) {
       default:
         endpoint = `check-email/${encodeURIComponent(email)}`
         break
-    }
-
-    const response = await fetch(`${process.env.XPOSEDORNOT_API_BASE}${endpoint}`, {
+    }    const response = await fetch(`${process.env.XPOSEDORNOT_API_BASE}${endpoint}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'x-api-key': process.env.XPOSEDORNOT_API_KEY,
       },
     })
 
