@@ -4,6 +4,10 @@ import "./globals.css";
 import { dark } from '@clerk/themes';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ThemeInitializer from '@/components/ThemeInitializer';
+import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
+import InstallPrompt from '@/components/InstallPrompt';
+import OfflineIndicator from '@/components/OfflineIndicator';
+import PWAErrorBoundary from '@/components/PWAErrorBoundary';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +43,12 @@ export const metadata = {
   metadataBase: new URL('https://privacyguard.app'),
   alternates: {
     canonical: '/',
+  },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'PrivacyGuard',
   },
   openGraph: {
     title: "PrivacyGuard - Your Digital Privacy Command Center",
@@ -101,9 +111,12 @@ export default function RootLayout({ children }) {
       <html lang="en" className="h-full">
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="theme-color" content="#1B212C" />
+          <meta name="theme-color" content="#00A99D" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+          <meta name="apple-mobile-web-app-title" content="PrivacyGuard" />
           <link rel="icon" href="/favicon.ico" />
-          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <link rel="apple-touch-icon" href="/icon-192.svg" />
           <link rel="manifest" href="/manifest.json" />
         </head>
         <body
@@ -111,11 +124,16 @@ export default function RootLayout({ children }) {
         >
           <ThemeInitializer />
           <ThemeProvider>
-            <div className="min-h-screen flex flex-col bg-theme-background text-theme-text">
-              <main className="flex-1">
-                {children}
-              </main>
-            </div>
+            <PWAErrorBoundary>
+              <OfflineIndicator />
+              <div className="min-h-screen flex flex-col bg-theme-background text-theme-text">
+                <main className="flex-1">
+                  {children}
+                </main>
+              </div>
+              <ServiceWorkerRegistration />
+              <InstallPrompt />
+            </PWAErrorBoundary>
           </ThemeProvider>
         </body>
       </html>

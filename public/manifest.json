@@ -3,33 +3,31 @@
   "short_name": "PrivacyGuard",
   "description": "Advanced cybersecurity platform protecting millions from data breaches",
   "start_url": "/",
-  "display": "standalone",
-  "background_color": "#111827",
-  "theme_color": "#3b82f6",
-  "orientation": "portrait-primary",
-  "icons": [
+  "display": "standalone",  "background_color": "#1B212C",
+  "theme_color": "#00A99D",
+  "orientation": "portrait-primary",  "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/icon-192.svg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "maskable"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/icon-512.svg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "maskable"
     },
     {
-      "src": "/icon-192.png",
+      "src": "/icon-192.svg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/icon-512.svg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any"
     }
   ],

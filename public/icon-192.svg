@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="192" height="192" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .bg { fill: #00A99D; }
+      .shield { fill: #FFFFFF; }
+      .text { fill: #00A99D; font-family: Arial, sans-serif; font-weight: bold; font-size: 28.799999999999997px; }
+    </style>
+  </defs>
+  
+  <!-- Background with rounded corners -->
+  <rect class="bg" width="192" height="192" rx="24" ry="24"/>
+  
+  <!-- Shield shape -->
+  <path class="shield" d="M 96 48 
+                         L 134.4 72 
+                         L 134.4 120 
+                         L 96 144 
+                         L 57.599999999999994 120 
+                         L 57.599999999999994 72 Z"/>
+  
+  <!-- Text -->
+  <text class="text" x="96" y="105.6" text-anchor="middle">PG</text>
+</svg>
