@@ -37,18 +37,23 @@ export default function DashboardPage() {
     lastScanDate: null,
     riskLevel: "low",
   });
-  const [recentActivity, setRecentActivity] = useState([]);
-  const [isVisible, setIsVisible] = useState(false);
+  const [recentActivity, setRecentActivity] = useState([]);  const [isVisible, setIsVisible] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     setIsVisible(true);
-    if (isLoaded && user) {
-      // Simulate loading dashboard data
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded && user && isClient) {
+      // Simulate loading dashboard data with fixed timestamps to avoid hydration mismatch
+      const baseDate = new Date('2024-01-01T10:00:00Z');
       setStats({
         totalBreaches: 0,
         compromisedPasswords: 0,
         tempEmailsCreated: 3,
-        lastScanDate: new Date().toISOString(),
+        lastScanDate: baseDate.toISOString(),
         riskLevel: "low",
       });
 
@@ -57,26 +62,26 @@ export default function DashboardPage() {
           id: 1,
           type: "temp_email",
           description: "Created temporary email address",
-          timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+          timestamp: new Date(baseDate.getTime() - 2 * 60 * 60 * 1000).toISOString(),
           status: "success",
         },
         {
           id: 2,
           type: "password_check",
           description: "Checked password strength",
-          timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
+          timestamp: new Date(baseDate.getTime() - 4 * 60 * 60 * 1000).toISOString(),
           status: "info",
         },
         {
           id: 3,
           type: "breach_scan",
           description: "Completed breach monitoring scan",
-          timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
+          timestamp: new Date(baseDate.getTime() - 6 * 60 * 60 * 1000).toISOString(),
           status: "success",
         },
       ]);
     }
-  }, [isLoaded, user]);
+  }, [isLoaded, user, isClient]);
 
   // Enhanced animation variants
   const containerVariants = {
@@ -120,30 +125,8 @@ export default function DashboardPage() {
     },
   };
 
-  const shimmerVariants = {
-    initial: { x: "-100%" },
-    animate: {
-      x: "100%",
-      transition: {
-        duration: 2,
-        ease: "easeInOut",
-        repeat: Infinity,
-        repeatDelay: 3,
-      },
-    },
-  };
 
-  const floatingElementVariants = {
-    float: {
-      y: [-10, 10, -10],
-      rotateX: [0, 5, 0],
-      transition: {
-        duration: 6,
-        ease: "easeInOut",
-        repeat: Infinity,
-      },
-    },
-  };
+  
   const getRiskLevelColor = (level) => {
     switch (level) {
       case "high":
@@ -168,162 +151,34 @@ export default function DashboardPage() {
       default:
         return <ClockIcon className="h-5 w-5" />;
     }
-  };
-  if (!isLoaded) {
+  };  if (!isLoaded || !isClient) {
     return (
       <>
         <Header />
-        <div className="min-h-screen bg-gradient-theme flex items-center justify-center relative overflow-hidden">
-          {/* Floating background elements */}
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            {[...Array(6)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-64 h-64 rounded-full opacity-5"
-                style={{
-                  background: `linear-gradient(135deg, ${i % 2 === 0 ? "var(--color-primary)" : "var(--color-accent)"}, transparent)`,
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  x: [0, 100, 0],
-                  y: [0, -100, 0],
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 180, 360],
-                }}
-                transition={{
-                  duration: 20 + i * 5,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
-            ))}
-          </motion.div>
-
-          <motion.div
-            className="flex flex-col items-center space-y-8 relative z-10"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            {/* Enhanced loading spinner */}
-            <motion.div className="relative">
-              {" "}
-              <motion.div
-                className="w-16 h-16 border-4 border-theme-border rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              />
-              <motion.div
-                className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-theme-primary rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              />
-              <motion.div
-                className="absolute inset-2 w-12 h-12 border-2 border-transparent border-t-theme-accent rounded-full"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-              />
-            </motion.div>
-
-            <motion.div
-              className="text-center space-y-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-            >
-              {" "}
-              <motion.h2
-                className="text-2xl font-bold text-theme-text"
-                animate={{
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-                style={{
-                  background:
-                    "linear-gradient(90deg, var(--color-primary), var(--color-accent), var(--color-primary))",
-                  backgroundSize: "200% 100%",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                Initializing Dashboard
-              </motion.h2>
-              <motion.p
-                className="text-theme-text-secondary text-lg"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                Preparing your personalized privacy insights...
-              </motion.p>
-              {/* Loading progress dots */}
-              <motion.div className="flex justify-center space-x-2 mt-6">
-                {[0, 1, 2].map((i) => (
-                  <motion.div
-                    key={i}
-                    className="w-3 h-3 bg-theme-primary rounded-full"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.5, 1, 0.5],
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      delay: i * 0.2,
-                    }}
-                  />
-                ))}
-              </motion.div>
-            </motion.div>
-          </motion.div>
+        <div className="min-h-screen bg-gradient-theme flex items-center justify-center relative overflow-hidden mt-20">
+          <div className="flex flex-col items-center space-y-8 relative z-10">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-theme-primary"></div>
+            <h2 className="text-2xl font-bold text-theme-text">
+              Initializing Dashboard
+            </h2>
+            <p className="text-theme-text-secondary text-lg">
+              Setting up your privacy tools...
+            </p>
+          </div>
         </div>
       </>
     );
-  }
-  return (
+  }  return (
     <>
       <Header />
       <motion.div
-        className="min-h-screen bg-gradient-theme relative overflow-hidden"
+        className="min-h-screen bg-gradient-theme relative overflow-hidden mt-20 "
         variants={containerVariants}
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
       >
-        {/* Enhanced floating background elements */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2 }}
-        >
-          {[...Array(8)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full opacity-[0.03] dark:opacity-[0.05]"
-              style={{
-                width: `${200 + i * 50}px`,
-                height: `${200 + i * 50}px`,
-                background: `linear-gradient(135deg, ${
-                  i % 3 === 0 ? "#3B82F6" : i % 3 === 1 ? "#8B5CF6" : "#06B6D4"
-                }, transparent)`,
-                left: `${(i * 15) % 100}%`,
-                top: `${(i * 20) % 100}%`,
-              }}
-              variants={floatingElementVariants}
-              animate="float"
-              transition={{ delay: i * 0.5 }}
-            />
-          ))}
-        </motion.div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 ">
           {/* Enhanced Welcome Section */}
           <motion.div
             className="mb-12 text-center relative"
@@ -490,41 +345,6 @@ export default function DashboardPage() {
                     <motion.div
                       className={`absolute inset-0 bg-gradient-to-br ${stat.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
                     />
-
-                    {/* Shimmer effect */}
-                    <motion.div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100"
-                      variants={shimmerVariants}
-                      initial="initial"
-                      whileHover="animate"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12" />
-                    </motion.div>
-
-                    {/* Floating particles */}
-                    <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      {" "}
-                      {[...Array(3)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute w-1 h-1 bg-theme-primary rounded-full"
-                          style={{
-                            left: `${20 + i * 30}%`,
-                            top: `${30 + i * 20}%`,
-                          }}
-                          animate={{
-                            y: [-10, -30, -10],
-                            opacity: [0, 1, 0],
-                            scale: [0, 1, 0],
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            delay: i * 0.5,
-                          }}
-                        />
-                      ))}
-                    </div>
 
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
                       <CardTitle className="text-sm font-semibold text-theme-text-secondary group-hover:text-theme-text transition-all duration-300">
