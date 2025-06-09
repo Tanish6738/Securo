@@ -520,7 +520,7 @@ export default function VaultPage() {
   };
   if (!isLoaded) {
     return (
-      <div className="min-h-screen bg-theme-background flex items-center justify-center">
+      <div className="min-h-screen bg-theme-background flex items-center justify-center ">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-theme-primary border-t-transparent mx-auto mb-4"></div>
           <p className="text-theme-textSecondary font-medium">Loading...</p>
@@ -531,7 +531,7 @@ export default function VaultPage() {
   return (
     <div className="min-h-screen bg-theme-background">
       <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 mt-20 ">
         {" "}
         {/* User-Friendly Header Section */}
         <motion.div

@@ -158,7 +158,7 @@ export default function FakeDataPage() {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-gradient-theme py-8">
+      <div className="min-h-screen bg-gradient-theme py-8 mt-20 ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
             {" "}

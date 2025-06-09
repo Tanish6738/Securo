@@ -7,7 +7,7 @@ export default function ThemeSettingsPage() {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-theme-background py-8">
+      <div className="min-h-screen bg-theme-background py-12 ">
         <ThemeAccessibilitySettings />
       </div>
     </>
