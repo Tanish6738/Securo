@@ -1,11 +1,16 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useTheme } from './ThemeProvider'
-import CustomThemeCreator from './CustomThemeCreator'
-import Card, { CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card'
-import Button from './ui/Button'
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "./ThemeProvider";
+import CustomThemeCreator from "./CustomThemeCreator";
+import Card, {
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/Card";
+import Button from "./ui/Button";
 import {
   PaintBrushIcon,
   SunIcon,
@@ -18,8 +23,8 @@ import {
   ArrowDownTrayIcon,
   TrashIcon,
   CheckIcon,
-  XMarkIcon
-} from '@heroicons/react/24/outline'
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 
 export default function ThemeAccessibilitySettings() {
   const {
@@ -31,34 +36,34 @@ export default function ThemeAccessibilitySettings() {
     updateAccessibilitySettings,
     exportTheme,
     importTheme,
-    deleteCustomTheme
-  } = useTheme()
+    deleteCustomTheme,
+  } = useTheme();
 
-  const [activeTab, setActiveTab] = useState('themes')
-  const [showCustomCreator, setShowCustomCreator] = useState(false)
+  const [activeTab, setActiveTab] = useState("themes");
+  const [showCustomCreator, setShowCustomCreator] = useState(false);
 
-  const allThemes = { ...predefinedThemes, ...customThemes }
+  const allThemes = { ...predefinedThemes, ...customThemes };
 
   const handleAccessibilityChange = (setting, value) => {
     updateAccessibilitySettings({
       ...accessibilitySettings,
-      [setting]: value
-    })
-  }
+      [setting]: value,
+    });
+  };
 
   const handleImportTheme = async (event) => {
-    const file = event.target.files[0]
+    const file = event.target.files[0];
     if (file) {
       try {
-        await importTheme(file)
+        await importTheme(file);
         // Reset file input
-        event.target.value = ''
+        event.target.value = "";
       } catch (error) {
-        console.error('Failed to import theme:', error)
-        alert('Failed to import theme. Please check the file format.')
+        console.error("Failed to import theme:", error);
+        alert("Failed to import theme. Please check the file format.");
       }
     }
-  }
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
@@ -71,35 +76,33 @@ export default function ThemeAccessibilitySettings() {
           Customize your visual experience and accessibility preferences
         </p>
       </div>
-
       {/* Tab Navigation */}
       <div className="flex space-x-1 bg-theme-secondary rounded-lg p-1 mb-6">
         <button
-          onClick={() => setActiveTab('themes')}
+          onClick={() => setActiveTab("themes")}
           className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
-            activeTab === 'themes'
-              ? 'bg-theme-primary text-white shadow-md'
-              : 'text-theme-text-secondary hover:text-theme-text'
+            activeTab === "themes"
+              ? "bg-theme-primary text-white shadow-md"
+              : "text-theme-text-secondary hover:text-theme-text"
           }`}
         >
           <PaintBrushIcon className="h-4 w-4 inline mr-2" />
           Themes
         </button>
         <button
-          onClick={() => setActiveTab('accessibility')}
+          onClick={() => setActiveTab("accessibility")}
           className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
-            activeTab === 'accessibility'
-              ? 'bg-theme-primary text-white shadow-md'
-              : 'text-theme-text-secondary hover:text-theme-text'
+            activeTab === "accessibility"
+              ? "bg-theme-primary text-white shadow-md"
+              : "text-theme-text-secondary hover:text-theme-text"
           }`}
         >
           <EyeIcon className="h-4 w-4 inline mr-2" />
           Accessibility
         </button>
       </div>
-
       <AnimatePresence mode="wait">
-        {activeTab === 'themes' && (
+        {activeTab === "themes" && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -122,8 +125,8 @@ export default function ThemeAccessibilitySettings() {
                       key={themeId}
                       className={`relative p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 ${
                         currentTheme === themeId
-                          ? 'border-theme-primary shadow-lg'
-                          : 'border-theme-border hover:border-theme-primary-50'
+                          ? "border-theme-primary shadow-lg"
+                          : "border-theme-border hover:border-theme-primary-50"
                       }`}
                       onClick={() => saveTheme(themeId)}
                       whileHover={{ scale: 1.02 }}
@@ -168,8 +171,8 @@ export default function ThemeAccessibilitySettings() {
                             size="sm"
                             variant="outline"
                             onClick={(e) => {
-                              e.stopPropagation()
-                              exportTheme(themeId)
+                              e.stopPropagation();
+                              exportTheme(themeId);
                             }}
                           >
                             <ArrowUpTrayIcon className="h-3 w-3" />
@@ -178,9 +181,9 @@ export default function ThemeAccessibilitySettings() {
                             size="sm"
                             variant="outline"
                             onClick={(e) => {
-                              e.stopPropagation()
-                              if (confirm('Delete this custom theme?')) {
-                                deleteCustomTheme(themeId)
+                              e.stopPropagation();
+                              if (confirm("Delete this custom theme?")) {
+                                deleteCustomTheme(themeId);
                               }
                             }}
                           >
@@ -201,7 +204,7 @@ export default function ThemeAccessibilitySettings() {
                     <PaintBrushIcon className="h-4 w-4 mr-2" />
                     Create Custom Theme
                   </Button>
-                  
+
                   <div className="relative">
                     <input
                       type="file"
@@ -220,7 +223,7 @@ export default function ThemeAccessibilitySettings() {
           </motion.div>
         )}
 
-        {activeTab === 'accessibility' && (
+        {activeTab === "accessibility" && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -240,20 +243,31 @@ export default function ThemeAccessibilitySettings() {
                 {/* High Contrast */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-theme-text">High Contrast Mode</h4>
+                    <h4 className="font-medium text-theme-text">
+                      High Contrast Mode
+                    </h4>
                     <p className="text-sm text-theme-text-secondary">
                       Increase contrast for better visibility
                     </p>
                   </div>
                   <button
-                    onClick={() => handleAccessibilityChange('highContrast', !accessibilitySettings.highContrast)}
+                    onClick={() =>
+                      handleAccessibilityChange(
+                        "highContrast",
+                        !accessibilitySettings.highContrast
+                      )
+                    }
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      accessibilitySettings.highContrast ? 'bg-theme-primary' : 'bg-theme-border'
+                      accessibilitySettings.highContrast
+                        ? "bg-theme-primary"
+                        : "bg-theme-border"
                     }`}
                   >
                     <span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        accessibilitySettings.highContrast ? 'translate-x-6' : 'translate-x-1'
+                        accessibilitySettings.highContrast
+                          ? "translate-x-6"
+                          : "translate-x-1"
                       }`}
                     />
                   </button>
@@ -261,16 +275,20 @@ export default function ThemeAccessibilitySettings() {
 
                 {/* Font Size */}
                 <div>
-                  <h4 className="font-medium text-theme-text mb-3">Font Size</h4>
+                  <h4 className="font-medium text-theme-text mb-3">
+                    Font Size
+                  </h4>
                   <div className="flex space-x-2">
-                    {['small', 'medium', 'large', 'xl'].map((size) => (
+                    {["small", "medium", "large", "xl"].map((size) => (
                       <button
                         key={size}
-                        onClick={() => handleAccessibilityChange('fontSize', size)}
+                        onClick={() =>
+                          handleAccessibilityChange("fontSize", size)
+                        }
                         className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                           accessibilitySettings.fontSize === size
-                            ? 'bg-theme-primary text-white'
-                            : 'bg-theme-secondary text-theme-text hover:bg-theme-primary hover:text-white'
+                            ? "bg-theme-primary text-white"
+                            : "bg-theme-secondary text-theme-text hover:bg-theme-primary hover:text-white"
                         }`}
                       >
                         {size.charAt(0).toUpperCase() + size.slice(1)}
@@ -282,20 +300,31 @@ export default function ThemeAccessibilitySettings() {
                 {/* Focus Indicators */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-theme-text">Enhanced Focus Indicators</h4>
+                    <h4 className="font-medium text-theme-text">
+                      Enhanced Focus Indicators
+                    </h4>
                     <p className="text-sm text-theme-text-secondary">
                       Show clear focus indicators for keyboard navigation
                     </p>
                   </div>
                   <button
-                    onClick={() => handleAccessibilityChange('focusIndicators', !accessibilitySettings.focusIndicators)}
+                    onClick={() =>
+                      handleAccessibilityChange(
+                        "focusIndicators",
+                        !accessibilitySettings.focusIndicators
+                      )
+                    }
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      accessibilitySettings.focusIndicators ? 'bg-theme-primary' : 'bg-theme-border'
+                      accessibilitySettings.focusIndicators
+                        ? "bg-theme-primary"
+                        : "bg-theme-border"
                     }`}
                   >
                     <span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        accessibilitySettings.focusIndicators ? 'translate-x-6' : 'translate-x-1'
+                        accessibilitySettings.focusIndicators
+                          ? "translate-x-6"
+                          : "translate-x-1"
                       }`}
                     />
                   </button>
@@ -304,20 +333,31 @@ export default function ThemeAccessibilitySettings() {
                 {/* Reduced Motion */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-theme-text">Reduced Motion</h4>
+                    <h4 className="font-medium text-theme-text">
+                      Reduced Motion
+                    </h4>
                     <p className="text-sm text-theme-text-secondary">
                       Minimize animations and transitions
                     </p>
                   </div>
                   <button
-                    onClick={() => handleAccessibilityChange('reducedMotion', !accessibilitySettings.reducedMotion)}
+                    onClick={() =>
+                      handleAccessibilityChange(
+                        "reducedMotion",
+                        !accessibilitySettings.reducedMotion
+                      )
+                    }
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      accessibilitySettings.reducedMotion ? 'bg-theme-primary' : 'bg-theme-border'
+                      accessibilitySettings.reducedMotion
+                        ? "bg-theme-primary"
+                        : "bg-theme-border"
                     }`}
                   >
                     <span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        accessibilitySettings.reducedMotion ? 'translate-x-6' : 'translate-x-1'
+                        accessibilitySettings.reducedMotion
+                          ? "translate-x-6"
+                          : "translate-x-1"
                       }`}
                     />
                   </button>
@@ -337,20 +377,31 @@ export default function ThemeAccessibilitySettings() {
                 {/* Larger Click Targets */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-theme-text">Larger Click Targets</h4>
+                    <h4 className="font-medium text-theme-text">
+                      Larger Click Targets
+                    </h4>
                     <p className="text-sm text-theme-text-secondary">
                       Make buttons and links easier to click
                     </p>
                   </div>
                   <button
-                    onClick={() => handleAccessibilityChange('largerClickTargets', !accessibilitySettings.largerClickTargets)}
+                    onClick={() =>
+                      handleAccessibilityChange(
+                        "largerClickTargets",
+                        !accessibilitySettings.largerClickTargets
+                      )
+                    }
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      accessibilitySettings.largerClickTargets ? 'bg-theme-primary' : 'bg-theme-border'
+                      accessibilitySettings.largerClickTargets
+                        ? "bg-theme-primary"
+                        : "bg-theme-border"
                     }`}
                   >
                     <span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        accessibilitySettings.largerClickTargets ? 'translate-x-6' : 'translate-x-1'
+                        accessibilitySettings.largerClickTargets
+                          ? "translate-x-6"
+                          : "translate-x-1"
                       }`}
                     />
                   </button>
@@ -359,20 +410,31 @@ export default function ThemeAccessibilitySettings() {
                 {/* Sticky Focus */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-theme-text">Sticky Focus</h4>
+                    <h4 className="font-medium text-theme-text">
+                      Sticky Focus
+                    </h4>
                     <p className="text-sm text-theme-text-secondary">
                       Keep focus visible longer for easier navigation
                     </p>
                   </div>
                   <button
-                    onClick={() => handleAccessibilityChange('stickyFocus', !accessibilitySettings.stickyFocus)}
+                    onClick={() =>
+                      handleAccessibilityChange(
+                        "stickyFocus",
+                        !accessibilitySettings.stickyFocus
+                      )
+                    }
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      accessibilitySettings.stickyFocus ? 'bg-theme-primary' : 'bg-theme-border'
+                      accessibilitySettings.stickyFocus
+                        ? "bg-theme-primary"
+                        : "bg-theme-border"
                     }`}
                   >
                     <span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        accessibilitySettings.stickyFocus ? 'translate-x-6' : 'translate-x-1'
+                        accessibilitySettings.stickyFocus
+                          ? "translate-x-6"
+                          : "translate-x-1"
                       }`}
                     />
                   </button>
@@ -381,20 +443,31 @@ export default function ThemeAccessibilitySettings() {
                 {/* Voice Navigation */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-theme-text">Voice Navigation Support</h4>
+                    <h4 className="font-medium text-theme-text">
+                      Voice Navigation Support
+                    </h4>
                     <p className="text-sm text-theme-text-secondary">
                       Enable voice commands for navigation
                     </p>
                   </div>
                   <button
-                    onClick={() => handleAccessibilityChange('voiceNavigation', !accessibilitySettings.voiceNavigation)}
+                    onClick={() =>
+                      handleAccessibilityChange(
+                        "voiceNavigation",
+                        !accessibilitySettings.voiceNavigation
+                      )
+                    }
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      accessibilitySettings.voiceNavigation ? 'bg-theme-primary' : 'bg-theme-border'
+                      accessibilitySettings.voiceNavigation
+                        ? "bg-theme-primary"
+                        : "bg-theme-border"
                     }`}
                   >
                     <span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        accessibilitySettings.voiceNavigation ? 'translate-x-6' : 'translate-x-1'
+                        accessibilitySettings.voiceNavigation
+                          ? "translate-x-6"
+                          : "translate-x-1"
                       }`}
                     />
                   </button>
@@ -413,20 +486,31 @@ export default function ThemeAccessibilitySettings() {
               <CardContent>
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-theme-text">Sound Effects</h4>
+                    <h4 className="font-medium text-theme-text">
+                      Sound Effects
+                    </h4>
                     <p className="text-sm text-theme-text-secondary">
                       Play sounds for UI interactions and feedback
                     </p>
                   </div>
                   <button
-                    onClick={() => handleAccessibilityChange('soundEffects', !accessibilitySettings.soundEffects)}
+                    onClick={() =>
+                      handleAccessibilityChange(
+                        "soundEffects",
+                        !accessibilitySettings.soundEffects
+                      )
+                    }
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      accessibilitySettings.soundEffects ? 'bg-theme-primary' : 'bg-theme-border'
+                      accessibilitySettings.soundEffects
+                        ? "bg-theme-primary"
+                        : "bg-theme-border"
                     }`}
                   >
                     <span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        accessibilitySettings.soundEffects ? 'translate-x-6' : 'translate-x-1'
+                        accessibilitySettings.soundEffects
+                          ? "translate-x-6"
+                          : "translate-x-1"
                       }`}
                     />
                   </button>
@@ -435,7 +519,8 @@ export default function ThemeAccessibilitySettings() {
             </Card>
           </motion.div>
         )}
-      </AnimatePresence>      {/* Custom Theme Creator Modal */}
+      </AnimatePresence>{" "}
+      {/* Custom Theme Creator Modal */}
       <AnimatePresence>
         {showCustomCreator && (
           <motion.div
@@ -453,11 +538,14 @@ export default function ThemeAccessibilitySettings() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="p-6">
-                <CustomThemeCreator onClose={() => setShowCustomCreator(false)} />
+                <CustomThemeCreator
+                  onClose={() => setShowCustomCreator(false)}
+                />
               </div>
             </motion.div>
           </motion.div>
-        )}      </AnimatePresence>
+        )}{" "}
+      </AnimatePresence>
     </div>
-  )
+  );
 }
