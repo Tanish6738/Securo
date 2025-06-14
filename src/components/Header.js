@@ -64,21 +64,19 @@ const guestLinks = [
   { href: "#faq", label: "FAQ" },
 ];
 
-export default function RedesignedHeader() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+export default function RedesignedHeader() {  const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [activeDesktopDropdown, setActiveDesktopDropdown] = useState(null);
+
   const { currentTheme } = useTheme();
   useEffect(() => {
     const scrollHandler = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
-  }, []);
-
-  useEffect(() => {
+  }, []);  useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest(".dropdown-container")) {
-        setActiveDropdown(null);
+        setActiveDesktopDropdown(null);
       }
     };
 
@@ -86,12 +84,12 @@ export default function RedesignedHeader() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  const handleDropdownToggle = (index) => {
-    setActiveDropdown(activeDropdown === index ? null : index);
+  const handleDesktopDropdownToggle = (index) => {
+    setActiveDesktopDropdown(activeDesktopDropdown === index ? null : index);
   };
 
-  const closeDropdown = () => {
-    setActiveDropdown(null);
+  const closeDesktopDropdown = () => {
+    setActiveDesktopDropdown(null);
   };
   return (
     <header
@@ -137,28 +135,27 @@ export default function RedesignedHeader() {
                   <span className="relative z-10">{item.label}</span>
                   <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-theme-primary to-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                 </Link>
-              ) : (
-                <div key={index} className="relative dropdown-container group">
+              ) : (                <div key={index} className="relative dropdown-container group">
                   <button
-                    onClick={() => handleDropdownToggle(index)}
+                    onClick={() => handleDesktopDropdownToggle(index)}
                     className="flex items-center space-x-1 text-sm font-medium text-theme-text hover:text-theme-primary transition-all duration-300 relative"
                   >
                     <span className="relative z-10">{item.label}</span>
                     <ChevronDownIcon
-                      className={`h-4 w-4 transition-all duration-300 ${activeDropdown === index ? "rotate-180 text-theme-primary" : "group-hover:text-theme-primary"}`}
+                      className={`h-4 w-4 transition-all duration-300 ${activeDesktopDropdown === index ? "rotate-180 text-theme-primary" : "group-hover:text-theme-primary"}`}
                     />
                     <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-theme-primary to-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                   </button>
 
-                  {activeDropdown === index && (
-                    <div className="absolute top-full left-0 mt-3 w-56 bg-theme-background/95 backdrop-blur-xl border border-theme-border/50 rounded-2xl shadow-2xl shadow-theme-primary/20 py-3 z-50 animate-in slide-in-from-top-2 duration-300">
+                  {activeDesktopDropdown === index && (
+                    <div className="absolute top-full left-0 mt-3 w-56 bg-theme-background backdrop-blur-xl border border-theme-border rounded-2xl shadow-2xl shadow-theme-primary py-3 z-50 animate-in slide-in-from-top-2 duration-300">
                       <div className="absolute -top-2 left-6 w-4 h-4 bg-theme-background/95 border-l border-t border-theme-border/50 rotate-45"></div>
                       {item.items.map((subItem) => (
                         <Link
                           key={subItem.href}
                           href={subItem.href}
                           className="group/item flex items-center px-4 py-3 text-sm text-theme-text hover:text-theme-primary hover:bg-gradient-to-r hover:from-theme-primary/10 hover:to-purple-500/10 transition-all duration-300 relative overflow-hidden"
-                          onClick={closeDropdown}
+                          onClick={closeDesktopDropdown}
                         >
                           <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-theme-primary to-purple-500 scale-y-0 group-hover/item:scale-y-100 transition-transform duration-300 origin-top"></div>
                           <span className="relative z-10 group-hover/item:translate-x-1 transition-transform duration-300">
@@ -248,40 +245,21 @@ export default function RedesignedHeader() {
                   <span className="relative z-10 group-hover:translate-x-2 transition-transform duration-300">
                     {item.label}
                   </span>
-                </Link>
-              ) : (
-                <div key={index} className="space-y-3">
-                  <button
-                    onClick={() => handleDropdownToggle(index)}
-                    className="flex items-center justify-between w-full text-theme-text hover:text-theme-primary py-3 px-4 rounded-xl hover:bg-gradient-to-r hover:from-theme-primary/10 hover:to-purple-500/10 transition-all duration-300 group"
-                  >
-                    <span className="group-hover:translate-x-1 transition-transform duration-300">
-                      {item.label}
-                    </span>
-                    <ChevronDownIcon
-                      className={`h-5 w-5 transition-all duration-300 ${activeDropdown === index ? "rotate-180 text-theme-primary" : "group-hover:text-theme-primary"}`}
-                    />
-                  </button>
-
-                  {activeDropdown === index && (
-                    <div className="pl-6 space-y-2 border-l-2 border-gradient-to-b from-theme-primary to-purple-500 ml-4">
-                      {item.items.map((subItem) => (
-                        <Link
-                          key={subItem.href}
-                          href={subItem.href}
-                          className="block text-sm text-theme-text hover:text-theme-primary py-2 px-3 rounded-lg hover:bg-theme-primary/5 transition-all duration-300 group"
-                          onClick={() => {
-                            setMobileOpen(false);
-                            closeDropdown();
-                          }}
-                        >
-                          <span className="group-hover:translate-x-1 transition-transform duration-300">
-                            {subItem.label}
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
-                  )}
+                </Link>              ) : (
+                <div key={index}>
+                  {item.items.map((subItem) => (
+                    <Link
+                      key={subItem.href}
+                      href={subItem.href}
+                      className="block text-theme-text hover:text-theme-primary py-3 px-4 rounded-xl hover:bg-gradient-to-r hover:from-theme-primary/10 hover:to-purple-500/10 transition-all duration-300 relative group"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-theme-primary to-purple-500 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top rounded-r"></div>
+                      <span className="relative z-10 group-hover:translate-x-2 transition-transform duration-300">
+                        {subItem.label}
+                      </span>
+                    </Link>
+                  ))}
                 </div>
               )
             )}

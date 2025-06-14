@@ -431,6 +431,424 @@ crystal: {
     warning: '#FB8C00',
     error: '#E53935'
   },
+onyx: {
+  name: 'Onyx',
+  primary: '#FF914D',
+  background: '#121212',
+  secondary: '#1E1E1E',
+  text: '#F5F5F5',
+  textSecondary: '#A1A1AA',
+  border: '#2C2C2C',
+  accent: '#FFB26B',
+  success: '#00E676',
+  warning: '#FFC400',
+  error: '#F44336'
+},
+
+obsidian: {
+  name: 'Obsidian',
+  primary: '#009688',
+  background: '#0F0F0F',
+  secondary: '#1C1C1C',
+  text: '#ECECEC',
+  textSecondary: '#A8A8A8',
+  border: '#333333',
+  accent: '#26A69A',
+  success: '#00C853',
+  warning: '#FFAB00',
+  error: '#D50000'
+},
+
+void: {
+  name: 'Void',
+  primary: '#673AB7',
+  background: '#0A0A0A',
+  secondary: '#1A1A1A',
+  text: '#EDEDED',
+  textSecondary: '#B39DDB',
+  border: '#4527A0',
+  accent: '#9575CD',
+  success: '#00E676',
+  warning: '#FFEB3B',
+  error: '#E53935'
+},
+
+carbon: {
+  name: 'Carbon',
+  primary: '#607D8B',
+  background: '#1C1C1C',
+  secondary: '#263238',
+  text: '#ECEFF1',
+  textSecondary: '#90A4AE',
+  border: '#37474F',
+  accent: '#78909C',
+  success: '#00C853',
+  warning: '#FFB300',
+  error: '#FF5252'
+},
+
+coal: {
+  name: 'Coal',
+  primary: '#FF8F00',
+  background: '#141414',
+  secondary: '#202020',
+  text: '#FAFAFA',
+  textSecondary: '#E0E0E0',
+  border: '#2D2D2D',
+  accent: '#FFA000',
+  success: '#66BB6A',
+  warning: '#FFCA28',
+  error: '#E53935'
+},
+
+nightshade: {
+  name: 'Nightshade',
+  primary: '#D946EF',
+  background: '#1A132F',
+  secondary: '#2E1A47',
+  text: '#EDE9FE',
+  textSecondary: '#C084FC',
+  border: '#7C3AED',
+  accent: '#A855F7',
+  success: '#34D399',
+  warning: '#FACC15',
+  error: '#EF4444'
+},
+
+deepsea: {
+  name: 'Deep Sea',
+  primary: '#1E90FF',
+  background: '#0C1B33',
+  secondary: '#132742',
+  text: '#DCEFFF',
+  textSecondary: '#7FB3FF',
+  border: '#2B3A67',
+  accent: '#4682B4',
+  success: '#00FA9A',
+  warning: '#FFD700',
+  error: '#DC143C'
+},
+
+rustic: {
+  name: 'Rustic',
+  primary: '#C1440E',
+  background: '#2D1E1B',
+  secondary: '#3F2D2B',
+  text: '#FFF4E6',
+  textSecondary: '#E0A899',
+  border: '#B55439',
+  accent: '#E07A5F',
+  success: '#43AA8B',
+  warning: '#FFD166',
+  error: '#E63946'
+},
+
+ash: {
+  name: 'Ash',
+  primary: '#9E9E9E',
+  background: '#1E1E1E',
+  secondary: '#2B2B2B',
+  text: '#FAFAFA',
+  textSecondary: '#BDBDBD',
+  border: '#424242',
+  accent: '#757575',
+  success: '#81C784',
+  warning: '#FFF176',
+  error: '#E57373'
+},
+
+plasma: {
+  name: 'Plasma',
+  primary: '#FF00C3',
+  background: '#121212',
+  secondary: '#1E1E1E',
+  text: '#F2F2F2',
+  textSecondary: '#FF79C6',
+  border: '#8A2BE2',
+  accent: '#DA70D6',
+  success: '#50FA7B',
+  warning: '#F1FA8C',
+  error: '#FF5555'
+},
+
+abyss: {
+  name: 'Abyss',
+  primary: '#00CED1',
+  background: '#06080A',
+  secondary: '#102128',
+  text: '#C0E0E6',
+  textSecondary: '#76C6D6',
+  border: '#2B4F60',
+  accent: '#20B2AA',
+  success: '#3CB371',
+  warning: '#FFB347',
+  error: '#FF4500'
+},
+
+obsidianNight: {
+  name: 'Obsidian Night',
+  primary: '#FF6F91',
+  background: '#101014',
+  secondary: '#1E1E23',
+  text: '#FAFAFA',
+  textSecondary: '#D4A5A5',
+  border: '#37373D',
+  accent: '#F06292',
+  success: '#4CAF50',
+  warning: '#FFC107',
+  error: '#F44336'
+},
+
+pearlBlack: {
+  name: 'Pearl Black',
+  primary: '#D9A5B3',
+  background: '#0B0C10',
+  secondary: '#151720',
+  text: '#EEECEA',
+  textSecondary: '#E0BAC1',
+  border: '#2C2F38',
+  accent: '#F4AAB9',
+  success: '#8BC34A',
+  warning: '#FFEB3B',
+  error: '#E53935'
+},
+
+pitch: {
+  name: 'Pitch',
+  primary: '#8B5CF6',
+  background: '#000000',
+  secondary: '#0F0F0F',
+  text: '#F8FAFC',
+  textSecondary: '#C4B5FD',
+  border: '#4C1D95',
+  accent: '#A78BFA',
+  success: '#22C55E',
+  warning: '#F59E0B',
+  error: '#DC2626'
+},
+
+phantom: {
+  name: 'Phantom',
+  primary: '#7F00FF',
+  background: '#0D0F1C',
+  secondary: '#191933',
+  text: '#EDE7F6',
+  textSecondary: '#B39DDB',
+  border: '#512DA8',
+  accent: '#9575CD',
+  success: '#00E676',
+  warning: '#FFD600',
+  error: '#F44336'
+},
+coral: {
+  name: 'Coral',
+  primary: '#FF7F50',
+  background: '#FFF8F5',
+  secondary: '#FFEDE5',
+  text: '#5A1F00',
+  textSecondary: '#FF9E80',
+  border: '#FFD2C1',
+  accent: '#FFA07A',
+  success: '#4CAF50',
+  warning: '#FFD700',
+  error: '#E57373'
+},
+
+linen: {
+  name: 'Linen',
+  primary: '#A67B5B',
+  background: '#FAF0E6',
+  secondary: '#F5EDE6',
+  text: '#5C4033',
+  textSecondary: '#A1887F',
+  border: '#D7CCC8',
+  accent: '#BCAAA4',
+  success: '#81C784',
+  warning: '#FFD54F',
+  error: '#E57373'
+},
+
+peach: {
+  name: 'Peach',
+  primary: '#FFAB91',
+  background: '#FFF5F0',
+  secondary: '#FFE0D4',
+  text: '#5D1200',
+  textSecondary: '#FF7043',
+  border: '#FFCCBC',
+  accent: '#FF8A65',
+  success: '#81C784',
+  warning: '#FFCA28',
+  error: '#F44336'
+},
+
+ivory: {
+  name: 'Ivory',
+  primary: '#C5A880',
+  background: '#FFFFF0',
+  secondary: '#FDF6E3',
+  text: '#4E342E',
+  textSecondary: '#8D6E63',
+  border: '#D7CCC8',
+  accent: '#FFDAB9',
+  success: '#66BB6A',
+  warning: '#FFC107',
+  error: '#EF5350'
+},
+
+skyline: {
+  name: 'Skyline',
+  primary: '#0EA5E9',
+  background: '#F0F9FF',
+  secondary: '#E0F2FE',
+  text: '#0F172A',
+  textSecondary: '#0284C7',
+  border: '#7DD3FC',
+  accent: '#38BDF8',
+  success: '#22C55E',
+  warning: '#FBBF24',
+  error: '#EF4444'
+},
+
+almond: {
+  name: 'Almond',
+  primary: '#EFBC9B',
+  background: '#FFF9F5',
+  secondary: '#FFE4D6',
+  text: '#5C2E0A',
+  textSecondary: '#FFAB91',
+  border: '#FFD2BA',
+  accent: '#FFB27E',
+  success: '#81C784',
+  warning: '#FFD54F',
+  error: '#E57373'
+},
+
+vanilla: {
+  name: 'Vanilla',
+  primary: '#F3E5AB',
+  background: '#FFFDF2',
+  secondary: '#FFF8DC',
+  text: '#5A3E00',
+  textSecondary: '#D4AF37',
+  border: '#FCEBB4',
+  accent: '#FFE082',
+  success: '#8BC34A',
+  warning: '#FFC107',
+  error: '#F44336'
+},
+
+seashell: {
+  name: 'Seashell',
+  primary: '#87CEEB',
+  background: '#FDF5E6',
+  secondary: '#F5F5DC',
+  text: '#005B63',
+  textSecondary: '#40E0D0',
+  border: '#B0E0E6',
+  accent: '#ADD8E6',
+  success: '#00C896',
+  warning: '#FFC107',
+  error: '#FF4500'
+},
+
+orchid: {
+  name: 'Orchid',
+  primary: '#DA70D6',
+  background: '#FFF0F5',
+  secondary: '#F8E1FF',
+  text: '#6A1B9A',
+  textSecondary: '#BA68C8',
+  border: '#CE93D8',
+  accent: '#AB47BC',
+  success: '#66BB6A',
+  warning: '#FFEB3B',
+  error: '#E91E63'
+},
+
+melon: {
+  name: 'Melon',
+  primary: '#FF6F61',
+  background: '#FFF7F3',
+  secondary: '#FFE4E1',
+  text: '#4B1C1C',
+  textSecondary: '#FF8A80',
+  border: '#FFABAB',
+  accent: '#FFB3A7',
+  success: '#81C784',
+  warning: '#FFD54F',
+  error: '#F44336'
+},
+
+champagne: {
+  name: 'Champagne',
+  primary: '#F7E7CE',
+  background: '#FFFDF4',
+  secondary: '#F3E5AB',
+  text: '#6B4226',
+  textSecondary: '#D2B48C',
+  border: '#E6D3A9',
+  accent: '#FFDDC1',
+  success: '#AED581',
+  warning: '#FFEB3B',
+  error: '#EF5350'
+},
+
+aqua: {
+  name: 'Aqua',
+  primary: '#00FFFF',
+  background: '#E0FFFF',
+  secondary: '#B2FFFF',
+  text: '#003C3C',
+  textSecondary: '#40E0D0',
+  border: '#AFEEEE',
+  accent: '#00CED1',
+  success: '#3CB371',
+  warning: '#FFD700',
+  error: '#F08080'
+},
+
+sand: {
+  name: 'Sand',
+  primary: '#EDC9AF',
+  background: '#FFF8E1',
+  secondary: '#FAEBD7',
+  text: '#5C4033',
+  textSecondary: '#A67B5B',
+  border: '#EED9C4',
+  accent: '#F4A460',
+  success: '#8BC34A',
+  warning: '#FFEB3B',
+  error: '#E57373'
+},
+
+periwinkle: {
+  name: 'Periwinkle',
+  primary: '#CCCCFF',
+  background: '#F5F5FF',
+  secondary: '#E6E6FA',
+  text: '#4B0082',
+  textSecondary: '#9370DB',
+  border: '#D8BFD8',
+  accent: '#B0C4DE',
+  success: '#00FA9A',
+  warning: '#FFEB3B',
+  error: '#F44336'
+},
+
+mintcream: {
+  name: 'Mint Cream',
+  primary: '#AAF0D1',
+  background: '#F5FFFA',
+  secondary: '#E0FFF9',
+  text: '#004D40',
+  textSecondary: '#00C896',
+  border: '#CCFFEB',
+  accent: '#2DD4BF',
+  success: '#16A34A',
+  warning: '#FCD34D',
+  error: '#DC2626'
+},
 
   ice: {
     name: 'Ice',
