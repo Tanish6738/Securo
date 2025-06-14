@@ -143,9 +143,84 @@ MonitoredEmailSchema.pre('save', function(next) {
   next()
 })
 
+// File Metadata Schema - stores only metadata, NOT actual files
+const FileMetadataSchema = new mongoose.Schema({
+  userId: { 
+    type: String, 
+    required: true,
+    index: true 
+  },
+  fileName: { 
+    type: String, 
+    required: true 
+  },
+  fileType: { 
+    type: String, 
+    required: true 
+  },
+  fileSize: { 
+    type: Number, 
+    required: true 
+  },
+  salt: { 
+    type: String, 
+    required: true 
+  },
+  iv: { 
+    type: String, 
+    required: true 
+  },
+  keyHash: { 
+    type: String, 
+    required: true 
+  },  localFileId: { 
+    type: String, 
+    required: false // Optional - for IndexedDB reference
+  },
+  tags: [String],
+  description: String,
+  isExported: { 
+    type: Boolean, 
+    default: false 
+  },
+  lastAccessed: { 
+    type: Date, 
+    default: Date.now 
+  },
+  createdAt: { 
+    type: Date, 
+    default: Date.now 
+  },
+  updatedAt: { 
+    type: Date, 
+    default: Date.now 
+  }
+});
+
+// Pre-save middleware to update timestamp
+FileMetadataSchema.pre('save', function(next) {
+  this.updatedAt = new Date();
+  next();
+});
+
+// Static method to create metadata entry
+FileMetadataSchema.statics.createMetadata = function(userId, encryptedFileData, localFileId = null) {
+  return new this({
+    userId,
+    fileName: encryptedFileData.fileName,
+    fileType: encryptedFileData.fileType,
+    fileSize: encryptedFileData.fileSize,
+    salt: encryptedFileData.salt,
+    iv: encryptedFileData.iv,
+    keyHash: encryptedFileData.keyHash,
+    localFileId
+  });
+};
+
 // Create models
 const User = mongoose.models.User || mongoose.model('User', UserSchema)
 const VaultItem = mongoose.models.VaultItem || mongoose.model('VaultItem', VaultItemSchema)
 const MonitoredEmail = mongoose.models.MonitoredEmail || mongoose.model('MonitoredEmail', MonitoredEmailSchema)
+const FileMetadata = mongoose.models.FileMetadata || mongoose.model('FileMetadata', FileMetadataSchema)
 
-export { User, VaultItem, MonitoredEmail }
+export { User, VaultItem, MonitoredEmail, FileMetadata }

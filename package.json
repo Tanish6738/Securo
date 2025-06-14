@@ -23,6 +23,7 @@
     "faker": "^6.6.6",
     "framer-motion": "^12.16.0",
     "gridfs-stream": "^1.1.1",
+    "idb-keyval": "^6.2.2",
     "keccak": "^3.0.4",
     "lucide-react": "^0.513.0",
     "mongodb": "^6.17.0",
