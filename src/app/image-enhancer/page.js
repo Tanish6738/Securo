@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Upload,
@@ -710,11 +711,12 @@ export default function ImageEnhancerPage() {
                       className="bg-theme-secondary/50 rounded-xl p-4"
                     >
                       {" "}
-                      <div className="flex items-center gap-4">
-                        <div className="relative">
-                          <img
+                      <div className="flex items-center gap-4">                        <div className="relative">
+                          <Image
                             src={file.originalDataUrl}
                             alt={file.name}
+                            width={64}
+                            height={64}
                             className="w-16 h-16 object-cover rounded-lg"
                           />
                           {file.processing && (
@@ -851,20 +853,22 @@ export default function ImageEnhancerPage() {
                           <div>
                             <p className="text-theme-text-secondary text-sm mb-2">
                               Original
-                            </p>
-                            <img
+                            </p>                            <Image
                               src={image.originalDataUrl}
                               alt={`Original ${image.name}`}
+                              width={400}
+                              height={256}
                               className="w-full h-64 object-contain rounded-lg bg-theme-secondary"
                             />
                           </div>
                           <div>
                             <p className="text-theme-text-secondary text-sm mb-2">
                               Enhanced
-                            </p>
-                            <img
+                            </p>                            <Image
                               src={image.processedDataUrl}
                               alt={`Enhanced ${image.name}`}
+                              width={400}
+                              height={256}
                               className="w-full h-64 object-contain rounded-lg bg-theme-secondary"
                             />
                           </div>
@@ -873,10 +877,11 @@ export default function ImageEnhancerPage() {
                         <div>
                           <p className="text-theme-text-secondary text-sm mb-2">
                             Enhanced Image
-                          </p>
-                          <img
+                          </p>                          <Image
                             src={image.processedDataUrl}
                             alt={`Enhanced ${image.name}`}
+                            width={600}
+                            height={384}
                             className="w-full max-h-96 object-contain rounded-lg bg-theme-secondary mx-auto"
                           />
                         </div>

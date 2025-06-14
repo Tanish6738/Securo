@@ -176,9 +176,8 @@ export default function DashboardPage() {
           <div className="mb-12 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-theme-text">
               Welcome back, {user?.firstName || "User"}! 👋
-            </h1>
-            <p className="text-xl text-theme-text-secondary max-w-2xl mx-auto">
-              Here's your comprehensive <span className="text-theme-primary font-semibold">privacy protection</span> overview and insights
+            </h1>            <p className="text-xl text-theme-text-secondary max-w-2xl mx-auto">
+              Here&apos;s your comprehensive <span className="text-theme-primary font-semibold">privacy protection</span> overview and insights
             </p>
             
             {/* Trust indicators */}
