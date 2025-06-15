@@ -4,6 +4,7 @@ import "./globals.css";
 import { dark } from "@clerk/themes";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeInitializer from "@/components/ThemeInitializer";
+import UserInitializer from "@/components/UserInitializer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -111,7 +112,9 @@ export default function RootLayout({ children }) {
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen font-sans`}
         >
+          {" "}
           <ThemeInitializer />
+          <UserInitializer />
           <ThemeProvider>
             <div className="min-h-screen flex flex-col bg-theme-background text-theme-text">
               <main className="flex-1">{children}</main>

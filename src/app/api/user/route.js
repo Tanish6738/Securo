@@ -13,19 +13,39 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    await connectDB()
-
-    // Find or create user in our database
+    await connectDB()    // Find or create user in our database
     let user = await User.findOne({ clerkId: userId })
     
     if (!user) {
       // Create new user record
+      console.log('Creating new user in database via API call:', userId)
       user = new User({
         clerkId: userId,
         email: clerkUser.primaryEmailAddress?.emailAddress,
-        username: clerkUser.username || clerkUser.firstName || 'User'
+        username: clerkUser.username || clerkUser.firstName || 'User',
+        settings: {
+          notifications: {
+            breachAlerts: true,
+            weeklyReports: true,
+            securityTips: false,
+            productUpdates: false
+          },
+          privacy: {
+            dataCollection: false,
+            analytics: false,
+            thirdPartySharing: false
+          },
+          security: {
+            twoFactorEnabled: false,
+            sessionTimeout: 30,
+            passwordChangeReminder: true
+          }
+        }
       })
       await user.save()
+      console.log('Successfully created user in database via API call:', userId)
+    } else {
+      console.log('User already exists in database:', userId)
     }
 
     // Return user data without sensitive information
@@ -54,7 +74,7 @@ export async function GET() {
   }
 }
 
-// POST - Update user settings
+// POST - Create or update user
 export async function POST(request) {
   try {
     const { userId } = await auth()
@@ -64,44 +84,85 @@ export async function POST(request) {
     }
 
     const body = await request.json()
-    const { settings, vaultPassword } = body
+    const { clerkId, email, firstName, lastName, imageUrl, settings, vaultPassword } = body
 
     await connectDB()
 
-    const user = await User.findOne({ clerkId: userId })
+    // Check if user already exists
+    let user = await User.findOne({ clerkId: userId })
     
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    if (user) {
+      // Update existing user with new data
+      if (email) user.email = email
+      if (firstName) user.username = firstName
+      if (settings) user.settings = { ...user.settings, ...settings }
+      if (vaultPassword) user.vaultPassword = vaultPassword
+      user.updatedAt = new Date()
+      
+      await user.save()
+      
+      const { vaultPassword: _, ...userResponse } = user.toObject()
+      
+      return NextResponse.json({ 
+        success: true, 
+        message: 'User updated successfully',
+        user: {
+          ...userResponse,
+          hasVaultPassword: !!user.vaultPassword
+        }
+      })
     }
 
-    // Update settings if provided
-    if (settings) {
-      user.settings = { ...user.settings, ...settings }
+    // Create new user if clerkId is provided
+    if (clerkId && clerkId === userId) {
+      user = new User({
+        clerkId: userId,
+        email: email,
+        username: firstName || 'User',
+        settings: {
+          notifications: {
+            breachAlerts: true,
+            weeklyReports: true,
+            securityTips: false,
+            productUpdates: false
+          },
+          privacy: {
+            dataCollection: false,
+            analytics: false,
+            thirdPartySharing: false
+          },
+          security: {
+            twoFactorEnabled: false,
+            sessionTimeout: 30,
+            passwordChangeReminder: true
+          }
+        }
+      })
+
+      await user.save()
+      console.log('✅ New user created in database:', userId)
+
+      const { vaultPassword: _, ...userResponse } = user.toObject()
+
+      return NextResponse.json({ 
+        success: true, 
+        message: 'User created successfully',
+        user: {
+          ...userResponse,
+          hasVaultPassword: !!user.vaultPassword
+        }
+      })
     }
 
-    // Update vault password if provided
-    if (vaultPassword) {
-      user.vaultPassword = vaultPassword
-    }
+    // If user doesn't exist and no clerkId provided, treat as settings update
+    return NextResponse.json({ error: 'User not found' }, { status: 404 })
 
-    await user.save()
-
-    // Return updated user data without sensitive information
-    const { vaultPassword: _, ...userResponse } = user.toObject()
-
-    return NextResponse.json({
-      message: 'User settings updated successfully',
-      user: {
-        ...userResponse,
-        hasVaultPassword: !!user.vaultPassword
-      }
-    })
   } catch (error) {
-    console.error('User POST error:', error)
-    return NextResponse.json(
-      { error: 'Failed to update user settings' },
-      { status: 500 }
-    )
+    console.error('❌ Error in POST /api/user:', error)
+    return NextResponse.json({ 
+      error: 'Internal server error',
+      details: error.message 
+    }, { status: 500 })
   }
 }
 

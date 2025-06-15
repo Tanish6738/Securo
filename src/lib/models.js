@@ -217,10 +217,182 @@ FileMetadataSchema.statics.createMetadata = function(userId, encryptedFileData, 
   });
 };
 
+// Shared Vault Schema for multi-member vaults
+const SharedVaultSchema = new mongoose.Schema({
+  name: { 
+    type: String, 
+    required: true 
+  },
+  description: String,
+  adminId: { 
+    type: String, 
+    required: true,
+    index: true 
+  },
+  memberIds: [{ 
+    type: String, 
+    required: true 
+  }],
+  isActive: { 
+    type: Boolean, 
+    default: true 
+  },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
+})
+
+// Pre-save middleware to update timestamp
+SharedVaultSchema.pre('save', function(next) {
+  this.updatedAt = new Date()
+  next()
+})
+
+// Vault PIN Schema for storing member PINs
+const VaultPinSchema = new mongoose.Schema({
+  vaultId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'SharedVault',
+    required: true,
+    index: true 
+  },
+  userId: { 
+    type: String, 
+    required: true,
+    index: true 
+  },  pinHash: { 
+    type: String, 
+    required: function() {
+      return this.isSet === true
+    }
+  },
+  isSet: { 
+    type: Boolean, 
+    default: false 
+  },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
+})
+
+// Compound index for vaultId + userId
+VaultPinSchema.index({ vaultId: 1, userId: 1 }, { unique: true })
+
+// Pre-save middleware to hash PIN and update timestamp
+VaultPinSchema.pre('save', async function(next) {
+  this.updatedAt = new Date()
+  
+  // If pinHash is not modified, just update timestamp
+  if (!this.isModified('pinHash')) {
+    return next()
+  }
+  
+  // If pinHash is provided and not empty, hash it
+  if (this.pinHash && this.pinHash.length > 0) {
+    this.pinHash = await bcrypt.hash(this.pinHash, 12)
+    this.isSet = true
+  } else {
+    // If pinHash is empty or not provided, ensure isSet is false
+    this.isSet = false
+  }
+  
+  next()
+})
+
+// Method to verify PIN
+VaultPinSchema.methods.verifyPin = async function(pin) {
+  if (!this.pinHash || !this.isSet) return false
+  return bcrypt.compare(pin, this.pinHash)
+}
+
+// Shared Vault File Schema for storing encrypted files in shared vaults
+const SharedVaultFileSchema = new mongoose.Schema({
+  vaultId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'SharedVault',
+    required: true,
+    index: true 
+  },
+  uploadedBy: { 
+    type: String, 
+    required: true,
+    index: true 
+  },
+  fileName: { 
+    type: String, 
+    required: true 
+  },
+  originalName: { 
+    type: String, 
+    required: true 
+  },
+  mimeType: { 
+    type: String, 
+    required: true 
+  },
+  fileSize: { 
+    type: Number, 
+    required: true 
+  },
+  encryptedData: { 
+    type: Buffer, 
+    required: true 
+  },
+  encryptionIv: { 
+    type: String, 
+    required: true 
+  },
+  tags: [String],
+  description: String,
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
+})
+
+// Pre-save middleware to update timestamp
+SharedVaultFileSchema.pre('save', function(next) {
+  this.updatedAt = new Date()
+  next()
+})
+
+// Vault History Schema for audit logging
+const VaultHistorySchema = new mongoose.Schema({
+  vaultId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'SharedVault',
+    required: true,
+    index: true 
+  },
+  userId: { 
+    type: String, 
+    required: true,
+    index: true 
+  },
+  fileId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'SharedVaultFile',
+    required: false 
+  },  action: { 
+    type: String, 
+    required: true,
+    enum: ['VAULT_CREATE', 'VAULT_ACCESS', 'FILE_VIEW', 'FILE_DOWNLOAD', 'FILE_UPLOAD', 'FILE_EDIT', 'FILE_DELETE', 'MEMBER_ADD', 'MEMBER_REMOVE', 'PIN_SET', 'PIN_CHANGE']
+  },
+  details: String,
+  ipAddress: String,
+  userAgent: String,
+  location: String,
+  timestamp: { type: Date, default: Date.now }
+})
+
+// Index for efficient querying
+VaultHistorySchema.index({ vaultId: 1, timestamp: -1 })
+VaultHistorySchema.index({ userId: 1, timestamp: -1 })
+
 // Create models
 const User = mongoose.models.User || mongoose.model('User', UserSchema)
 const VaultItem = mongoose.models.VaultItem || mongoose.model('VaultItem', VaultItemSchema)
 const MonitoredEmail = mongoose.models.MonitoredEmail || mongoose.model('MonitoredEmail', MonitoredEmailSchema)
 const FileMetadata = mongoose.models.FileMetadata || mongoose.model('FileMetadata', FileMetadataSchema)
+const SharedVault = mongoose.models.SharedVault || mongoose.model('SharedVault', SharedVaultSchema)
+const VaultPin = mongoose.models.VaultPin || mongoose.model('VaultPin', VaultPinSchema)
+const SharedVaultFile = mongoose.models.SharedVaultFile || mongoose.model('SharedVaultFile', SharedVaultFileSchema)
+const VaultHistory = mongoose.models.VaultHistory || mongoose.model('VaultHistory', VaultHistorySchema)
 
-export { User, VaultItem, MonitoredEmail, FileMetadata }
+export { User, VaultItem, MonitoredEmail, FileMetadata, SharedVault, VaultPin, SharedVaultFile, VaultHistory }

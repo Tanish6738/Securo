@@ -22,14 +22,14 @@ const navigationGroups = [
     label: "Dashboard",
     href: "/dashboard",
     type: "link",
-  },
-  {
+  },  {
     label: "Security Tools",
     type: "dropdown",
     items: [
       { href: "/breach-monitor", label: "Breach Monitor" },
       { href: "/password-checker", label: "Password Checker" },
       { href: "/vault", label: "Personal Vault" },
+      { href: "/shared-vault", label: "Shared Vault" },
       { href: "/encrypt-files", label: "Encrypt Files" },
     ],
   },
@@ -41,11 +41,17 @@ const navigationGroups = [
       { href: "/temp-email", label: "Temporary Email" },
       { href: "/image-enhancer", label: "Image Enhancer" },
     ],
-  },
-  {
+  },  {
     label: "News",
     href: "/privacy-news",
     type: "link",
+  },
+  {
+    label: "Dev Tools",
+    type: "dropdown",
+    items: [
+      { href: "/user-sync-test", label: "User Sync Test" },
+    ],
   },
   {
     label: "Settings",
