@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   MagnifyingGlassIcon,
@@ -39,7 +39,7 @@ export default function UserSearchSelector({
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [searchQuery]);
+  }, [searchQuery, searchUsers]);
 
   // Click outside to close dropdown
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function UserSearchSelector({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const searchUsers = async (query) => {
+  const searchUsers = useCallback(async (query) => {
     if (!query.trim()) return;
 
     setIsSearching(true);
@@ -83,11 +83,10 @@ export default function UserSearchSelector({
       }
     } catch (error) {
       console.error("Search error:", error);
-      setSearchResults([]);
-    } finally {
+      setSearchResults([]);    } finally {
       setIsSearching(false);
     }
-  };
+  }, [selectedUsers, excludeUsers]);
 
   const addUser = (user) => {
     if (selectedUsers.length >= maxUsers) {

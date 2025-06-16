@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   KeyIcon,
@@ -125,9 +125,8 @@ export function PinSetupModal({ isOpen, onClose, vaultData, onPinSet }) {
               <div className="flex items-center space-x-3">
                 <UsersIcon className="h-5 w-5 text-theme-primary" />
                 <div>
-                  <p className="text-sm font-medium text-white">{vaultData.vaultName}</p>
-                  <p className="text-xs text-theme-textSecondary">
-                    You've been added to this shared vault
+                  <p className="text-sm font-medium text-white">{vaultData.vaultName}</p>                  <p className="text-xs text-theme-textSecondary">
+                    You&apos;ve been added to this shared vault
                   </p>
                 </div>
               </div>
@@ -214,7 +213,7 @@ export function PinSetupModal({ isOpen, onClose, vaultData, onPinSet }) {
             <div className="mt-4 p-3 bg-theme-primary border border-theme-primary rounded-lg">
               <p className="text-xs text-white">
                 <BellIcon className="h-3 w-3 inline mr-1" />
-                Your PIN is required along with all other members' PINs to unlock the vault
+                Your PIN is required along with all other members&apos; PINs to unlock the vault
               </p>
             </div>
           </motion.div>
@@ -501,14 +500,13 @@ export function NotificationToast({ notification, onClose }) {
 export function VaultDetailsModal({ isOpen, onClose, vaultData }) {
   const [memberDetails, setMemberDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     if (isOpen && vaultData) {
       loadMemberDetails();
     }
-  }, [isOpen, vaultData]);
+  }, [isOpen, vaultData, loadMemberDetails]);
 
-  const loadMemberDetails = async () => {
+  const loadMemberDetails = useCallback(async () => {
     setLoading(true);
     try {
       // Get user details for each member
@@ -544,12 +542,11 @@ export function VaultDetailsModal({ isOpen, onClose, vaultData }) {
 
       const memberData = await Promise.all(memberPromises);
       setMemberDetails(memberData);
-    } catch (error) {
-      console.error("Error loading member details:", error);
+    } catch (error) {      console.error("Error loading member details:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [vaultData]);
 
   const handleClose = () => {
     setMemberDetails([]);
@@ -839,9 +836,8 @@ export function VaultPinWaitingModal({ isOpen, onClose, vaultData, memberProgres
                   <p className="text-sm font-medium text-white">
                     Vault Unlock in Progress
                   </p>
-                  <p className="text-xs text-theme-textSecondary mt-1">
-                    The vault will automatically unlock once all team members have entered their PINs. 
-                    You'll receive a notification when it's ready.
+                  <p className="text-xs text-theme-textSecondary mt-1">                    The vault will automatically unlock once all team members have entered their PINs. 
+                    You&apos;ll receive a notification when it&apos;s ready.
                   </p>
                 </div>
               </div>

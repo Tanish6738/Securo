@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -91,17 +91,16 @@ export default function SharedVaultPage() {
     memberEmails: [],
     unlockDurationMinutes: 60,
     memberPins: {},
-  });
-  useEffect(() => {
+  });  useEffect(() => {
     if (isLoaded && user) {
       loadVaults();
       initializeNotificationService();
       requestNotificationPermission();
     }
-  }, [isLoaded, user]);
+  }, [isLoaded, user, initializeNotificationService]);
 
   // Initialize notification service and WebSocket connection
-  const initializeNotificationService = () => {
+  const initializeNotificationService = useCallback(() => {
     if (user?.id) {
       notificationService.connect(user.id);
 
@@ -126,10 +125,9 @@ export default function SharedVaultPage() {
         notificationService.off("fileUploadRequest", handleFileUploadRequest);
         notificationService.off("uploadApproved", handleUploadApproved);
         notificationService.off("uploadDenied", handleUploadDenied);
-        notificationService.disconnect();
-      };
+        notificationService.disconnect();      };
     }
-  };
+  }, [user]);
 
   // Request browser notification permission
   const requestNotificationPermission = async () => {
@@ -1133,9 +1131,8 @@ export default function SharedVaultPage() {
                   <h3 className="text-xl font-bold text-theme-primary mb-2">
                     Enter PINs
                   </h3>
-                  <p className="text-theme-textSecondary">
-                    All members must enter their PINs to unlock "
-                    {selectedVault.name}"
+                  <p className="text-theme-textSecondary">                    All members must enter their PINs to unlock &quot;
+                    {selectedVault.name}&quot;
                   </p>
                 </div>
 
@@ -1204,10 +1201,9 @@ export default function SharedVaultPage() {
                   <LockClosedIcon className="h-12 w-12 text-theme-primary mx-auto mb-3" />
                   <h3 className="text-xl font-bold text-theme-primary mb-2">
                     Vault Password
-                  </h3>
-                  <p className="text-theme-textSecondary">
-                    Enter the vault password to access files in "
-                    {selectedVault.name}"
+                  </h3>                  <p className="text-theme-textSecondary">
+                    Enter the vault password to access files in &quot;
+                    {selectedVault.name}&quot;
                   </p>
                 </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -10,10 +10,11 @@ import {
   EyeIcon,
   EyeSlashIcon,
 } from "@heroicons/react/24/outline";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-
+import Card, { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
+// import { Button } from "@/components/ui/Button";
+// import { Input } from "@/components/ui/Input";
 export default function SetPinPage() {
   const { user, isLoaded } = useUser();
   const [vaults, setVaults] = useState([]);
@@ -22,22 +23,20 @@ export default function SetPinPage() {
   const [pin, setPin] = useState("");
   const [confirmPin, setConfirmPin] = useState("");
   const [showPin, setShowPin] = useState(false);
-  const [showConfirmPin, setShowConfirmPin] = useState(false);
-
-  useEffect(() => {
+  const [showConfirmPin, setShowConfirmPin] = useState(false);  useEffect(() => {
     if (isLoaded && user) {
       loadVaultsWithoutPins();
     }
-  }, [isLoaded, user]);
+  }, [isLoaded, user, loadVaultsWithoutPins]);
 
-  const loadVaultsWithoutPins = async () => {
+  const loadVaultsWithoutPins = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch("/api/shared-vault");
       const data = await response.json();
 
       if (response.ok) {
-        // Filter vaults where user hasn't set PIN yet
+        // Filter vaults where user hasn&apos;t set PIN yet
         const vaultsNeedingPins = data.vaults?.filter(vault => {
           const userPinStatus = vault.memberPinStatus?.find(
             status => status.userId === user.id
@@ -48,16 +47,15 @@ export default function SetPinPage() {
       } else {
         console.error("Failed to load vaults:", data.error);
       }
-    } catch (error) {
-      console.error("Error loading vaults:", error);
+    } catch (error) {      console.error("Error loading vaults:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   const handleSetPin = async () => {
     if (pin !== confirmPin) {
-      alert("PINs don't match");
+      alert("PINs don&apos;t match");
       return;
     }
 
@@ -119,7 +117,7 @@ export default function SetPinPage() {
             <KeyIcon className="h-16 w-16 text-theme-primary mx-auto mb-4" />
             <h1 className="text-3xl font-bold text-white mb-2">Set Your Vault PINs</h1>
             <p className="text-theme-textSecondary">
-              Set secure PINs for shared vaults you've been invited to
+              Set secure PINs for shared vaults you&apos;ve been invited to
             </p>
           </div>
         </div>
@@ -135,9 +133,8 @@ export default function SetPinPage() {
         ) : vaults.length === 0 ? (
           <div className="text-center py-12">
             <CheckCircleIcon className="h-24 w-24 text-theme-success mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-2">All Set!</h3>
-            <p className="text-theme-textSecondary">
-              You've set PINs for all your shared vaults. You can change them anytime from the vault settings.
+            <h3 className="text-xl font-semibold text-white mb-2">All Set!</h3>            <p className="text-theme-textSecondary">
+              You&apos;ve set PINs for all your shared vaults. You can change them anytime from the vault settings.
             </p>
           </div>
         ) : (
@@ -148,9 +145,8 @@ export default function SetPinPage() {
                 <div className="flex items-center space-x-3">
                   <ExclamationTriangleIcon className="h-6 w-6 text-theme-warning" />
                   <div>
-                    <CardTitle className="text-lg text-white">PIN Setup Required</CardTitle>
-                    <CardDescription>
-                      Set secure PINs for the vaults you've been invited to. All members must enter their PINs to unlock a vault.
+                    <CardTitle className="text-lg text-white">PIN Setup Required</CardTitle>                    <CardDescription>
+                      Set secure PINs for the vaults you&apos;ve been invited to. All members must enter their PINs to unlock a vault.
                     </CardDescription>
                   </div>
                 </div>
@@ -161,7 +157,7 @@ export default function SetPinPage() {
                   <ul className="text-sm text-theme-textSecondary space-y-1">
                     <li>• Minimum 4 characters</li>
                     <li>• Use a unique PIN for each vault</li>
-                    <li>• Don't reuse passwords or easily guessable numbers</li>
+                    <li>• Don&apos;t reuse passwords or easily guessable numbers</li>
                     <li>• Consider using a mix of numbers and letters</li>
                   </ul>
                 </div>
@@ -225,12 +221,11 @@ export default function SetPinPage() {
                   className="overflow-hidden"
                 >
                   <Card className="bg-theme-card/80 backdrop-blur-lg border-theme-primary/30">
-                    <CardHeader>
-                      <CardTitle className="text-lg text-white">
-                        Set PIN for "{selectedVault.name}"
+                    <CardHeader>                      <CardTitle className="text-lg text-white">
+                        Set PIN for &quot;{selectedVault.name}&quot;
                       </CardTitle>
                       <CardDescription>
-                        Create a secure PIN for this vault. You'll need this to unlock the vault along with other members.
+                        Create a secure PIN for this vault. You&apos;ll need this to unlock the vault along with other members.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -287,7 +282,7 @@ export default function SetPinPage() {
                           </button>
                         </div>
                         {confirmPin && pin !== confirmPin && (
-                          <p className="text-sm text-theme-error mt-1">PINs don't match</p>
+                          <p className="text-sm text-theme-error mt-1">PINs don&apos;t match</p>
                         )}
                       </div>
 
