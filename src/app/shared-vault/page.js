@@ -83,34 +83,31 @@ export default function SharedVaultPage() {
   const [uploadDescription, setUploadDescription] = useState("");
   const [uploadTags, setUploadTags] = useState("");
   const [isUploading, setIsUploading] = useState(false);
-
   // Create vault form state
   const [createForm, setCreateForm] = useState({
     name: "",
     description: "",
     memberEmails: [],
     unlockDurationMinutes: 60,
-    memberPins: {},  });
-  // Request browser notification permission - regular function
-  const requestNotificationPermission = async () => {
+    memberPins: {},
+  });  // Request browser notification permission - using useCallback for stability
+  const requestNotificationPermission = useCallback(async () => {
     await fallbackNotifications.requestPermission();
-  };
+  }, []);
 
-  // Show notification - regular function to avoid useCallback issues
-  const showNotification = (type, message) => {
+  // Show notification - using useCallback for stability
+  const showNotification = useCallback((type, message) => {
     const notification = {
       id: Date.now(),
       type,
       message,
       timestamp: new Date(),
-    };
-
-    setNotifications((prev) => [...prev, notification]);
+    };    setNotifications((prev) => [...prev, notification]);
     fallbackNotifications.showBrowserNotification("Shared Vault", message);
-  };
+  }, []);
 
-  // Load vaults function - regular function to avoid useCallback issues
-  const loadVaults = async () => {
+  // Load vaults function - using useCallback for stability
+  const loadVaults = useCallback(async () => {
     if (!user?.id) return;
     
     setLoading(true);
@@ -123,48 +120,47 @@ export default function SharedVaultPage() {
         console.error("Failed to load vaults");
       }
     } catch (error) {
-      console.error("Error loading vaults:", error);
-    } finally {
+      console.error("Error loading vaults:", error);    } finally {
       setLoading(false);
-    }  };
+    }
+  }, [user?.id]);
 
-  // Notification event handlers - regular functions to avoid circular dependencies
-  const handleVaultInvitation = (data) => {
-    showNotification(
+  // Notification event handlers - using useCallback for stability
+  const handleVaultInvitation = useCallback((data) => {    showNotification(
       "vault_invitation",
       `You've been invited to "${data.vaultName}" by ${data.adminName}`
     );
     loadVaults();
-  };
+  }, [showNotification, loadVaults]);
 
-  const handlePinSetupRequired = (data) => {
+  const handlePinSetupRequired = useCallback((data) => {
     setPinSetupData(data);
-    setShowPinSetupModal(true);
-    showNotification(
+    setShowPinSetupModal(true);    showNotification(
       "pin_setup_required",
       `PIN setup required for "${data.vaultName}"`
     );
-  };
+  }, [showNotification]);
 
-  const handleVaultUnlockRequest = (data) => {
+  const handleVaultUnlockRequest = useCallback((data) => {
     setVaultAccessData(data);
-    setShowVaultAccessModal(true);
-    showNotification(
+    setShowVaultAccessModal(true);    showNotification(
       "vault_unlock_request",
       `${data.requesterName} is requesting access to "${data.vaultName}"`
     );
-  };  const handleVaultUnlocked = (data) => {
-    showNotification(
+  }, [showNotification]);
+
+  const handleVaultUnlocked = useCallback((data) => {    showNotification(
       "vault_unlocked",
       `"${data.vaultName}" has been unlocked for ${data.unlockDurationMinutes} minutes`
     );
     loadVaults();
-  };
+  }, [showNotification, loadVaults]);
 
-  const handleVaultLocked = (data) => {
-    showNotification("vault_locked", `"${data.vaultName}" has been locked`);
+  const handleVaultLocked = useCallback((data) => {    showNotification("vault_locked", `"${data.vaultName}" has been locked`);
     loadVaults();
-  };  const handlePinProgressUpdate = (data) => {
+  }, [showNotification, loadVaults]);
+
+  const handlePinProgressUpdate = useCallback((data) => {
     // Update PIN waiting modal with new progress
     if (showPinWaitingModal && pinWaitingData?.vaultId === data.vaultId) {
       setPinWaitingData((prev) => ({
@@ -175,8 +171,7 @@ export default function SharedVaultPage() {
       // Check if all members have entered PINs
       const allEntered = data.memberProgress?.every(
         (member) => member.pinEntered
-      );
-      if (allEntered) {
+      );      if (allEntered) {
         setShowPinWaitingModal(false);
         showNotification(
           "vault_unlocked",
@@ -185,36 +180,32 @@ export default function SharedVaultPage() {
         loadVaults();
       }
     }
-  };
-
-  const handleFileUploadRequest = (data) => {
+  }, [showPinWaitingModal, pinWaitingData, showNotification, loadVaults]);
+  const handleFileUploadRequest = useCallback((data) => {
     setFileUploadPermissionData(data);
     setShowFileUploadPermissionModal(true);
     showNotification(
       "file_upload_request",
       `${data.uploaderName} wants to upload "${data.fileName}"`
     );
-  };
-  const proceedWithApprovedUpload = async (data) => {
+  }, [showNotification]);  const proceedWithApprovedUpload = useCallback(async (data) => {
     // This would be called when the upload is approved
     console.log("Upload approved, should proceed with upload:", data);
-  };
+  }, []);
 
   // Handle upload approval/denial notifications
-  const handleUploadApproved = (data) => {
-    showNotification("upload_approved", "Your file upload has been approved!");
+  const handleUploadApproved = useCallback((data) => {    showNotification("upload_approved", "Your file upload has been approved!");
     // Automatically proceed with upload if this user requested it
     proceedWithApprovedUpload(data);
-  };
+  }, [showNotification, proceedWithApprovedUpload]);
 
-  const handleUploadDenied = (data) => {
-    showNotification(
+  const handleUploadDenied = useCallback((data) => {    showNotification(
       "upload_denied",
       `Upload denied: ${data.reason || "No reason provided"}`
-    );  };
-
-  // Initialize notification service - regular function
-  const initializeNotificationService = () => {
+    );
+  }, [showNotification]);
+  // Initialize notification service - using useCallback for stability
+  const initializeNotificationService = useCallback(() => {
     if (user?.id) {
       notificationService.connect(user.id);
 
@@ -235,15 +226,14 @@ export default function SharedVaultPage() {
         notificationService.off("pinSetupRequired", handlePinSetupRequired);
         notificationService.off("vaultUnlockRequest", handleVaultUnlockRequest);
         notificationService.off("vaultUnlocked", handleVaultUnlocked);
-        notificationService.off("vaultLocked", handleVaultLocked);
-        notificationService.off("pinProgressUpdate", handlePinProgressUpdate);
+        notificationService.off("vaultLocked", handleVaultLocked);        notificationService.off("pinProgressUpdate", handlePinProgressUpdate);
         notificationService.off("fileUploadRequest", handleFileUploadRequest);
         notificationService.off("uploadApproved", handleUploadApproved);
         notificationService.off("uploadDenied", handleUploadDenied);
         notificationService.disconnect();
       };
     }
-  };
+  }, [user?.id, handleVaultInvitation, handlePinSetupRequired, handleVaultUnlockRequest, handleVaultUnlocked, handleVaultLocked, handlePinProgressUpdate, handleFileUploadRequest, handleUploadApproved, handleUploadDenied]);
   // Remove notification
   const removeNotification = (id) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
@@ -731,7 +721,7 @@ export default function SharedVaultPage() {
     setVaultPassword("");
     setShowPasswordModal(true);
   };
-  const loadVaultFiles = async () => {
+  const loadVaultFiles = useCallback(async () => {
     if (!selectedVault || !vaultPassword) return;
 
     try {
@@ -750,13 +740,12 @@ export default function SharedVaultPage() {
         console.error("DEBUG: Failed to load vault files:", data.error);
         alert("Failed to load vault files: " + data.error);
       }
-    } catch (error) {
-      console.error("DEBUG: Error loading vault files:", error);
+    } catch (error) {      console.error("DEBUG: Error loading vault files:", error);
       alert("Error loading vault files: " + error.message);
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedVault, vaultPassword]);
 
   const getFileIcon = (mimeType) => {
     if (mimeType?.startsWith("image/")) return PhotoIcon;
@@ -772,27 +761,25 @@ export default function SharedVaultPage() {
     if (minutes < 60) return `${minutes}m`;
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;    return `${hours}h ${mins}m`;
-  };
-
-  // Separate useEffects to avoid circular dependencies
+  };  // Separate useEffects to avoid circular dependencies
   useEffect(() => {
     if (isLoaded && user) {
       requestNotificationPermission();
     }
-  }, [isLoaded, user]);
+  }, [isLoaded, user, requestNotificationPermission]);
 
   useEffect(() => {
     if (isLoaded && user) {
       loadVaults();
     }
-  }, [isLoaded, user]);
+  }, [isLoaded, user, loadVaults]);
 
   useEffect(() => {
     if (isLoaded && user) {
       const cleanup = initializeNotificationService();
       return cleanup;
     }
-  }, [isLoaded, user]);
+  }, [isLoaded, user, initializeNotificationService]);
 
   if (!isLoaded) {
     return (
