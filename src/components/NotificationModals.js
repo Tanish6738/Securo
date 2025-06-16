@@ -23,7 +23,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 
 // PIN Setup Modal for when user is added to a vault
-export function PinSetupModal({ isOpen, onClose, vaultData, onPinSet }) {
+function PinSetupModal({ isOpen, onClose, vaultData, onPinSet }) {
   const [pin, setPin] = useState("");
   const [confirmPin, setConfirmPin] = useState("");
   const [showPin, setShowPin] = useState(false);
@@ -224,7 +224,7 @@ export function PinSetupModal({ isOpen, onClose, vaultData, onPinSet }) {
 }
 
 // Vault Access Modal for entering PIN to unlock vault
-export function VaultAccessModal({ isOpen, onClose, vaultData, onPinSubmit }) {
+function VaultAccessModal({ isOpen, onClose, vaultData, onPinSubmit }) {
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -396,7 +396,7 @@ export function VaultAccessModal({ isOpen, onClose, vaultData, onPinSubmit }) {
 }
 
 // Notification Toast for various vault events
-export function NotificationToast({ notification, onClose }) {
+function NotificationToast({ notification, onClose }) {
   const [isVisible, setIsVisible] = useState(true);
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -497,7 +497,7 @@ export function NotificationToast({ notification, onClose }) {
 }
 
 // Vault Details Modal for admin to view member PIN status
-export function VaultDetailsModal({ isOpen, onClose, vaultData }) {
+function VaultDetailsModal({ isOpen, onClose, vaultData }) {
   const [memberDetails, setMemberDetails] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -688,7 +688,7 @@ export function VaultDetailsModal({ isOpen, onClose, vaultData }) {
 }
 
 // Vault PIN Waiting Modal - shows progress while waiting for all members to enter PINs
-export function VaultPinWaitingModal({ isOpen, onClose, vaultData, memberProgress = [] }) {
+function VaultPinWaitingModal({ isOpen, onClose, vaultData, memberProgress = [] }) {
   const [progress, setProgress] = useState(memberProgress);
   const [timeElapsed, setTimeElapsed] = useState(0);
 
@@ -863,7 +863,7 @@ export function VaultPinWaitingModal({ isOpen, onClose, vaultData, memberProgres
 }
 
 // File Upload Permission Modal
-export function FileUploadPermissionModal({ isOpen, onClose, vaultData, onApprove, onDeny }) {
+function FileUploadPermissionModal({ isOpen, onClose, vaultData, onApprove, onDeny }) {
   const [reason, setReason] = useState("");
   const [loading, setLoading] = useState(false);
 
