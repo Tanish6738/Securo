@@ -97,7 +97,140 @@ export default function SharedVaultPage() {
       initializeNotificationService();
       requestNotificationPermission();
     }
-  }, [isLoaded, user, initializeNotificationService]);
+  }, [isLoaded, user, loadVaults, initializeNotificationService]);
+
+  // Request browser notification permission
+  const requestNotificationPermission = async () => {
+    await fallbackNotifications.requestPermission();
+  };
+
+  // Show notification
+  const showNotification = useCallback((type, message) => {
+    const notification = {
+      id: Date.now(),
+      type,
+      message,
+      timestamp: new Date(),
+    };
+
+    setNotifications((prev) => [...prev, notification]);
+
+    // Show browser notification as fallback
+    fallbackNotifications.showBrowserNotification("Shared Vault", message);
+  }, []);
+
+  // Load vaults function - declare early to use in handlers
+  const loadVaults = useCallback(async () => {
+    if (!user?.id) return;
+    
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/shared-vault?userId=${user.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        setVaults(data.vaults || []);
+      } else {
+        console.error("Failed to load vaults");
+      }
+    } catch (error) {
+      console.error("Error loading vaults:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [user?.id]);
+
+  // Notification event handlers wrapped in useCallback
+  const handleVaultInvitation = useCallback((data) => {
+    showNotification(
+      "vault_invitation",
+      `You've been invited to "${data.vaultName}" by ${data.adminName}`
+    );
+    loadVaults(); // Refresh vault list
+  }, [showNotification, loadVaults]);
+
+  const handlePinSetupRequired = useCallback((data) => {
+    setPinSetupData(data);
+    setShowPinSetupModal(true);
+    showNotification(
+      "pin_setup_required",
+      `PIN setup required for "${data.vaultName}"`
+    );
+  }, [showNotification]);
+
+  const handleVaultUnlockRequest = useCallback((data) => {
+    setVaultAccessData(data);
+    setShowVaultAccessModal(true);
+    showNotification(
+      "vault_unlock_request",
+      `${data.requesterName} is requesting access to "${data.vaultName}"`
+    );
+  }, [showNotification]);
+
+  const handleVaultUnlocked = useCallback((data) => {
+    showNotification(
+      "vault_unlocked",
+      `"${data.vaultName}" has been unlocked for ${data.unlockDurationMinutes} minutes`
+    );
+    loadVaults(); // Refresh to show updated status
+  }, [showNotification, loadVaults]);
+
+  const handleVaultLocked = useCallback((data) => {
+    showNotification("vault_locked", `"${data.vaultName}" has been locked`);
+    loadVaults(); // Refresh to show updated status
+  }, [showNotification, loadVaults]);
+
+  const handlePinProgressUpdate = useCallback((data) => {
+    // Update PIN waiting modal with new progress
+    if (showPinWaitingModal && pinWaitingData?.vaultId === data.vaultId) {
+      setPinWaitingData((prev) => ({
+        ...prev,
+        memberProgress: data.memberProgress || [],
+      }));
+
+      // Check if all members have entered PINs
+      const allEntered = data.memberProgress?.every(
+        (member) => member.pinEntered
+      );
+      if (allEntered) {
+        setShowPinWaitingModal(false);
+        showNotification(
+          "vault_unlocked",
+          `"${data.vaultName}" is now unlocked!`
+        );
+        loadVaults();
+      }
+    }
+  }, [showPinWaitingModal, pinWaitingData?.vaultId, showNotification, loadVaults]);
+
+  const handleFileUploadRequest = useCallback((data) => {
+    setFileUploadPermissionData(data);
+    setShowFileUploadPermissionModal(true);
+    showNotification(
+      "file_upload_request",
+      `${data.uploaderName} wants to upload "${data.fileName}"`
+    );
+  }, [showNotification]);
+
+  const proceedWithApprovedUpload = useCallback(async (data) => {
+    // This would be called when the upload is approved
+    // For now, just show a success message as the actual upload logic
+    // would need to be integrated with the stored file data
+    console.log("Upload approved, should proceed with upload:", data);
+  }, []);
+
+  // Handle upload approval/denial notifications
+  const handleUploadApproved = useCallback((data) => {
+    showNotification("upload_approved", "Your file upload has been approved!");
+    // Automatically proceed with upload if this user requested it
+    proceedWithApprovedUpload(data);
+  }, [showNotification, proceedWithApprovedUpload]);
+
+  const handleUploadDenied = useCallback((data) => {
+    showNotification(
+      "upload_denied",
+      `Upload denied: ${data.reason || "No reason provided"}`
+    );
+  }, [showNotification]);
 
   // Initialize notification service and WebSocket connection
   const initializeNotificationService = useCallback(() => {
@@ -127,125 +260,22 @@ export default function SharedVaultPage() {
         notificationService.off("uploadDenied", handleUploadDenied);
         notificationService.disconnect();      };
     }
-  }, [user]);
-
-  // Request browser notification permission
-  const requestNotificationPermission = async () => {
-    await fallbackNotifications.requestPermission();
-  };
-
-  // Notification event handlers
-  const handleVaultInvitation = (data) => {
-    showNotification(
-      "vault_invitation",
-      `You've been invited to "${data.vaultName}" by ${data.adminName}`
-    );
-    loadVaults(); // Refresh vault list
-  };
-
-  const handlePinSetupRequired = (data) => {
-    setPinSetupData(data);
-    setShowPinSetupModal(true);
-    showNotification(
-      "pin_setup_required",
-      `PIN setup required for "${data.vaultName}"`
-    );
-  };
-
-  const handleVaultUnlockRequest = (data) => {
-    setVaultAccessData(data);
-    setShowVaultAccessModal(true);
-    showNotification(
-      "vault_unlock_request",
-      `${data.requesterName} is requesting access to "${data.vaultName}"`
-    );
-  };
-
-  const handleVaultUnlocked = (data) => {
-    showNotification(
-      "vault_unlocked",
-      `"${data.vaultName}" has been unlocked for ${data.unlockDurationMinutes} minutes`
-    );
-    loadVaults(); // Refresh to show updated status
-  };
-
-  const handleVaultLocked = (data) => {
-    showNotification("vault_locked", `"${data.vaultName}" has been locked`);
-    loadVaults(); // Refresh to show updated status
-  };
-
-  const handlePinProgressUpdate = (data) => {
-    // Update PIN waiting modal with new progress
-    if (showPinWaitingModal && pinWaitingData?.vaultId === data.vaultId) {
-      setPinWaitingData((prev) => ({
-        ...prev,
-        memberProgress: data.memberProgress || [],
-      }));
-
-      // Check if all members have entered PINs
-      const allEntered = data.memberProgress?.every(
-        (member) => member.pinEntered
-      );
-      if (allEntered) {
-        setShowPinWaitingModal(false);
-        showNotification(
-          "vault_unlocked",
-          `"${data.vaultName}" is now unlocked!`
-        );
-        loadVaults();
-      }
-    }
-  };
-
-  const handleFileUploadRequest = (data) => {
-    setFileUploadPermissionData(data);
-    setShowFileUploadPermissionModal(true);
-    showNotification(
-      "file_upload_request",
-      `${data.uploaderName} wants to upload "${data.fileName}"`
-    );
-  };
-
-  // Handle upload approval/denial notifications
-  const handleUploadApproved = (data) => {
-    showNotification("upload_approved", "Your file upload has been approved!");
-    // Automatically proceed with upload if this user requested it
-    proceedWithApprovedUpload(data);
-  };
-
-  const handleUploadDenied = (data) => {
-    showNotification(
-      "upload_denied",
-      `Upload denied: ${data.reason || "No reason provided"}`
-    );
-  };
-
-  const proceedWithApprovedUpload = async (data) => {
-    // This would be called when the upload is approved
-    // For now, just show a success message as the actual upload logic
-    // would need to be integrated with the stored file data
-    console.log("Upload approved, should proceed with upload:", data);
-  };
-
-  // Show notification
-  const showNotification = (type, message) => {
-    const notification = {
-      id: Date.now(),
-      type,
-      message,
-      timestamp: new Date(),
-    };
-
-    setNotifications((prev) => [...prev, notification]);
-
-    // Show browser notification as fallback
-    fallbackNotifications.showBrowserNotification("Shared Vault", message);
-  };
-
+  }, [
+    user,
+    handleVaultInvitation,
+    handlePinSetupRequired,
+    handleVaultUnlockRequest,
+    handleVaultUnlocked,
+    handleVaultLocked,
+    handlePinProgressUpdate,
+    handleFileUploadRequest,
+    handleUploadApproved,
+    handleUploadDenied
+  ]);
   // Remove notification
   const removeNotification = (id) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
-  }; // Handle file upload approval/denial
+  };// Handle file upload approval/denial
   const handleFileUploadApproval = async (fileData, reason) => {
     try {
       const response = await fetch("/api/shared-vault/file-upload-permission", {
@@ -495,24 +525,6 @@ export default function SharedVaultPage() {
     } catch (error) {
       console.error("File download error:", error);
       showNotification("error", "Failed to download file: " + error.message);
-    }
-  };
-
-  const loadVaults = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("/api/shared-vault");
-      const data = await response.json();
-
-      if (response.ok) {
-        setVaults(data.vaults || []);
-      } else {
-        console.error("Failed to load vaults:", data.error);
-      }
-    } catch (error) {
-      console.error("Error loading vaults:", error);
-    } finally {
-      setLoading(false);
     }
   };
   const handleCreateVault = async () => {
