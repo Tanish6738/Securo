@@ -233,6 +233,15 @@ const SharedVaultSchema = new mongoose.Schema({
     type: String, 
     required: true 
   }],
+  openedAt: {
+    type: Date,
+    default: null
+  },
+  unlockDurationMinutes: {
+    type: Number,
+    required: true,
+    default: 60 // Default 1 hour
+  },
   isActive: { 
     type: Boolean, 
     default: true 
@@ -246,6 +255,40 @@ SharedVaultSchema.pre('save', function(next) {
   this.updatedAt = new Date()
   next()
 })
+
+// Method to check if vault is currently unlocked
+SharedVaultSchema.methods.isUnlocked = function() {
+  if (!this.openedAt) return false
+  
+  const now = new Date()
+  const unlockExpiry = new Date(this.openedAt.getTime() + (this.unlockDurationMinutes * 60 * 1000))
+  
+  return now < unlockExpiry
+}
+
+// Method to get remaining unlock time in minutes
+SharedVaultSchema.methods.getRemainingUnlockTime = function() {
+  if (!this.openedAt) return 0
+  
+  const now = new Date()
+  const unlockExpiry = new Date(this.openedAt.getTime() + (this.unlockDurationMinutes * 60 * 1000))
+  
+  if (now >= unlockExpiry) return 0
+  
+  return Math.ceil((unlockExpiry - now) / (60 * 1000))
+}
+
+// Method to unlock vault
+SharedVaultSchema.methods.unlock = function() {
+  this.openedAt = new Date()
+  return this.save()
+}
+
+// Method to lock vault
+SharedVaultSchema.methods.lock = function() {
+  this.openedAt = null
+  return this.save()
+}
 
 // Vault PIN Schema for storing member PINs
 const VaultPinSchema = new mongoose.Schema({
@@ -372,7 +415,7 @@ const VaultHistorySchema = new mongoose.Schema({
   },  action: { 
     type: String, 
     required: true,
-    enum: ['VAULT_CREATE', 'VAULT_ACCESS', 'FILE_VIEW', 'FILE_DOWNLOAD', 'FILE_UPLOAD', 'FILE_EDIT', 'FILE_DELETE', 'MEMBER_ADD', 'MEMBER_REMOVE', 'PIN_SET', 'PIN_CHANGE']
+    enum: ['VAULT_CREATE', 'VAULT_ACCESS', 'VAULT_UNLOCK', 'VAULT_LOCK', 'FILE_VIEW', 'FILE_DOWNLOAD', 'FILE_UPLOAD', 'FILE_EDIT', 'FILE_DELETE', 'MEMBER_ADD', 'MEMBER_REMOVE', 'PIN_SET', 'PIN_CHANGE', 'PIN_ENTER', 'AUTO_LOCK']
   },
   details: String,
   ipAddress: String,
