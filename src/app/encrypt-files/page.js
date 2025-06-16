@@ -55,10 +55,11 @@ export default function EncryptFilesPage() {
     setNotification({ message, type });
     setTimeout(() => setNotification(null), 5000);
   }, []);
-
   const loadEncryptedFiles = useCallback(async () => {
     try {
+      console.log("Loading encrypted files...");
       const files = await listEncryptedFiles();
+      console.log("Loaded files:", files.length, files);
       setEncryptedFiles(files);
     } catch (error) {
       console.error("Error loading encrypted files:", error);
@@ -308,8 +309,7 @@ export default function EncryptFilesPage() {
       console.error("Export error:", error);
       showNotification("Failed to export file: " + error.message, "error");
     }
-  };
-  const handleImportFile = async (event) => {
+  };  const handleImportFile = async (event) => {
     const file = event.target.files[0];
     if (!file || !file.name.endsWith(".vault")) {
       showNotification("Please select a valid .vault file", "error");
@@ -317,9 +317,15 @@ export default function EncryptFilesPage() {
     }
 
     try {
-      await importVaultFile(file);
+      console.log("Starting import of vault file:", file.name);
+      const fileId = await importVaultFile(file);
+      console.log("Import successful, fileId:", fileId);
+      
+      console.log("Reloading encrypted files...");
       await loadEncryptedFiles();
       await loadStorageStats();
+      
+      console.log("Current encrypted files count:", encryptedFiles.length);
       showNotification("Vault file imported successfully", "success");
 
       // Reset file input
@@ -356,12 +362,18 @@ export default function EncryptFilesPage() {
       if (!file.name.endsWith(".vault")) {
         showNotification("Please drop a valid .vault file", "error");
         return;
-      }
-      
+      }      
       importVaultFile(file)
+        .then((fileId) => {
+          console.log("Drag import successful, fileId:", fileId);
+          console.log("Reloading encrypted files after drag import...");
+          return loadEncryptedFiles();
+        })
         .then(() => {
-          loadEncryptedFiles();
-          loadStorageStats();
+          console.log("Files reloaded after drag import");
+          return loadStorageStats();
+        })
+        .then(() => {
           showNotification("Vault file imported successfully", "success");
         })
         .catch((error) => {

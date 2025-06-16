@@ -112,16 +112,24 @@ export async function getEncryptedFile(fileId) {
  */
 export async function listEncryptedFiles() {
   try {
+    console.log("Listing encrypted files...");
     const allKeys = await keys();
+    console.log("All keys in storage:", allKeys);
+    
     const metadataKeys = allKeys.filter(key => key.startsWith(METADATA_PREFIX));
+    console.log("Metadata keys found:", metadataKeys);
     
     const metadataPromises = metadataKeys.map(key => get(key));
     const metadataList = await Promise.all(metadataPromises);
+    console.log("Raw metadata list:", metadataList);
     
     // Sort by timestamp (newest first)
-    return metadataList
+    const filteredAndSorted = metadataList
       .filter(metadata => metadata) // Filter out any null results
       .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    
+    console.log("Filtered and sorted metadata:", filteredAndSorted);
+    return filteredAndSorted;
   } catch (error) {
     console.error('Error listing encrypted files:', error);
     throw new Error('Failed to list encrypted files');
@@ -211,28 +219,36 @@ export async function exportVaultFile(fileId) {
  */
 export async function importVaultFile(vaultFile) {
   try {
+    console.log("Importing vault file:", vaultFile.name);
     const fileText = await vaultFile.text();
+    console.log("Vault file text length:", fileText.length);
+    
     const vaultData = JSON.parse(fileText);
+    console.log("Parsed vault data:", vaultData);
     
     // Validate vault file format
     if (vaultData.type !== 'privayguard-vault') {
       throw new Error('Invalid vault file format');
     }
-    
-    // Extract encrypted file data
+      // Extract encrypted file data
     const encryptedFileData = {
       fileName: vaultData.metadata.fileName,
       fileType: vaultData.metadata.fileType,
       fileSize: vaultData.metadata.fileSize,
-      timestamp: vaultData.metadata.timestamp,
+      timestamp: vaultData.metadata.timestamp || new Date().toISOString(), // Fallback if timestamp is missing
       salt: vaultData.encryption.salt,
       iv: vaultData.encryption.iv,
       keyHash: vaultData.encryption.keyHash,
       encryptedData: vaultData.data
     };
     
+    console.log("Extracted encrypted file data:", encryptedFileData);
+    
     // Store in IndexedDB
-    return await storeEncryptedFile(encryptedFileData);
+    const fileId = await storeEncryptedFile(encryptedFileData);
+    console.log("Stored with fileId:", fileId);
+    
+    return fileId;
   } catch (error) {
     console.error('Error importing vault file:', error);
     throw new Error('Failed to import vault file: ' + error.message);

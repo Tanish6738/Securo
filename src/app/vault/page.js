@@ -430,8 +430,13 @@ export default function VaultPage() {
       setPreviewLoading(false);
     }
   };
-
   const handleDownload = async (item) => {
+    if (!vaultPassword) {
+      setCurrentAction({ type: "download", item });
+      setShowPasswordModal(true);
+      return;
+    }
+
     try {
       setLoading(true);
       const response = await fetch(
@@ -482,7 +487,6 @@ export default function VaultPage() {
       setLoading(false);
     }
   };
-
   const executeCurrentAction = async () => {
     if (!vaultPassword) {
       alert("Please enter your vault password");
@@ -493,6 +497,10 @@ export default function VaultPage() {
       await handleUpload();
     } else if (currentAction?.type === "preview") {
       await handlePreview(currentAction.item);
+      setCurrentAction(null);
+      setShowPasswordModal(false);
+    } else if (currentAction?.type === "download") {
+      await handleDownload(currentAction.item);
       setCurrentAction(null);
       setShowPasswordModal(false);
     }
