@@ -238,11 +238,14 @@ export default function SharedVaultPage() {
         notificationService.disconnect();
       };
     }
-  }, [user?.id, handleVaultInvitation, handlePinSetupRequired, handleVaultUnlockRequest, handleVaultUnlocked, handleVaultLocked, handlePinProgressUpdate, handleFileUploadRequest, handleUploadApproved, handleUploadDenied]);
-  // Remove notification
+  }, [user?.id, handleVaultInvitation, handlePinSetupRequired, handleVaultUnlockRequest, handleVaultUnlocked, handleVaultLocked, handlePinProgressUpdate, handleFileUploadRequest, handleUploadApproved, handleUploadDenied]);  // Remove notification
   const removeNotification = (id) => {
-    setNotifications((prev) => prev.filter((n) => n.id !== id));
-  };// Handle file upload approval/denial
+    if (id && typeof id !== 'undefined') {
+      setNotifications((prev) => Array.isArray(prev) ? prev.filter((n) => n && n.id !== id) : []);
+    }
+  };
+
+  // Handle file upload approval/denial
   const handleFileUploadApproval = async (fileData, reason) => {
     try {
       const response = await fetch("/api/shared-vault/file-upload-permission", {
@@ -1578,15 +1581,16 @@ export default function SharedVaultPage() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
-      {/* Notification Toasts */}
+      </AnimatePresence>      {/* Notification Toasts */}
       <div className="fixed top-4 right-4 z-50 space-y-2">
-        {notifications.map((notification) => (
-          <NotificationToast
-            key={notification.id}
-            notification={notification}
-            onClose={() => removeNotification(notification.id)}
-          />
+        {notifications && Array.isArray(notifications) && notifications.map((notification) => (
+          notification && notification.id ? (
+            <NotificationToast
+              key={notification.id}
+              notification={notification}
+              onClose={() => removeNotification(notification.id)}
+            />
+          ) : null
         ))}
       </div>
     </div>

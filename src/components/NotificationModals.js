@@ -398,7 +398,6 @@ export function VaultAccessModal({ isOpen, onClose, vaultData, onPinSubmit }) {
 // Notification Toast for various vault events
 export function NotificationToast({ notification, onClose }) {
   const [isVisible, setIsVisible] = useState(true);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
@@ -407,6 +406,7 @@ export function NotificationToast({ notification, onClose }) {
 
     return () => clearTimeout(timer);
   }, [onClose]);
+
   const getIcon = () => {
     switch (notification.type) {
       case 'vault_invitation':
@@ -428,9 +428,9 @@ export function NotificationToast({ notification, onClose }) {
       case 'permission_requested':
         return <ShieldCheckIcon className="h-5 w-5" />;
       default:
-        return <BellIcon className="h-5 w-5" />;
-    }
+        return <BellIcon className="h-5 w-5" />;    }
   };
+
   const getTitle = () => {
     switch (notification.type) {
       case 'vault_invitation':
@@ -1060,3 +1060,13 @@ export function FileUploadPermissionModal({ isOpen, onClose, vaultData, onApprov
     </AnimatePresence>
   );
 }
+
+// Export all components explicitly to avoid initialization issues
+export {
+  PinSetupModal,
+  VaultAccessModal, 
+  NotificationToast,
+  VaultDetailsModal,
+  VaultPinWaitingModal,
+  FileUploadPermissionModal
+};
