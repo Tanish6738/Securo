@@ -90,21 +90,14 @@ export default function SharedVaultPage() {
     description: "",
     memberEmails: [],
     unlockDurationMinutes: 60,
-    memberPins: {},
-  });  useEffect(() => {
-    if (isLoaded && user) {
-      loadVaults();
-      initializeNotificationService();
-      requestNotificationPermission();
-    }
-  }, [isLoaded, user, loadVaults, initializeNotificationService]);
+    memberPins: {},  });
 
   // Request browser notification permission
   const requestNotificationPermission = async () => {
     await fallbackNotifications.requestPermission();
   };
 
-  // Show notification
+  // Show notification - no dependencies to avoid circular refs
   const showNotification = useCallback((type, message) => {
     const notification = {
       id: Date.now(),
@@ -114,12 +107,10 @@ export default function SharedVaultPage() {
     };
 
     setNotifications((prev) => [...prev, notification]);
-
-    // Show browser notification as fallback
     fallbackNotifications.showBrowserNotification("Shared Vault", message);
   }, []);
 
-  // Load vaults function - declare early to use in handlers
+  // Load vaults function - only depend on user.id
   const loadVaults = useCallback(async () => {
     if (!user?.id) return;
     
@@ -138,15 +129,17 @@ export default function SharedVaultPage() {
       setLoading(false);
     }
   }, [user?.id]);
-
-  // Notification event handlers wrapped in useCallback
+  // Notification event handlers - remove problematic dependencies
   const handleVaultInvitation = useCallback((data) => {
     showNotification(
       "vault_invitation",
       `You've been invited to "${data.vaultName}" by ${data.adminName}`
     );
-    loadVaults(); // Refresh vault list
-  }, [showNotification, loadVaults]);
+    // Call loadVaults directly without dependency to avoid circular ref
+    if (user?.id) {
+      loadVaults();
+    }
+  }, [showNotification, user?.id]);
 
   const handlePinSetupRequired = useCallback((data) => {
     setPinSetupData(data);
@@ -165,20 +158,24 @@ export default function SharedVaultPage() {
       `${data.requesterName} is requesting access to "${data.vaultName}"`
     );
   }, [showNotification]);
-
   const handleVaultUnlocked = useCallback((data) => {
     showNotification(
       "vault_unlocked",
       `"${data.vaultName}" has been unlocked for ${data.unlockDurationMinutes} minutes`
     );
-    loadVaults(); // Refresh to show updated status
-  }, [showNotification, loadVaults]);
+    // Call loadVaults directly without dependency to avoid circular ref
+    if (user?.id) {
+      loadVaults();
+    }
+  }, [showNotification, user?.id]);
 
   const handleVaultLocked = useCallback((data) => {
     showNotification("vault_locked", `"${data.vaultName}" has been locked`);
-    loadVaults(); // Refresh to show updated status
-  }, [showNotification, loadVaults]);
-
+    // Call loadVaults directly without dependency to avoid circular ref
+    if (user?.id) {
+      loadVaults();
+    }
+  }, [showNotification, user?.id]);
   const handlePinProgressUpdate = useCallback((data) => {
     // Update PIN waiting modal with new progress
     if (showPinWaitingModal && pinWaitingData?.vaultId === data.vaultId) {
@@ -197,10 +194,13 @@ export default function SharedVaultPage() {
           "vault_unlocked",
           `"${data.vaultName}" is now unlocked!`
         );
-        loadVaults();
+        // Call loadVaults directly without dependency to avoid circular ref
+        if (user?.id) {
+          loadVaults();
+        }
       }
     }
-  }, [showPinWaitingModal, pinWaitingData?.vaultId, showNotification, loadVaults]);
+  }, [showPinWaitingModal, pinWaitingData?.vaultId, showNotification, user?.id]);
 
   const handleFileUploadRequest = useCallback((data) => {
     setFileUploadPermissionData(data);
@@ -231,13 +231,13 @@ export default function SharedVaultPage() {
       `Upload denied: ${data.reason || "No reason provided"}`
     );
   }, [showNotification]);
-
-  // Initialize notification service and WebSocket connection
+  // Initialize notification service - simplified dependencies
   const initializeNotificationService = useCallback(() => {
     if (user?.id) {
       notificationService.connect(user.id);
 
-      // Set up event listeners      notificationService.on('vaultInvitation', handleVaultInvitation);
+      // Set up event listeners
+      notificationService.on('vaultInvitation', handleVaultInvitation);
       notificationService.on("pinSetupRequired", handlePinSetupRequired);
       notificationService.on("vaultUnlockRequest", handleVaultUnlockRequest);
       notificationService.on("vaultUnlocked", handleVaultUnlocked);
@@ -258,10 +258,11 @@ export default function SharedVaultPage() {
         notificationService.off("fileUploadRequest", handleFileUploadRequest);
         notificationService.off("uploadApproved", handleUploadApproved);
         notificationService.off("uploadDenied", handleUploadDenied);
-        notificationService.disconnect();      };
+        notificationService.disconnect();
+      };
     }
   }, [
-    user,
+    user?.id,
     handleVaultInvitation,
     handlePinSetupRequired,
     handleVaultUnlockRequest,
@@ -799,9 +800,17 @@ export default function SharedVaultPage() {
     if (minutes <= 0) return "Expired";
     if (minutes < 60) return `${minutes}m`;
     const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return `${hours}h ${mins}m`;
+    const mins = minutes % 60;    return `${hours}h ${mins}m`;
   };
+
+  // Main effect hook - simplified dependencies to prevent circular refs
+  useEffect(() => {
+    if (isLoaded && user) {
+      loadVaults();
+      initializeNotificationService();
+      requestNotificationPermission();
+    }
+  }, [isLoaded, user]); // Only depend on isLoaded and user, not functions
 
   if (!isLoaded) {
     return (
