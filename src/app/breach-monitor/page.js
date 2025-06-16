@@ -172,14 +172,15 @@ export default function BreachMonitorPage() {
   }, [activeTab]);
   return (
     <>
+      {" "}
       <Header />
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-theme-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-20 ">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-theme-text">
               Breach Monitor
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-theme-text-secondary">
               Check if your email addresses have been compromised in known data
               breaches.
             </p>
@@ -187,12 +188,13 @@ export default function BreachMonitorPage() {
           {/* Tab Navigation */}
           <div className="mb-8">
             <nav className="flex space-x-8" aria-label="Tabs">
+              {" "}
               <button
                 onClick={() => setActiveTab("email")}
                 className={`whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm ${
                   activeTab === "email"
-                    ? "border-blue-500 text-blue-600 dark:text-blue-400"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
+                    ? "border-theme-primary text-theme-primary"
+                    : "border-transparent text-theme-text-secondary hover:text-theme-text hover:border-theme-border"
                 }`}
               >
                 <MagnifyingGlassIcon className="h-5 w-5 inline mr-2" />
@@ -202,8 +204,8 @@ export default function BreachMonitorPage() {
                 onClick={() => setActiveTab("domain")}
                 className={`whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm ${
                   activeTab === "domain"
-                    ? "border-blue-500 text-blue-600 dark:text-blue-400"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
+                    ? "border-theme-primary text-theme-primary"
+                    : "border-transparent text-theme-text-secondary hover:text-theme-text hover:border-theme-border"
                 }`}
               >
                 <GlobeAltIcon className="h-5 w-5 inline mr-2" />
@@ -213,8 +215,8 @@ export default function BreachMonitorPage() {
                 onClick={() => setActiveTab("recent")}
                 className={`whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm ${
                   activeTab === "recent"
-                    ? "border-blue-500 text-blue-600 dark:text-blue-400"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
+                    ? "border-theme-primary text-theme-primary"
+                    : "border-transparent text-theme-text-secondary hover:text-theme-text hover:border-theme-border"
                 }`}
               >
                 <ClockIcon className="h-5 w-5 inline mr-2" />
@@ -257,13 +259,12 @@ export default function BreachMonitorPage() {
                         />
                         <span className="text-sm">Detailed Analytics</span>
                       </label>
-                    </div>
-
+                    </div>{" "}
                     {/* Explanatory text */}
-                    <div className="text-xs text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                    <div className="text-xs text-theme-text-secondary bg-theme-secondary rounded-lg p-3">
                       {checkType === "basic" ? (
                         <div>
-                          <p className="font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          <p className="font-medium text-theme-text mb-1">
                             Basic Check includes:
                           </p>
                           <ul className="list-disc list-inside space-y-1">
@@ -274,7 +275,7 @@ export default function BreachMonitorPage() {
                         </div>
                       ) : (
                         <div>
-                          <p className="font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          <p className="font-medium text-theme-text mb-1">
                             Detailed Analytics includes:
                           </p>
                           <ul className="list-disc list-inside space-y-1">
@@ -293,9 +294,10 @@ export default function BreachMonitorPage() {
 
               {/* Email Checker */}
               <Card>
+                {" "}
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <ShieldCheckIcon className="h-6 w-6 mr-2 text-blue-600 dark:text-blue-400" />
+                    <ShieldCheckIcon className="h-6 w-6 mr-2 text-theme-primary" />
                     Email Breach Check
                   </CardTitle>
                   <CardDescription>
@@ -316,7 +318,7 @@ export default function BreachMonitorPage() {
                         required
                       />{" "}
                       {checkType === "analytics" && (
-                        <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                        <p className="text-xs text-theme-primary mt-1">
                           💡 Try &quot;test@example.com&quot; or
                           &quot;demo@test.com&quot; to see full analytics
                           features in action
@@ -373,7 +375,7 @@ export default function BreachMonitorPage() {
                                     {results.ExposedBreaches?.breaches_details
                                       ?.length || 0}
                                   </div>
-                                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                                  <div className="text-sm   dark: 400">
                                     Total Breaches
                                   </div>
                                 </div>
@@ -387,7 +389,7 @@ export default function BreachMonitorPage() {
                                   <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
                                     {results.PastesSummary?.cnt || 0}
                                   </div>
-                                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                                  <div className="text-sm   dark: 400">
                                     Paste Exposures
                                   </div>
                                 </div>
@@ -413,7 +415,7 @@ export default function BreachMonitorPage() {
                                       {results.BreachMetrics.risk[0].risk_score}
                                       /10
                                     </div>
-                                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                                    <div className="text-sm   dark: 400">
                                       Risk Score
                                     </div>
                                     <div
@@ -447,7 +449,7 @@ export default function BreachMonitorPage() {
                                       )
                                       ?.toLocaleString() || "0"}
                                   </div>
-                                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                                  <div className="text-sm   dark: 400">
                                     Records Exposed
                                   </div>
                                 </div>
@@ -493,7 +495,7 @@ export default function BreachMonitorPage() {
                                                 }}
                                               ></div>
                                             </div>
-                                            <span className="text-sm text-gray-600 dark:text-gray-400 w-8">
+                                            <span className="text-sm  600 dark: 400 w-8">
                                               {count}
                                             </span>
                                           </div>
@@ -630,7 +632,7 @@ export default function BreachMonitorPage() {
                                             <span className="text-sm font-medium">
                                               {getIndustryName(industry)}
                                             </span>
-                                            <span className="text-sm text-gray-600 dark:text-gray-400">
+                                            <span className="text-sm  600 dark: 400">
                                               {count}
                                             </span>
                                           </div>
@@ -662,7 +664,7 @@ export default function BreachMonitorPage() {
                                           key={idx}
                                           className="border border-gray-200 dark:border-gray-700 rounded-lg p-3"
                                         >
-                                          <h4 className="font-medium text-sm mb-2 text-gray-900 dark:text-white">
+                                          <h4 className="font-medium text-sm mb-2 text-theme-text-secondary">
                                             {category.name}
                                           </h4>
                                           <div className="space-y-1">
@@ -672,7 +674,7 @@ export default function BreachMonitorPage() {
                                                   key={itemIdx}
                                                   className="flex justify-between items-center text-xs"
                                                 >
-                                                  <span className="text-gray-600 dark:text-gray-400">
+                                                  <span className="text-theme-tex-secondary ">
                                                     {item.name.replace(
                                                       "data_",
                                                       ""
@@ -777,10 +779,10 @@ export default function BreachMonitorPage() {
                                               selectedBreachWebsite.breachID ===
                                                 breachName
                                                 ? "bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500"
-                                                : "hover:bg-gray-100 dark:hover:bg-gray-800/50 border-l-4 border-transparent"
+                                                : "hover:bg-gray-400 border-l-4 border-transparent"
                                             }`}
                                           >
-                                            <h3 className="font-medium text-gray-900 dark:text-white truncate">
+                                            <h3 className="font-medium  900 dark:bg-theme-primary truncate">
                                               {breachName}
                                             </h3>
                                             <p className="text-xs text-red-600 dark:text-red-400 mt-1">
@@ -788,15 +790,15 @@ export default function BreachMonitorPage() {
                                             </p>
                                             {typeof breach === "object" && (
                                               <div className="flex items-center mt-1">
-                                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                <span className="text-xs   dark: 400">
                                                   {breach.xposed_records?.toLocaleString() ||
                                                     "?"}{" "}
                                                   records
                                                 </span>
-                                                <span className="mx-2 text-gray-300 dark:text-gray-600">
+                                                <span className="mx-2  300 dark: 600">
                                                   •
                                                 </span>
-                                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                <span className="text-xs   dark: 400">
                                                   {breach.xposed_date ||
                                                     "Unknown date"}
                                                 </span>
@@ -845,16 +847,16 @@ export default function BreachMonitorPage() {
                                 <CardContent className="space-y-6">
                                   {/* Breach Information */}
                                   <div>
-                                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                                    <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-2">
                                       Breach Information
                                     </h3>
                                     <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                                          <p className="text-sm   dark: 400">
                                             Date of Breach
                                           </p>
-                                          <p className="font-medium text-gray-900 dark:text-white">
+                                          <p className="font-medium  900 dark:text-white">
                                             {selectedBreachWebsite.breachedDate
                                               ? new Date(
                                                   selectedBreachWebsite.breachedDate
@@ -863,28 +865,28 @@ export default function BreachMonitorPage() {
                                           </p>
                                         </div>
                                         <div>
-                                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                                          <p className="text-sm   dark: 400">
                                             Industry
                                           </p>
-                                          <p className="font-medium text-gray-900 dark:text-white">
+                                          <p className="font-medium  900 dark:text-white">
                                             {selectedBreachWebsite.industry ||
                                               "Unknown"}
                                           </p>
                                         </div>
                                         <div>
-                                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                                          <p className="text-sm   dark: 400">
                                             Records Exposed
                                           </p>
-                                          <p className="font-medium text-gray-900 dark:text-white">
+                                          <p className="font-medium  900 dark:text-white">
                                             {selectedBreachWebsite.exposedRecords?.toLocaleString() ||
                                               "Unknown"}
                                           </p>
                                         </div>
                                         <div>
-                                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                                          <p className="text-sm   dark: 400">
                                             Verification
                                           </p>
-                                          <p className="font-medium text-gray-900 dark:text-white">
+                                          <p className="font-medium  900 dark:text-white">
                                             {selectedBreachWebsite.verified
                                               ? "Verified"
                                               : "Unverified"}
@@ -896,10 +898,10 @@ export default function BreachMonitorPage() {
 
                                   {/* Description */}
                                   <div>
-                                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                                    <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-2">
                                       Description
                                     </h3>
-                                    <p className="text-gray-700 dark:text-gray-300">
+                                    <p className=" 700 dark: 300">
                                       {selectedBreachWebsite.exposureDescription ||
                                         "No description available for this breach."}
                                     </p>
@@ -910,7 +912,7 @@ export default function BreachMonitorPage() {
                                     selectedBreachWebsite.exposedData.length >
                                       0 && (
                                       <div>
-                                        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                                        <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-2">
                                           Exposed Data Types
                                         </h3>
                                         <div className="flex flex-wrap gap-2">
@@ -940,13 +942,13 @@ export default function BreachMonitorPage() {
 
                                   {/* Security Recommendations */}
                                   <div>
-                                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                                    <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-2">
                                       Immediate Actions Required
                                     </h3>
                                     <div className="space-y-3">
                                       <div className="flex items-start space-x-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
                                         <div className="flex-shrink-0">
-                                          <div className="w-6 h-6 bg-yellow-600 dark:bg-yellow-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                          <div className="w-6 h-6 bg-yellow-600 dark:bg-yellow-400 rounded-full flex items-center justify-center bg-theme-primarytext-xs font-bold">
                                             !
                                           </div>
                                         </div>
@@ -964,7 +966,7 @@ export default function BreachMonitorPage() {
                                       </div>
                                       <div className="flex items-start space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                                         <div className="flex-shrink-0">
-                                          <div className="w-6 h-6 bg-blue-600 dark:bg-blue-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                          <div className="w-6 h-6 bg-blue-600 dark:bg-blue-400 rounded-full flex items-center justify-center bg-theme-primarytext-xs font-bold">
                                             2
                                           </div>
                                         </div>
@@ -987,13 +989,13 @@ export default function BreachMonitorPage() {
                                     results.ExposedPastes.pastes_details
                                       .length > 0 && (
                                       <div>
-                                        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                                        <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-2">
                                           Paste Site Exposures
                                         </h3>
                                         <div className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-4">
                                           <div className="flex items-center mb-3">
                                             <div className="flex-shrink-0">
-                                              <div className="w-8 h-8 bg-orange-600 dark:bg-orange-400 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                                              <div className="w-8 h-8 bg-orange-600 dark:bg-orange-400 rounded-full flex items-center justify-center bg-theme-primarytext-sm font-bold">
                                                 {
                                                   results.ExposedPastes
                                                     .pastes_details.length
@@ -1057,7 +1059,7 @@ export default function BreachMonitorPage() {
                                   {checkType === "analytics" &&
                                     results.PastesSummary?.cnt === 0 && (
                                       <div>
-                                        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                                        <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-2">
                                           Paste Site Monitoring
                                         </h3>
                                         <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
@@ -1082,7 +1084,7 @@ export default function BreachMonitorPage() {
                                   {checkType === "analytics" &&
                                     results.BreachMetrics?.risk?.[0] && (
                                       <div>
-                                        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                                        <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-2">
                                           Comprehensive Risk Assessment
                                         </h3>
                                         <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4">
@@ -1106,7 +1108,7 @@ export default function BreachMonitorPage() {
                                                 }
                                                 /10
                                               </div>
-                                              <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                              <p className="text-sm font-medium  900 dark:text-white">
                                                 Overall Risk Score
                                               </p>
                                               <p
@@ -1131,10 +1133,10 @@ export default function BreachMonitorPage() {
 
                                             <div className="space-y-3">
                                               <div>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                <p className="text-sm   dark: 400">
                                                   Risk Factors:
                                                 </p>
-                                                <ul className="text-sm text-gray-700 dark:text-gray-300 mt-1 space-y-1">
+                                                <ul className="text-sm  700 dark: 300 mt-1 space-y-1">
                                                   <li>
                                                     •{" "}
                                                     {results.ExposedBreaches
@@ -1168,10 +1170,10 @@ export default function BreachMonitorPage() {
                                               </div>
 
                                               <div>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                <p className="text-sm   dark: 400">
                                                   Recommendation:
                                                 </p>
-                                                <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+                                                <p className="text-sm  700 dark: 300 mt-1">
                                                   {results.BreachMetrics.risk[0]
                                                     .risk_score <= 3
                                                     ? "Monitor regularly and maintain good security practices."
@@ -1193,10 +1195,10 @@ export default function BreachMonitorPage() {
                               <Card className="h-full flex items-center justify-center">
                                 <CardContent className="text-center py-12">
                                   <ExclamationTriangleIcon className="h-16 w-16 text-red-400 mx-auto mb-4" />
-                                  <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-2">
+                                  <h3 className="text-xl font-medium  900 dark:bg-theme-primarymb-2">
                                     Select a Breach
                                   </h3>
-                                  <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                                  <p className=" 600 dark: 400 max-w-md mx-auto">
                                     Choose a breach from the list to view
                                     detailed information and security
                                     recommendations.
@@ -1276,7 +1278,7 @@ export default function BreachMonitorPage() {
                                   <div className="space-y-3">
                                     <div className="flex items-start space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                                       <div className="flex-shrink-0">
-                                        <div className="w-6 h-6 bg-blue-600 dark:bg-blue-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                        <div className="w-6 h-6 bg-blue-600 dark:bg-blue-400 rounded-full flex items-center justify-center bg-theme-primarytext-xs font-bold">
                                           1
                                         </div>
                                       </div>
@@ -1292,7 +1294,7 @@ export default function BreachMonitorPage() {
                                     </div>
                                     <div className="flex items-start space-x-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
                                       <div className="flex-shrink-0">
-                                        <div className="w-6 h-6 bg-purple-600 dark:bg-purple-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                        <div className="w-6 h-6 bg-purple-600 dark:bg-purple-400 rounded-full flex items-center justify-center bg-theme-primarytext-xs font-bold">
                                           2
                                         </div>
                                       </div>
@@ -1318,12 +1320,12 @@ export default function BreachMonitorPage() {
                         <div className="mt-6 text-center">
                           <Button
                             onClick={() => setIsAIAssistantOpen(true)}
-                            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+                            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 bg-theme-primarypx-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
                           >
                             <SparklesIcon className="h-5 w-5 mr-2" />
                             Analyze with AI
                           </Button>
-                          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                          <p className="text-sm   dark: 400 mt-2">
                             Get personalized insights and recommendations from
                             our AI assistant
                           </p>
@@ -1429,10 +1431,10 @@ export default function BreachMonitorPage() {
                                       >
                                         <div className="flex items-center justify-between">
                                           <div>
-                                            <h4 className="font-medium text-gray-900 dark:text-white text-sm">
+                                            <h4 className="font-medium  900 dark:bg-theme-primarytext-sm">
                                               {breach.breachID}
                                             </h4>
-                                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                            <p className="text-xs   dark: 400 mt-1">
                                               {breach.exposedRecords?.toLocaleString()}{" "}
                                               records •{" "}
                                               {new Date(
@@ -1479,43 +1481,43 @@ export default function BreachMonitorPage() {
                               <CardContent className="space-y-6">
                                 {/* Breach Overview */}
                                 <div>
-                                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+                                  <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-3">
                                     Breach Overview
                                   </h3>
                                   <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                                      <p className="text-sm   dark: 400">
                                         Date Breached
                                       </p>
-                                      <p className="font-medium text-gray-900 dark:text-white">
+                                      <p className="font-medium  900 dark:text-white">
                                         {new Date(
                                           selectedDomainBreach.breachedDate
                                         ).toLocaleDateString()}
                                       </p>
                                     </div>
                                     <div>
-                                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                                      <p className="text-sm   dark: 400">
                                         Records Exposed
                                       </p>
-                                      <p className="font-medium text-gray-900 dark:text-white">
+                                      <p className="font-medium  900 dark:text-white">
                                         {selectedDomainBreach.exposedRecords?.toLocaleString() ||
                                           "Unknown"}
                                       </p>
                                     </div>
                                     <div>
-                                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                                      <p className="text-sm   dark: 400">
                                         Industry
                                       </p>
-                                      <p className="font-medium text-gray-900 dark:text-white">
+                                      <p className="font-medium  900 dark:text-white">
                                         {selectedDomainBreach.industry ||
                                           "Unknown"}
                                       </p>
                                     </div>
                                     <div>
-                                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                                      <p className="text-sm   dark: 400">
                                         Verification
                                       </p>
-                                      <p className="font-medium text-gray-900 dark:text-white">
+                                      <p className="font-medium  900 dark:text-white">
                                         {selectedDomainBreach.verified
                                           ? "Verified"
                                           : "Unverified"}
@@ -1526,10 +1528,10 @@ export default function BreachMonitorPage() {
 
                                 {/* Description */}
                                 <div>
-                                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                                  <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-2">
                                     Description
                                   </h3>
-                                  <p className="text-gray-700 dark:text-gray-300">
+                                  <p className=" 700 dark: 300">
                                     {selectedDomainBreach.exposureDescription ||
                                       "No description available for this breach."}
                                   </p>
@@ -1540,7 +1542,7 @@ export default function BreachMonitorPage() {
                                   selectedDomainBreach.exposedData.length >
                                     0 && (
                                     <div>
-                                      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                                      <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-2">
                                         Exposed Data Types
                                       </h3>
                                       <div className="flex flex-wrap gap-2">
@@ -1568,13 +1570,13 @@ export default function BreachMonitorPage() {
 
                                 {/* Security Recommendations */}
                                 <div>
-                                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                                  <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-2">
                                     Security Recommendations
                                   </h3>
                                   <div className="space-y-3">
                                     <div className="flex items-start space-x-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
                                       <div className="flex-shrink-0">
-                                        <div className="w-6 h-6 bg-yellow-600 dark:bg-yellow-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                        <div className="w-6 h-6 bg-yellow-600 dark:bg-yellow-400 rounded-full flex items-center justify-center bg-theme-primarytext-xs font-bold">
                                           !
                                         </div>
                                       </div>
@@ -1591,7 +1593,7 @@ export default function BreachMonitorPage() {
                                     </div>
                                     <div className="flex items-start space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                                       <div className="flex-shrink-0">
-                                        <div className="w-6 h-6 bg-blue-600 dark:bg-blue-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                        <div className="w-6 h-6 bg-blue-600 dark:bg-blue-400 rounded-full flex items-center justify-center bg-theme-primarytext-xs font-bold">
                                           2
                                         </div>
                                       </div>
@@ -1614,10 +1616,10 @@ export default function BreachMonitorPage() {
                             <Card className="h-full flex items-center justify-center">
                               <CardContent className="text-center py-12">
                                 <GlobeAltIcon className="h-16 w-16 text-blue-400 mx-auto mb-4" />
-                                <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-2">
+                                <h3 className="text-xl font-medium  900 dark:bg-theme-primarymb-2">
                                   Select a Domain Breach
                                 </h3>
-                                <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                                <p className=" 600 dark: 400 max-w-md mx-auto">
                                   Choose a breach from the list to view detailed
                                   information and security recommendations.
                                 </p>
@@ -1661,7 +1663,7 @@ export default function BreachMonitorPage() {
               </CardHeader>
               <CardContent>
                 <div className="flex justify-between items-center mb-4">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm  600 dark: 400">
                     Stay informed about recent security incidents and data
                     breaches.
                   </p>
@@ -1726,10 +1728,10 @@ export default function BreachMonitorPage() {
                                 >
                                   <div className="flex items-center justify-between">
                                     <div>
-                                      <h4 className="font-medium text-gray-900 dark:text-white text-sm">
+                                      <h4 className="font-medium  900 dark:bg-theme-primarytext-sm">
                                         {breach.breachID}
                                       </h4>
-                                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                      <p className="text-xs   dark: 400 mt-1">
                                         {breach.exposedRecords?.toLocaleString()}{" "}
                                         records •{" "}
                                         {new Date(
@@ -1775,42 +1777,42 @@ export default function BreachMonitorPage() {
                           <CardContent className="space-y-6">
                             {/* Breach Overview */}
                             <div>
-                              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+                              <h3 className="text-lg font-medium text-theme-primary mb-3">
                                 Breach Overview
                               </h3>
                               <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                                  <p className="text-sm text-theme-text-secondary">
                                     Date Breached
                                   </p>
-                                  <p className="font-medium text-gray-900 dark:text-white">
+                                  <p className="font-medium text-theme-primary ">
                                     {new Date(
                                       selectedRecentBreach.breachedDate
                                     ).toLocaleDateString()}
                                   </p>
                                 </div>
                                 <div>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                                  <p className="text-sm   dark: 400">
                                     Records Exposed
                                   </p>
-                                  <p className="font-medium text-gray-900 dark:text-white">
+                                  <p className="font-medium  900 dark:text-white">
                                     {selectedRecentBreach.exposedRecords?.toLocaleString() ||
                                       "Unknown"}
                                   </p>
                                 </div>
                                 <div>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                                  <p className="text-sm   dark: 400">
                                     Industry
                                   </p>
-                                  <p className="font-medium text-gray-900 dark:text-white">
+                                  <p className="font-medium  900 dark:text-white">
                                     {selectedRecentBreach.industry || "Unknown"}
                                   </p>
                                 </div>
                                 <div>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                                  <p className="text-sm   dark: 400">
                                     Verification
                                   </p>
-                                  <p className="font-medium text-gray-900 dark:text-white">
+                                  <p className="font-medium  900 dark:text-white">
                                     {selectedRecentBreach.verified
                                       ? "Verified"
                                       : "Unverified"}
@@ -1821,10 +1823,10 @@ export default function BreachMonitorPage() {
 
                             {/* Description */}
                             <div>
-                              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                              <h3 className="text-lg font-medium text-theme-primary mb-2">
                                 Description
                               </h3>
-                              <p className="text-gray-700 dark:text-gray-300">
+                              <p className=" 700 dark: 300">
                                 {selectedRecentBreach.exposureDescription ||
                                   "No description available for this breach."}
                               </p>
@@ -1834,7 +1836,7 @@ export default function BreachMonitorPage() {
                             {selectedRecentBreach.exposedData &&
                               selectedRecentBreach.exposedData.length > 0 && (
                                 <div>
-                                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                                  <h3 className="text-lg font-medium text-theme-primary mb-2">
                                     Exposed Data Types
                                   </h3>
                                   <div className="flex flex-wrap gap-2">
@@ -1862,13 +1864,13 @@ export default function BreachMonitorPage() {
 
                             {/* Security Recommendations */}
                             <div>
-                              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                              <h3 className="text-lg font-medium  900 dark:bg-theme-primarymb-2">
                                 Security Awareness
                               </h3>
                               <div className="space-y-3">
                                 <div className="flex items-start space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                                   <div className="flex-shrink-0">
-                                    <div className="w-6 h-6 bg-blue-600 dark:bg-blue-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                    <div className="w-6 h-6 bg-blue-600 dark:bg-blue-400 rounded-full flex items-center justify-center bg-theme-primarytext-xs font-bold">
                                       i
                                     </div>
                                   </div>
@@ -1885,7 +1887,7 @@ export default function BreachMonitorPage() {
                                 </div>
                                 <div className="flex items-start space-x-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
                                   <div className="flex-shrink-0">
-                                    <div className="w-6 h-6 bg-yellow-600 dark:bg-yellow-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                    <div className="w-6 h-6 bg-yellow-600 dark:bg-yellow-400 rounded-full flex items-center justify-center bg-theme-primarytext-xs font-bold">
                                       !
                                     </div>
                                   </div>
@@ -1906,11 +1908,11 @@ export default function BreachMonitorPage() {
                       ) : (
                         <Card className="h-full flex items-center justify-center">
                           <CardContent className="text-center py-12">
-                            <ClockIcon className="h-16 w-16 text-orange-400 mx-auto mb-4" />
-                            <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-2">
+                            <ClockIcon className="h-16 w-16 text-theme-primary mx-auto mb-4" />
+                            <h3 className="text-xl font-medium text-theme-primary mb-2">
                               Select a Recent Breach
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                            <p className="text-theme-text-secondary max-w-md mx-auto">
                               Choose a breach from the list to view detailed
                               information about recent security incidents.
                             </p>
@@ -1921,8 +1923,8 @@ export default function BreachMonitorPage() {
                   </div>
                 ) : !loading ? (
                   <div className="text-center py-8">
-                    <ClockIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-500 dark:text-gray-400">
+                    <ClockIcon className="h-12 w-12 text-theme-secondary mx-auto mb-4" />
+                    <p className="text-theme-text-secondary">
                       No recent breaches available
                     </p>
                   </div>
@@ -1944,15 +1946,15 @@ export default function BreachMonitorPage() {
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0">
-                      <div className="w-6 h-6 bg-blue-600 dark:bg-blue-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                      <div className="w-6 h-6 bg-theme-primary rounded-full flex items-center justify-center bg-theme-primarytext-xs font-bold">
                         1
                       </div>
                     </div>
                     <div>
-                      <h4 className="font-medium text-gray-900 dark:text-white">
+                      <h4 className="font-medium text-theme-primary ">
                         Change your passwords immediately
                       </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-theme-text-secondary ">
                         Update passwords for all accounts associated with this
                         email address.
                       </p>
@@ -1961,15 +1963,15 @@ export default function BreachMonitorPage() {
 
                   <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0">
-                      <div className="w-6 h-6 bg-blue-600 dark:bg-blue-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                      <div className="w-6 h-6 bg-theme-primary rounded-full flex items-center justify-center bg-theme-primarytext-xs font-bold">
                         2
                       </div>
                     </div>
                     <div>
-                      <h4 className="font-medium text-gray-900 dark:text-white">
+                      <h4 className="font-medium text-theme-primary">
                         Enable two-factor authentication
                       </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-theme-text-secondary ">
                         Add an extra layer of security to your important
                         accounts.
                       </p>
@@ -1978,15 +1980,15 @@ export default function BreachMonitorPage() {
 
                   <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0">
-                      <div className="w-6 h-6 bg-blue-600 dark:bg-blue-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                      <div className="w-6 h-6 bg-theme-primary rounded-full flex items-center justify-center bg-theme-primarytext-xs font-bold">
                         3
                       </div>
                     </div>
                     <div>
-                      <h4 className="font-medium text-gray-900 dark:text-white">
+                      <h4 className="font-medium text-theme-primary  ">
                         Monitor your accounts
                       </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-theme-text-secondary ">
                         Keep an eye on your bank statements and credit reports
                         for unusual activity.
                       </p>
@@ -1998,7 +2000,6 @@ export default function BreachMonitorPage() {
           )}{" "}
         </div>
       </div>
-
       {/* AI Assistant Component */}
       <AIAssistant
         isOpen={isAIAssistantOpen}

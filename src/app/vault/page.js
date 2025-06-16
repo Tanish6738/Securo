@@ -549,12 +549,12 @@ export default function VaultPage() {
                 <div className="relative flex-shrink-0">
                   <div className="absolute inset-0 bg-gradient-to-br from-theme-primary/40 to-theme-primary/60 rounded-2xl blur-lg opacity-40"></div>
                   <div className="relative p-3 sm:p-4 bg-gradient-to-br from-theme-primary to-theme-primary/80 rounded-2xl shadow-lg">
-                    <LockClosedIcon className="h-10 w-10 sm:h-12 sm:w-12 text-white" />
+                    <LockClosedIcon className="h-10 w-10 sm:h-12 sm:w-12  text-theme-primary " />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3">
-                    <h1 className="text-2xl sm:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-white to-theme-text bg-clip-text text-transparent">
+                    <h1 className="text-2xl sm:text-3xl xl:text-4xl font-bold text-theme-primary ">
                       Secure Vault
                     </h1>
                     <div className="px-3 py-1.5 bg-gradient-to-r from-green-900/60 to-emerald-900/60 border border-green-700/40 rounded-full self-start">
@@ -575,14 +575,14 @@ export default function VaultPage() {
                   <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm">
                     <div className="flex items-center gap-2 min-w-fit">
                       <FolderSolidIcon className="h-5 w-5 text-theme-primary" />
-                      <span className="font-semibold text-white">
+                      <span className="font-semibold  text-theme-primary ">
                         {filteredItems.length}
                       </span>
                       <span className="text-theme-textSecondary">files</span>
                     </div>
                     <div className="flex items-center gap-2 min-w-fit">
                       <ArchiveBoxIcon className="h-5 w-5 text-theme-primary" />
-                      <span className="font-semibold text-white">
+                      <span className="font-semibold  text-theme-primary ">
                         {formatFileSize(
                           filteredItems.reduce(
                             (acc, item) => acc + (item.size || 0),
@@ -607,7 +607,7 @@ export default function VaultPage() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => fileInputRef.current?.click()}
-                  className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-theme-primary to-theme-primary/80 text-white rounded-2xl font-semibold shadow-xl shadow-theme-primary/25 hover:shadow-2xl hover:shadow-theme-primary/40 transition-all duration-300 touch-manipulation"
+                  className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-theme-primary to-theme-primary/80  text-theme-primary  rounded-2xl font-semibold shadow-xl shadow-theme-primary/25 hover:shadow-2xl hover:shadow-theme-primary/40 transition-all duration-300 touch-manipulation"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-theme-primary/80 to-theme-primary/60 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="relative flex items-center justify-center gap-3">
@@ -762,7 +762,7 @@ export default function VaultPage() {
                     <div
                       className={`mx-auto h-16 w-16 sm:h-20 sm:w-20 rounded-xl sm:rounded-2xl flex items-center justify-center transition-all duration-500 ${
                         dragActive
-                          ? "bg-gradient-to-br from-theme-primary to-theme-primary/80 text-white shadow-lg"
+                          ? "bg-gradient-to-br from-theme-primary to-theme-primary/80  text-theme-primary  shadow-lg"
                           : "bg-gradient-to-br from-theme-secondary to-theme-card text-theme-textSecondary hover:from-theme-primary/20 hover:to-theme-primary/30 hover:text-theme-primary"
                       }`}
                     >
@@ -783,7 +783,7 @@ export default function VaultPage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => fileInputRef.current?.click()}
-                    className="inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-theme-primary to-theme-primary/80 hover:from-theme-primary/80 hover:to-theme-primary/60 text-white rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 shadow-lg shadow-theme-primary/25 hover:shadow-xl touch-manipulation min-h-[44px] w-full justify-center"
+                    className="inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-theme-primary to-theme-primary/80 hover:from-theme-primary/80 hover:to-theme-primary/60  text-theme-primary  rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 shadow-lg shadow-theme-primary/25 hover:shadow-xl touch-manipulation min-h-[44px] w-full justify-center"
                   >
                     <FolderIcon className="h-5 w-5 sm:h-6 sm:w-6" />
                     <span className="text-sm sm:text-base">Choose Files</span>
@@ -900,7 +900,7 @@ export default function VaultPage() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => fileInputRef.current?.click()}
-                          className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-theme-primary to-theme-primary/80 text-white rounded-2xl font-semibold shadow-xl shadow-theme-primary/25 hover:shadow-2xl hover:shadow-theme-primary/40 transition-all duration-300"
+                          className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-theme-primary to-theme-primary/80  text-theme-primary  rounded-2xl font-semibold shadow-xl shadow-theme-primary/25 hover:shadow-2xl hover:shadow-theme-primary/40 transition-all duration-300"
                         >
                           <CloudArrowUpIcon className="h-6 w-6" />
                           Upload Your First File
@@ -1139,10 +1139,10 @@ export default function VaultPage() {
               <div className="relative p-4 sm:p-6 lg:p-8">
                 <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
                   <div className="p-2 sm:p-3 bg-gradient-to-br from-theme-primary to-theme-primary/80 rounded-xl sm:rounded-2xl shadow-lg">
-                    <LockClosedIcon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
+                    <LockClosedIcon className="h-6 w-6 sm:h-8 sm:w-8  text-theme-primary " />
                   </div>
                   <div>
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold  text-theme-primary ">
                       {hasVaultPassword ? "Vault Access" : "Create Vault"}
                     </h3>
                     <p className="text-theme-textSecondary text-xs sm:text-sm">
@@ -1208,7 +1208,7 @@ export default function VaultPage() {
                   <Button
                     onClick={executeCurrentAction}
                     disabled={!vaultPassword || loading}
-                    className="flex-1 h-11 sm:h-12 lg:h-14 bg-gradient-to-r from-theme-primary to-theme-primary/80 hover:from-theme-primary/90 hover:to-theme-primary/70 text-white rounded-xl shadow-lg shadow-theme-primary/25 text-sm sm:text-base touch-manipulation"
+                    className="flex-1 h-11 sm:h-12 lg:h-14 bg-gradient-to-r from-theme-primary to-theme-primary/80 hover:from-theme-primary/90 hover:to-theme-primary/70  text-theme-primary  rounded-xl shadow-lg shadow-theme-primary/25 text-sm sm:text-base touch-manipulation"
                   >
                     {loading ? (
                       <div className="flex items-center gap-2">
@@ -1287,7 +1287,7 @@ export default function VaultPage() {
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-sm sm:text-lg lg:text-xl font-bold text-white truncate">
+                    <h3 className="text-sm sm:text-lg lg:text-xl font-bold  text-theme-primary  truncate">
                       {previewItem?.originalName}
                     </h3>
                     <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 text-xs sm:text-sm text-theme-textSecondary overflow-hidden">
@@ -1341,7 +1341,7 @@ export default function VaultPage() {
                           <EyeIcon className="h-4 w-4 sm:h-6 sm:w-6 text-theme-primary" />
                         </div>
                       </div>
-                      <h4 className="text-base sm:text-lg font-semibold text-white mb-1 sm:mb-2">
+                      <h4 className="text-base sm:text-lg font-semibold  text-theme-primary  mb-1 sm:mb-2">
                         Decrypting Preview
                       </h4>
                       <p className="text-theme-textSecondary text-sm sm:text-base">
@@ -1380,7 +1380,7 @@ export default function VaultPage() {
                                     );
                                     img.style.transform = `scale(${newScale})`;
                                   }}
-                                  className="p-1.5 hover:bg-theme-border/30 rounded text-theme-textSecondary hover:text-white transition-colors"
+                                  className="p-1.5 hover:bg-theme-border/30 rounded text-theme-textSecondary hover: text-theme-primary  transition-colors"
                                   title="Zoom In"
                                 >
                                   <PlusIcon className="h-4 w-4" />
@@ -1400,7 +1400,7 @@ export default function VaultPage() {
                                     );
                                     img.style.transform = `scale(${newScale})`;
                                   }}
-                                  className="p-1.5 hover:bg-theme-border/30 rounded text-theme-textSecondary hover:text-white transition-colors"
+                                  className="p-1.5 hover:bg-theme-border/30 rounded text-theme-textSecondary hover: text-theme-primary  transition-colors"
                                   title="Zoom Out"
                                 >
                                   <XMarkIcon className="h-4 w-4" />
@@ -1411,7 +1411,7 @@ export default function VaultPage() {
                                       document.querySelector(".preview-image");
                                     img.style.transform = "scale(1)";
                                   }}
-                                  className="px-2 py-1.5 hover:bg-theme-border/30 rounded text-theme-textSecondary hover:text-white transition-colors text-xs"
+                                  className="px-2 py-1.5 hover:bg-theme-border/30 rounded text-theme-textSecondary hover: text-theme-primary  transition-colors text-xs"
                                   title="Reset Zoom"
                                 >
                                   Reset
@@ -1542,10 +1542,10 @@ export default function VaultPage() {
                           <div className="text-center bg-theme-secondary rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 shadow-lg max-w-lg mx-auto border border-theme-border/20">
                             <div className="mb-4 sm:mb-6">
                               <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-theme-success/80 to-theme-success rounded-full flex items-center justify-center">
-                                <AudioSolidIcon className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                                <AudioSolidIcon className="h-8 w-8 sm:h-10 sm:w-10  text-theme-primary " />
                               </div>
                             </div>
-                            <h4 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4 truncate">
+                            <h4 className="text-base sm:text-lg font-semibold  text-theme-primary  mb-3 sm:mb-4 truncate">
                               {previewContent.originalName}
                             </h4>
                             <audio
@@ -1571,7 +1571,7 @@ export default function VaultPage() {
                                 <DocumentSolidIcon className="h-8 w-8 sm:h-10 sm:w-10 text-theme-textSecondary" />
                               </div>
                             </div>
-                            <h4 className="text-base sm:text-lg font-semibold text-white mb-2">
+                            <h4 className="text-base sm:text-lg font-semibold  text-theme-primary  mb-2">
                               Preview not available
                             </h4>
                             <p className="text-theme-textSecondary mb-4 sm:mb-6 text-sm sm:text-base">
@@ -1579,7 +1579,7 @@ export default function VaultPage() {
                             </p>
                             <Button
                               onClick={() => handleDownload(previewItem)}
-                              className="bg-gradient-to-r from-theme-primary to-theme-primary/80 hover:from-theme-primary/90 hover:to-theme-primary/70 text-white px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base touch-manipulation"
+                              className="bg-gradient-to-r from-theme-primary to-theme-primary/80 hover:from-theme-primary/90 hover:to-theme-primary/70  text-theme-primary  px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base touch-manipulation"
                             >
                               <ArrowDownTrayIcon className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
                               Download to view
@@ -1592,10 +1592,10 @@ export default function VaultPage() {
                         <div className="text-center bg-theme-secondary rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 shadow-lg max-w-lg mx-auto border border-theme-border/20">
                           <div className="mb-4 sm:mb-6">
                             <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-theme-error/80 to-theme-error rounded-full flex items-center justify-center">
-                              <ExclamationTriangleIcon className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                              <ExclamationTriangleIcon className="h-8 w-8 sm:h-10 sm:w-10  text-theme-primary " />
                             </div>
                           </div>
-                          <h4 className="text-base sm:text-lg font-semibold text-white mb-2">
+                          <h4 className="text-base sm:text-lg font-semibold  text-theme-primary  mb-2">
                             Preview failed
                           </h4>
                           <p className="text-theme-textSecondary text-sm sm:text-base">

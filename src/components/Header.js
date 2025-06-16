@@ -47,13 +47,6 @@ const navigationGroups = [
     type: "link",
   },
   {
-    label: "Dev Tools",
-    type: "dropdown",
-    items: [
-      { href: "/user-sync-test", label: "User Sync Test" },
-    ],
-  },
-  {
     label: "Settings",
     type: "dropdown",
     items: [
