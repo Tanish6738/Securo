@@ -124,9 +124,9 @@ export default function SharedVaultPage() {
       setLoading(false);
     }
   }, [user?.id]);
-
   // Notification event handlers - using useCallback for stability
-  const handleVaultInvitation = useCallback((data) => {    showNotification(
+  const handleVaultInvitation = useCallback((data) => {
+    showNotification(
       "vault_invitation",
       `You've been invited to "${data.vaultName}" by ${data.adminName}`
     );
@@ -135,7 +135,8 @@ export default function SharedVaultPage() {
 
   const handlePinSetupRequired = useCallback((data) => {
     setPinSetupData(data);
-    setShowPinSetupModal(true);    showNotification(
+    setShowPinSetupModal(true);
+    showNotification(
       "pin_setup_required",
       `PIN setup required for "${data.vaultName}"`
     );
@@ -148,15 +149,16 @@ export default function SharedVaultPage() {
       `${data.requesterName} is requesting access to "${data.vaultName}"`
     );
   }, [showNotification]);
-
-  const handleVaultUnlocked = useCallback((data) => {    showNotification(
+  const handleVaultUnlocked = useCallback((data) => {
+    showNotification(
       "vault_unlocked",
       `"${data.vaultName}" has been unlocked for ${data.unlockDurationMinutes} minutes`
     );
     loadVaults();
   }, [showNotification, loadVaults]);
 
-  const handleVaultLocked = useCallback((data) => {    showNotification("vault_locked", `"${data.vaultName}" has been locked`);
+  const handleVaultLocked = useCallback((data) => {
+    showNotification("vault_locked", `"${data.vaultName}" has been locked`);
     loadVaults();
   }, [showNotification, loadVaults]);
 
@@ -184,22 +186,25 @@ export default function SharedVaultPage() {
   const handleFileUploadRequest = useCallback((data) => {
     setFileUploadPermissionData(data);
     setShowFileUploadPermissionModal(true);
-    showNotification(
-      "file_upload_request",
+    showNotification(      "file_upload_request",
       `${data.uploaderName} wants to upload "${data.fileName}"`
     );
-  }, [showNotification]);  const proceedWithApprovedUpload = useCallback(async (data) => {
+  }, [showNotification]);
+
+  const proceedWithApprovedUpload = useCallback(async (data) => {
     // This would be called when the upload is approved
     console.log("Upload approved, should proceed with upload:", data);
   }, []);
 
   // Handle upload approval/denial notifications
-  const handleUploadApproved = useCallback((data) => {    showNotification("upload_approved", "Your file upload has been approved!");
+  const handleUploadApproved = useCallback((data) => {
+    showNotification("upload_approved", "Your file upload has been approved!");
     // Automatically proceed with upload if this user requested it
     proceedWithApprovedUpload(data);
   }, [showNotification, proceedWithApprovedUpload]);
 
-  const handleUploadDenied = useCallback((data) => {    showNotification(
+  const handleUploadDenied = useCallback((data) => {
+    showNotification(
       "upload_denied",
       `Upload denied: ${data.reason || "No reason provided"}`
     );

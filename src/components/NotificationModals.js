@@ -500,11 +500,6 @@ export function NotificationToast({ notification, onClose }) {
 export function VaultDetailsModal({ isOpen, onClose, vaultData }) {
   const [memberDetails, setMemberDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (isOpen && vaultData) {
-      loadMemberDetails();
-    }
-  }, [isOpen, vaultData, loadMemberDetails]);
 
   const loadMemberDetails = useCallback(async () => {
     setLoading(true);
@@ -542,11 +537,18 @@ export function VaultDetailsModal({ isOpen, onClose, vaultData }) {
 
       const memberData = await Promise.all(memberPromises);
       setMemberDetails(memberData);
-    } catch (error) {      console.error("Error loading member details:", error);
+    } catch (error) {
+      console.error("Error loading member details:", error);
     } finally {
       setLoading(false);
     }
   }, [vaultData]);
+
+  useEffect(() => {
+    if (isOpen && vaultData) {
+      loadMemberDetails();
+    }
+  }, [isOpen, vaultData, loadMemberDetails]);
 
   const handleClose = () => {
     setMemberDetails([]);
