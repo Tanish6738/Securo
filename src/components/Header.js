@@ -29,7 +29,6 @@ const navigationGroups = [
       { href: "/breach-monitor", label: "Breach Monitor" },
       { href: "/password-checker", label: "Password Checker" },
       { href: "/vault", label: "Personal Vault" },
-      { href: "/shared-vault", label: "Shared Vault" },
       { href: "/encrypt-files", label: "Encrypt Files" },
     ],
   },
