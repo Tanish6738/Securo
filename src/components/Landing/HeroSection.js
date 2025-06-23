@@ -80,7 +80,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="text-lg md:text-xl text-theme-text-secondary mb-8 max-w-3xl mx-auto leading-relaxed"
           >
-            PrivacyGuard provides comprehensive tools to monitor your digital footprint, 
+            Securo provides comprehensive tools to monitor your digital footprint, 
             enhance online security, and protect your sensitive information.
           </motion.p>
 

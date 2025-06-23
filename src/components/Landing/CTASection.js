@@ -75,7 +75,7 @@ export default function CTASection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            Join thousands of users who trust PrivacyGuard to protect their
+            Join thousands of users who trust Securo to protect their
             digital identity.
           </motion.p>
           <motion.div

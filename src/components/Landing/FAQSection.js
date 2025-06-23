@@ -9,8 +9,8 @@ export default function FAQSection() {
 
   const faqs = [
     {
-      question: "How does PrivacyGuard protect my data?",
-      answer: "PrivacyGuard uses industry-standard encryption and secure APIs to check your data against breach databases. We never store your passwords or personal information on our servers. All checks are performed securely and anonymously."
+      question: "How does Securo protect my data?",
+      answer: "Securo uses industry-standard encryption and secure APIs to check your data against breach databases. We never store your passwords or personal information on our servers. All checks are performed securely and anonymously."
     },
     {
       question: "Is the temporary email service really secure?",
@@ -21,7 +21,7 @@ export default function FAQSection() {
       answer: "Our breach database is updated in real-time through our partnership with leading security APIs. We monitor new breaches continuously and alert users as soon as their data appears in any new incidents."
     },
     {
-      question: "Can I use PrivacyGuard for my business?",
+      question: "Can I use Securo for my business?",
       answer: "Absolutely! Our Business plan is designed for teams and organizations. It includes advanced monitoring for multiple email addresses, team management tools, and dedicated support for enterprise security needs."
     },
     {
@@ -30,7 +30,7 @@ export default function FAQSection() {
     },
     {
       question: "Is there a mobile app available?",
-      answer: "Currently, PrivacyGuard is optimized as a responsive web application that works great on mobile devices. We're working on dedicated mobile apps that will be available soon."
+      answer: "Currently, Securo is optimized as a responsive web application that works great on mobile devices. We're working on dedicated mobile apps that will be available soon."
     }
   ]
 
@@ -77,7 +77,7 @@ export default function FAQSection() {
             Frequently Asked Questions
           </h2>
           <p className="text-xl text-theme-text-secondary max-w-2xl mx-auto">
-            Get answers to common questions about PrivacyGuard.
+            Get answers to common questions about Securo.
           </p>
         </motion.div>
 

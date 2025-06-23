@@ -8,7 +8,7 @@ export default function TestimonialsSection() {  const testimonials = [
     {
       name: "Alex P.",
       role: "Cybersecurity Analyst",
-      quote: "PrivacyGuard has become an indispensable tool for my clients. The breach monitoring is top-notch and the temporary email feature is a lifesaver!",
+      quote: "Securo has become an indispensable tool for my clients. The breach monitoring is top-notch and the temporary email feature is a lifesaver!",
       avatar: "/avatars/alex.png", // Placeholder path
       rating: 5
     },
@@ -22,7 +22,7 @@ export default function TestimonialsSection() {  const testimonials = [
     {
       name: "Mike B.",
       role: "Small Business Owner",
-      quote: "Understanding my digital footprint was eye-opening. PrivacyGuard gave me the tools to take control and protect my business data.",
+      quote: "Understanding my digital footprint was eye-opening. Securo gave me the tools to take control and protect my business data.",
       avatar: "/avatars/mike.png", // Placeholder path
       rating: 5
     }
@@ -98,7 +98,7 @@ export default function TestimonialsSection() {  const testimonials = [
             Trusted by Professionals
           </h2>
           <p className="text-xl text-theme-text-secondary max-w-2xl mx-auto">
-            Hear what our users say about PrivacyGuard.
+            Hear what our users say about Securo.
           </p>
         </motion.div>
 

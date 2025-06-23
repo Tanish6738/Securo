@@ -56,7 +56,7 @@ export default function Footer() {
             <div className="flex items-center mb-6">
               <ShieldCheckIcon className="h-8 w-8 text-theme-primary mr-3" />
               <span className="text-2xl font-bold text-theme-text">
-                PrivacyGuard
+                Securo
               </span>
             </div>
             <p className="text-theme-text-secondary mb-6 leading-relaxed">
@@ -67,7 +67,7 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-center text-theme-text-secondary">
                 <EnvelopeIcon className="h-5 w-5 mr-3 text-theme-primary" />
-                <span>support@privacyguard.com</span>
+                <span>support@securo.com</span>
               </div>
               <div className="flex items-center text-theme-text-secondary">
                 <PhoneIcon className="h-5 w-5 mr-3 text-theme-primary" />
@@ -260,7 +260,7 @@ export default function Footer() {
           className="border-t border-theme-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
         >
           <div className="text-theme-text-secondary text-sm mb-4 md:mb-0">
-            © 2024 PrivacyGuard. All rights reserved. | Protecting privacy
+            © 2024 Securo. All rights reserved. | Protecting privacy
             since 2024.
           </div>
           <div className="flex space-x-6">

@@ -22,12 +22,14 @@ const navigationGroups = [
     label: "Dashboard",
     href: "/dashboard",
     type: "link",
-  },  {
+  },
+  {
     label: "Security Tools",
     type: "dropdown",
     items: [
       { href: "/breach-monitor", label: "Breach Monitor" },
       { href: "/password-checker", label: "Password Checker" },
+      // { href: "/api-key-scanner", label: "API Key Scanner" },
       { href: "/vault", label: "Personal Vault" },
       { href: "/shared-vault", label: "Shared Vault" },
       { href: "/encrypt-files", label: "Encrypt Files" },
@@ -41,7 +43,13 @@ const navigationGroups = [
       { href: "/temp-email", label: "Temporary Email" },
       { href: "/image-enhancer", label: "Image Enhancer" },
     ],
-  },  {
+  },
+  {
+    label: "Exposed APIs",
+    type: "link",
+    href: "/api-key-scanner",
+  },
+  {
     label: "News",
     href: "/privacy-news",
     type: "link",
@@ -63,7 +71,8 @@ const guestLinks = [
   { href: "#faq", label: "FAQ" },
 ];
 
-export default function RedesignedHeader() {  const [mobileOpen, setMobileOpen] = useState(false);
+export default function RedesignedHeader() {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDesktopDropdown, setActiveDesktopDropdown] = useState(null);
 
@@ -72,7 +81,8 @@ export default function RedesignedHeader() {  const [mobileOpen, setMobileOpen] 
     const scrollHandler = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
-  }, []);  useEffect(() => {
+  }, []);
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest(".dropdown-container")) {
         setActiveDesktopDropdown(null);
@@ -104,7 +114,7 @@ export default function RedesignedHeader() {  const [mobileOpen, setMobileOpen] 
             <div className=""></div>
             <div className="">
               <span className="text-xl font-bold bg-clip-text ">
-                PrivacyGuard
+                Securo
               </span>
             </div>
           </div>{" "}
@@ -134,7 +144,8 @@ export default function RedesignedHeader() {  const [mobileOpen, setMobileOpen] 
                   <span className="relative z-10">{item.label}</span>
                   <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-theme-primary to-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                 </Link>
-              ) : (                <div key={index} className="relative dropdown-container group">
+              ) : (
+                <div key={index} className="relative dropdown-container group">
                   <button
                     onClick={() => handleDesktopDropdownToggle(index)}
                     className="flex items-center space-x-1 text-sm font-medium text-theme-text hover:text-theme-primary transition-all duration-300 relative"
@@ -244,7 +255,8 @@ export default function RedesignedHeader() {  const [mobileOpen, setMobileOpen] 
                   <span className="relative z-10 group-hover:translate-x-2 transition-transform duration-300">
                     {item.label}
                   </span>
-                </Link>              ) : (
+                </Link>
+              ) : (
                 <div key={index}>
                   {item.items.map((subItem) => (
                     <Link
