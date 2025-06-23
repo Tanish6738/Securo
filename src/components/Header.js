@@ -31,7 +31,6 @@ const navigationGroups = [
       { href: "/password-checker", label: "Password Checker" },
       // { href: "/api-key-scanner", label: "API Key Scanner" },
       { href: "/vault", label: "Personal Vault" },
-      { href: "/shared-vault", label: "Shared Vault" },
       { href: "/encrypt-files", label: "Encrypt Files" },
     ],
   },
