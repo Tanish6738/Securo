@@ -30,6 +30,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function APIKeyScanner() {
   // Tab management
@@ -430,11 +431,12 @@ export default function APIKeyScanner() {
               {userProfile && (
                 <div className="bg-theme-surface rounded-3xl p-8 shadow-xl border border-theme-border-opaque">
                   <div className="flex flex-col lg:flex-row items-start space-y-6 lg:space-y-0 lg:space-x-8">
-                    {/* Avatar and Basic Info */}
-                    <div className="flex-shrink-0">
-                      <img
+                    {/* Avatar and Basic Info */}                    <div className="flex-shrink-0">
+                      <Image
                         src={userProfile.avatar_url}
                         alt={userProfile.login}
+                        width={128}
+                        height={128}
                         className="w-32 h-32 rounded-2xl shadow-lg"
                       />
                     </div>
@@ -680,9 +682,8 @@ export default function APIKeyScanner() {
                   <BookOpen className="h-16 w-16 text-theme-text-secondary mx-auto mb-4" />
                   <h3 className="text-2xl font-semibold text-theme-text mb-2">
                     No Public Repositories Found
-                  </h3>
-                  <p className="text-theme-text-secondary">
-                    This user doesn't have any public repositories to scan.
+                  </h3>                  <p className="text-theme-text-secondary">
+                    This user doesn&apos;t have any public repositories to scan.
                   </p>
                 </div>
               )}
