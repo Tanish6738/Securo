@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
 import keccak from "keccak";
+import fs from "fs";
+import path from "path";
 
 export async function POST(request) {
   try {
     const { password } = await request.json();
+    
+    console.log("=== PASSWORD CHECK DEBUG ===");
+    console.log("Received password:", password);
+    console.log("Password type:", typeof password);
 
     if (!password) {
       return NextResponse.json(
@@ -48,8 +54,49 @@ export async function POST(request) {
         try {
           const errorData = await response.json();
           if (errorData?.Error === "Not found") {
-            console.log("Password not found in breach database (404 with 'Not found' message)");
-            return NextResponse.json({ isCompromised: false, occurrences: 0 });
+            console.log("Password not found in breach database - checking fallback list");
+            
+            // Load compromised passwords from JSON file
+            try {
+              const jsonPath = path.join(process.cwd(), 'src', 'app', 'api', 'password-check', 'Password.json');
+              const passwordData = fs.readFileSync(jsonPath, 'utf8');
+              const compromisedPasswords = JSON.parse(passwordData);
+              
+              console.log(`Loaded ${compromisedPasswords.length} compromised passwords from JSON file`);
+              
+              if (compromisedPasswords.includes(password.toLowerCase())) {
+                console.log("Password found in compromised passwords JSON file");
+                return NextResponse.json({ 
+                  isCompromised: true, 
+                  occurrences: 999999,
+                  note: "This password is known to be commonly breached"
+                });
+              }
+              
+              return NextResponse.json({ isCompromised: false, occurrences: 0 });
+              
+            } catch (fileError) {
+              console.error("Error reading Password.json file:", fileError);
+              
+              // Fallback to hardcoded list if file read fails
+              const commonBreachedPasswords = [
+                'password', '123456', '123456789', 'qwerty', 'abc123', 
+                'password123', 'admin', 'letmein', 'welcome', 'monkey',
+                'dragon', 'pass', 'master', 'hello', 'freedom',
+                '1234567890', 'login', 'password1', '12345678', '1234567'
+              ];
+              
+              if (commonBreachedPasswords.includes(password.toLowerCase())) {
+                console.log("Password found in hardcoded fallback list");
+                return NextResponse.json({ 
+                  isCompromised: true, 
+                  occurrences: 999999,
+                  note: "This password is known to be commonly breached"
+                });
+              }
+              
+              return NextResponse.json({ isCompromised: false, occurrences: 0 });
+            }
           }
         } catch (e) {
           console.log("404 error - service might be temporarily unavailable");
@@ -70,29 +117,7 @@ export async function POST(request) {
     const data = await response.json();
     
     // Add detailed logging to understand the API response structure
-    console.log("API Response:", JSON.stringify(data, null, 2));    // Handle "Not found" response
-    if (data?.Error === "Not found") {
-      console.log("Password not found in breach database");
-      
-      // Fallback: Check against known common breached passwords
-      const commonBreachedPasswords = [
-        'password', '123456', '123456789', 'qwerty', 'abc123', 
-        'password123', 'admin', 'letmein', 'welcome', 'monkey',
-        'dragon', 'pass', 'master', 'hello', 'freedom',
-        '1234567890', 'login', 'password1', '12345678', '1234567'
-      ];
-      
-      if (commonBreachedPasswords.includes(password.toLowerCase())) {
-        console.log("Password found in common breached passwords list");
-        return NextResponse.json({ 
-          isCompromised: true, 
-          occurrences: 999999,
-          note: "This password is known to be commonly breached"
-        });
-      }
-      
-      return NextResponse.json({ isCompromised: false, occurrences: 0 });
-    }
+    console.log("API Response:", JSON.stringify(data, null, 2));
 
     // Handle the correct API response format based on documentation
     // Expected format: { "SearchPassAnon": { "anon": "808d63ba47", "char": "D:6;A:0;S:0;L:6", "count": "11999477", "wordlist": 0 } }
