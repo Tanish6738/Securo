@@ -418,9 +418,6 @@ export default function DashboardPage() {
                       key={recommendation.title}
                       className={`flex items-start space-x-4 p-6 rounded-2xl ${recommendation.bgColor} hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-[1.02]`}
                     >
-                      <div className={`absolute top-4 right-4 px-2 py-1 text-xs font-bold rounded-full ${recommendation.priorityColor}`}>
-                        {recommendation.priority}
-                      </div>
                       <div className="flex-shrink-0">
                         <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 shadow-lg">
                           <recommendation.icon className={`h-8 w-8 ${recommendation.iconColor}`} />

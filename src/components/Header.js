@@ -24,29 +24,25 @@ const navigationGroups = [
     type: "link",
   },
   {
-    label: "Security Tools",
+    label: "Privacy Tools",
     type: "dropdown",
     items: [
       { href: "/breach-monitor", label: "Breach Monitor" },
       { href: "/password-checker", label: "Password Checker" },
-      // { href: "/api-key-scanner", label: "API Key Scanner" },
       { href: "/vault", label: "Personal Vault" },
       { href: "/encrypt-files", label: "Encrypt Files" },
-    ],
-  },
-  {
-    label: "Privacy Tools",
-    type: "dropdown",
-    items: [
       { href: "/fake-data", label: "Fake Data Generator" },
       { href: "/temp-email", label: "Temporary Email" },
       { href: "/image-enhancer", label: "Image Enhancer" },
     ],
   },
   {
-    label: "Exposed APIs",
-    type: "link",
-    href: "/api-key-scanner",
+    label: "Security Tools",
+    type: "dropdown",
+    items: [
+      { href: "/api-key-scanner", label: "Exposed APIs" },
+      { href: "/endpoint-security", label: "Endpoint Security" },
+    ],
   },
   {
     label: "News",
