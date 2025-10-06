@@ -1,4 +1,4 @@
-# PrivacyGuard – Personal Data Privacy Dashboard
+# Securo – Personal Data Privacy Dashboard
 
 <div align="center">
 
@@ -24,7 +24,7 @@
 
 ## 🔒 Overview
 
-PrivacyGuard will be a comprehensive personal data privacy dashboard designed to empower users with advanced tools to monitor their digital footprint, enhance online security, and protect sensitive information. The platform will integrate multiple third-party APIs to provide real-time breach alerts, facilitate secure fake data generation, offer temporary email solutions, and maintain an encrypted vault for sensitive credentials.
+Securo will be a comprehensive personal data privacy dashboard designed to empower users with advanced tools to monitor their digital footprint, enhance online security, and protect sensitive information. The platform will integrate multiple third-party APIs to provide real-time breach alerts, facilitate secure fake data generation, offer temporary email solutions, and maintain an encrypted vault for sensitive credentials.
 
 ### 🎯 Mission Statement
 
@@ -101,8 +101,8 @@ This project is in the **initial development phase**. Currently implemented:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/privacyguard.git
-   cd privacyguard
+   git clone https://github.com/yourusername/Securo.git
+   cd Securo
    ```
    
    > **Note**: The package.json currently shows the project name as "privayguard" (missing 'c'), but this doesn't affect functionality.
@@ -130,7 +130,7 @@ This project is in the **initial development phase**. Currently implemented:
 ## 📁 Project Structure
 
 ```
-privacyguard/
+Securo/
 ├── public/                 # Static assets
 │   ├── file.svg           # File icon
 │   ├── globe.svg          # Globe icon
@@ -184,7 +184,7 @@ privacyguard/
 
 ## 🤝 Contributing
 
-We welcome contributions to PrivacyGuard! Here's how you can help:
+We welcome contributions to Securo! Here's how you can help:
 
 ### Development Setup
 
